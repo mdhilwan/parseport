@@ -34,6 +34,11 @@ io.on('connection', socket => {
         socket.to(mainSocketId).emit('encrypt:ready')
     })
 
+    socket.on('parsed', ({agent, data}) => {
+        console.log(agent, data)
+        socket.to(agent).emit('parsed', data);
+    })
+
     socket.on('disconnect', async() => {
         const matchingSockets = await io.in(socket.io).allSockets();
         const isDisconnected = matchingSockets.size === 0;

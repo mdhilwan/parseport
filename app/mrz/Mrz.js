@@ -23,6 +23,11 @@ const Mrz = () => {
                 }
             }
         })
+        
+        console.log(cookies.guid)
+        if (!cookies.guid) {
+            setSockDisc(true)
+        }
     }, [])
 
     const initMrz = () => {
@@ -41,6 +46,10 @@ const Mrz = () => {
                         console.log({state: 'result', data: data})
                         if (data.result.parsed.fields) {
                             setParsed(data.result.parsed.fields)
+                            socket.emit('parsed', {
+                                agent: cookies.guid.split('@@')[1],
+                                data: data.result.parsed.fields
+                            })
                         }
                         break;
                     default:

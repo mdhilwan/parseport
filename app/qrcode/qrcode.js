@@ -14,6 +14,7 @@ const QrCode = ({uuid}) => {
     const [guid, setGuid] = useState(uuid)
     const [scanned, setScanned] = useState(false)
     const [qrcodeSrc, setQrcodeSrc] = useState('loading.svg')
+    const [scannedData, setScannedData] = useState({})
 
     useEffect(() => {
         socket.on('connect', () => {
@@ -22,6 +23,10 @@ const QrCode = ({uuid}) => {
 
         socket.on('scanned:phone:qr', () => {
             setScanned(true)
+        })
+
+        socket.on('parsed', (data) => {
+            setScannedData(data)
         })
     }, [])
 
@@ -44,6 +49,7 @@ const QrCode = ({uuid}) => {
                             <Image src={qrcodeSrc} alt="" width={300} height={300}/> : 
                         ''
                 }
+                {JSON.stringify(scannedData)}
             </div>
         </>
     )
