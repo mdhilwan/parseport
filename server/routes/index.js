@@ -1,7 +1,7 @@
 const express = require('express')
 const { writeFile, readFile, unlink } = require('fs').promises
 const router = express.Router()
-const io = require('../api');
+const PDFDocument = require('pdfkit')
 
 module.exports = (socketio) => {
 
@@ -9,6 +9,25 @@ module.exports = (socketio) => {
         try {
             await writeFile(`server/data/${req.body.id}`, req.body.data)
             res.json({status: 'ok'})
+        } catch (error) {
+            console.error(error)
+            res.json({status: 'fail'})
+        }
+    })
+
+    router.post('/generate/:filename', async(req, res) => {
+        try {
+            const doc = new PDFDocument()
+            let filename = req.body.filename
+            // Stripping special characters
+            filename = encodeURIComponent(filename) + '.pdf'
+            res.setHeader('Content-disposition', 'attachment; filename="' + filename + '"')
+            res.setHeader('Content-type', 'application/pdf')
+            const content = req.body.data
+            doc.y = 300
+            doc.text(content, 50, 50)
+            doc.pipe(res)
+            doc.end()
         } catch (error) {
             console.error(error)
             res.json({status: 'fail'})
