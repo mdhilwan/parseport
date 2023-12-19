@@ -1,5 +1,6 @@
 import QrCode from "./qrcode/qrcode";
 import { v4 } from "uuid";
+import '../styles/global.css'
 
 export default function Home() {
   return (

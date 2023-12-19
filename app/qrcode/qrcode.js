@@ -4,6 +4,7 @@ import Image from 'next/image';
 import React, {useEffect, useState} from 'react';
 import io from 'socket.io-client';
 import QRCode from 'qrcode'
+import ParsedTable from '../parsedTable/parsedTable';
 
 const QrCode = ({uuid}) => {
 
@@ -14,7 +15,7 @@ const QrCode = ({uuid}) => {
     const [guid, setGuid] = useState(uuid)
     const [scanned, setScanned] = useState(false)
     const [qrcodeSrc, setQrcodeSrc] = useState('loading.svg')
-    const [scannedData, setScannedData] = useState({})
+    const [scannedData, setScannedData] = useState([])
 
     useEffect(() => {
         socket.on('connect', () => {
@@ -26,7 +27,7 @@ const QrCode = ({uuid}) => {
         })
 
         socket.on('parsed', (data) => {
-            setScannedData(data)
+            setScannedData([...scannedData, data])
         })
     }, [])
 
@@ -45,14 +46,12 @@ const QrCode = ({uuid}) => {
                 {
                     connectedToWs() ? 
                         scanned ? 
-                            <h1>Phone Linked</h1> :
+                            <>
+                                <h1>Phone Linked</h1>
+                                <ParsedTable parsed={scannedData}/>
+                            </> :
                             <Image src={qrcodeSrc} alt="" width={300} height={300}/> : 
                         ''
-                }
-                {
-                    Object.values(scannedData).length > 0 ? 
-                        JSON.stringify(scannedData) : 
-                        <></>
                 }
             </div>
         </>

@@ -58,7 +58,7 @@ const Mrz = () => {
                             setScanState(State.SUCCESS)
                         } else {
                             setParsed({
-                                message: "Was unable to scan. Please position the biometric page and try again."
+                                message: "Please reposition the biometric page and try again."
                             })
 
                             setScanState(State.ERROR)
@@ -92,16 +92,25 @@ const Mrz = () => {
         }
     }
 
-    const getPersonName = (data) => {
-        if (data.firstName && data.lastName) {
-            return `${data.firstName} ${data.lastName}`
-        } else if (data.firstName && !data.lastName) {
-            return `${data.firstName}`
-        } else if (!data.firstName && data.lastName) {
-            return `${data.lastName}`
-        } else {
-            return ''
+    const truncateString = string => {
+        if (string.length > 10) {
+            return string.slice(0, 10) + '...'
         }
+        return string
+    }
+
+    const getPersonName = data => {
+        let name = '';
+        if (data.firstName && data.lastName) {
+            name = `${data.firstName} ${data.lastName}`
+        } else if (data.firstName && !data.lastName) {
+            name = `${data.firstName}`
+        } else if (!data.firstName && data.lastName) {
+            name = `${data.lastName}`
+        } else {
+            name = ''
+        }
+        return truncateString(name)
     }
 
     return (
@@ -111,14 +120,35 @@ const Mrz = () => {
                     <h1>Disconnected. Please rescan QR code</h1> :
                     <div>
                         <Script type='text/javascript' src="./vendor/mrz-worker.bundle-min-wrapped.js" strategy='afterInteractive'/>
-                        <input type='file' onChange={$event => beginScanning($event)}></input>
-                        {   
-                            scanState === State.SUCCESS ? 
-                                <div>Sent {getPersonName(parsed)} to agent</div> : 
-                                scanState === State.ERROR ? 
-                                    <>{JSON.stringify(parsed)}</> : 
-                                    <></>
-                        }
+                        <div className="flex items-center justify-center w-full">
+                            <label for="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                    </svg>
+                                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                        {
+                                            scanState === State.SUCCESS ?
+                                                <>
+                                                    <span>Sent {getPersonName(parsed)} to agent</span><br/>
+                                                    <span className="font-semibold">Click and choose another file</span> or take another photo
+                                                </> : scanState === State.ERROR ? 
+                                                    <>
+                                                        <span>There seems to be an error scanning. {parsed.message}</span>
+                                                        <span className="font-semibold">Click and choose a file</span> or take a photo
+                                                    </> : scanState === State.SCANNING ?
+                                                        <>
+                                                            Scanning....
+                                                        </> :
+                                                        <>
+                                                            <span className="font-semibold">Click and choose a file</span> or take a photo
+                                                        </>
+                                        }
+                                    </p>
+                                </div>
+                                <input id="dropzone-file" type="file" className="hidden" onChange={$event => beginScanning($event)}/>
+                            </label>
+                        </div> 
                     </div>
                     
             }
