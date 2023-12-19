@@ -34,8 +34,11 @@ const ParsedTable = ({parsed}) => {
                         </tr>)}
                     </tbody>
                 </table>
-                
-                : ''
+                : 
+                <div>
+                    <div className='text-slate-400 text-2xl'>Awaiting scans...</div>
+                    <div className="text-slate-500">Use your phone that you have linked this computer with to scan your document</div>
+                </div>
         }
     </>
 }

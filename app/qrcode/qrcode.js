@@ -47,10 +47,13 @@ const QrCode = ({uuid}) => {
                     connectedToWs() ? 
                         scanned ? 
                             <>
-                                <h1>Phone Linked</h1>
+                                <h2 className="text-3xl font-bold tracking-tight">Phone Linked</h2>
                                 <ParsedTable parsed={scannedData}/>
                             </> :
-                            <Image src={qrcodeSrc} alt="" width={300} height={300}/> : 
+                            <div className='w-80'>
+                                <h2 className="text-3xl font-bold tracking-tight text-justify">Scan this QR code <span className='text-slate-400 text-2xl'>with the phone you want to use to scan your document</span></h2>
+                                <Image src={qrcodeSrc} alt="" width={400} height={400}/>
+                            </div> : 
                         ''
                 }
             </div>

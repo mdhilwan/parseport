@@ -117,7 +117,9 @@ const Mrz = () => {
         <>
             {
                 sockDisc ? 
-                    <h1>Disconnected. Please rescan QR code</h1> :
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">Disconnected from agent.</span> Please rescan agent QR code
+                    </div> :
                     <div>
                         <Script type='text/javascript' src="./vendor/mrz-worker.bundle-min-wrapped.js" strategy='afterInteractive'/>
                         <div className="flex items-center justify-center w-full">
@@ -138,7 +140,7 @@ const Mrz = () => {
                                                         <span className="font-semibold">Click and choose a file</span> or take a photo
                                                     </> : scanState === State.SCANNING ?
                                                         <>
-                                                            Scanning....
+                                                            Scanning...
                                                         </> :
                                                         <>
                                                             <span className="font-semibold">Click and choose a file</span> or take a photo
