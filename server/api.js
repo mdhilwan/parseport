@@ -24,18 +24,9 @@ io.on('connection', socket => {
 
     socket.on('scanned:phone:qr', mainSocketId => {
         socket.to(mainSocketId).emit('scanned:qr:res', { agent: socket.id })
-    }) 
-
-    socket.on('iv:res', ({iv, mainSocketId}) => {
-        socket.to(mainSocketId).emit('iv:res', iv)
     })
 
-    socket.on('saved:scan', ({mainSocketId}) => {
-        socket.to(mainSocketId).emit('encrypt:ready')
-    })
-
-    socket.on('parsed', ({agent, data}) => {
-        console.log(agent, data)
+    socket.on('scanned:parsed', ({agent, data}) => {
         socket.to(agent).emit('parsed', data);
     })
 

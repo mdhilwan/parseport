@@ -6,12 +6,19 @@ import { useEffect, useState } from 'react';
 import Script from 'next/script';
 import helper from './helper';
 
+const State = {
+    SCANNING: "Scanning",
+    SUCCESS: "Success",
+    ERROR: "Error"
+}
+
 const Mrz = () => {
     const socketPort = '4001';
     const socket = io(`:${socketPort}`);
 
     const [cookies, setCookies, removeCookie] = useCookies(['guid']);
     const [sockDisc, setSockDisc] = useState(false);
+    const [scanState, setScanState] = useState();
     const [parsed, setParsed] = useState({})
 
     useEffect(() => {
@@ -24,7 +31,6 @@ const Mrz = () => {
             }
         })
         
-        console.log(cookies.guid)
         if (!cookies.guid) {
             setSockDisc(true)
         }
@@ -37,19 +43,25 @@ const Mrz = () => {
 
                 switch (data.type) {
                     case 'progress':
-                        console.log({state: 'progress'})
+                        setScanState(State.SCANNING)
                         break;
                     case 'error':
-                        console.log({state: 'error', data: data})
+                        setScanState(State.ERROR)
                         break;
                     case 'result':
-                        console.log({state: 'result', data: data})
-                        if (data.result.parsed.fields) {
+                        if (data.result?.parsed?.fields) {
                             setParsed(data.result.parsed.fields)
-                            socket.emit('parsed', {
+                            socket.emit('scanned:parsed', {
                                 agent: cookies.guid.split('@@')[1],
                                 data: data.result.parsed.fields
                             })
+                            setScanState(State.SUCCESS)
+                        } else {
+                            setParsed({
+                                message: "Was unable to scan. Please position the biometric page and try again."
+                            })
+
+                            setScanState(State.ERROR)
                         }
                         break;
                     default:
@@ -80,6 +92,18 @@ const Mrz = () => {
         }
     }
 
+    const getPersonName = (data) => {
+        if (data.firstName && data.lastName) {
+            return `${data.firstName} ${data.lastName}`
+        } else if (data.firstName && !data.lastName) {
+            return `${data.firstName}`
+        } else if (!data.firstName && data.lastName) {
+            return `${data.lastName}`
+        } else {
+            return ''
+        }
+    }
+
     return (
         <>
             {
@@ -88,13 +112,13 @@ const Mrz = () => {
                     <div>
                         <Script type='text/javascript' src="./vendor/mrz-worker.bundle-min-wrapped.js" strategy='afterInteractive'/>
                         <input type='file' onChange={$event => beginScanning($event)}></input>
-
-                        <div>
-                            {parsed ? 
-                                <>{JSON.stringify(parsed)}</> : 
-                                <></>
-                            }
-                        </div>
+                        {   
+                            scanState === State.SUCCESS ? 
+                                <div>Sent {getPersonName(parsed)} to agent</div> : 
+                                scanState === State.ERROR ? 
+                                    <>{JSON.stringify(parsed)}</> : 
+                                    <></>
+                        }
                     </div>
                     
             }

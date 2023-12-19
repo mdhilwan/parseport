@@ -45,11 +45,15 @@ const QrCode = ({uuid}) => {
                 {
                     connectedToWs() ? 
                         scanned ? 
-                            <h1>Phone Scanned</h1> :
+                            <h1>Phone Linked</h1> :
                             <Image src={qrcodeSrc} alt="" width={300} height={300}/> : 
                         ''
                 }
-                {JSON.stringify(scannedData)}
+                {
+                    Object.values(scannedData).length > 0 ? 
+                        JSON.stringify(scannedData) : 
+                        <></>
+                }
             </div>
         </>
     )

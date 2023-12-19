@@ -13,20 +13,24 @@ const Link = () => {
 
     const [linked, setLinked] = useState(false)
     const [linkedErr, setLinkedErr] = useState(false)
-    const [itsMobile, setItsMobile] = useState(undefined)
+    const [itsMobile, setItsMobile] = useState()
     const [cookies, setCookie] = useCookies(['guid']);
 
+    const doLink = async () => {
+        const linkRes = await fetch(`${window.location.protocol}//${window.location.hostname}:4001/api/link/${mainUuid}/${mainSocketId}`, {
+            method: 'POST'
+        });
+        const linkData = await linkRes.json();
+        setLinked(linkData.status === 'ok')
+        setLinkedErr(linkData.status === 'socket error')
+    }
+
     useEffect(() => {
-        const doLink = async () => {
-            const linkRes = await fetch(`${window.location.protocol}//${window.location.hostname}:4001/api/link/${mainUuid}/${mainSocketId}`, {
-                method: 'POST'
-            });
-            const linkData = await linkRes.json();
-            setLinked(linkData.status === 'ok')
-            setLinkedErr(linkData.status === 'socket error')
+        setItsMobile(isMobile())
+
+        if (isMobile()) {
+            doLink();
         }
-        doLink();
-        setItsMobile(isMobile());
     }, [])
 
     useEffect(() => {
@@ -41,7 +45,7 @@ const Link = () => {
     return <>
     {itsMobile ? 
         linked ? 
-            <h1>QR Code Accepted: {cookies.guid}</h1> : 
+            <h1>Connecting...</h1> : 
             linkedErr ?
                 <h1>QR Code Error. Try scanning the QR code again</h1> :
                 <div>Connecting...</div> :
