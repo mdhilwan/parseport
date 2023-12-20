@@ -4,6 +4,7 @@ const { writeFile, readFile, unlink } = require('fs').promises
 const { createReadStream } = require('fs')
 const router = express.Router()
 const { PDFDocument } = require('pdf-lib');
+const moment = require("moment");
 
 const pdfDataMap = [{
     field: 'firstName',
@@ -72,10 +73,14 @@ module.exports = (socketio) => {
                     
                     if (fieldType === 'textField') {
                         const inputField = form.getTextField(pdfField)
-                        inputField.setText(value)
+                        if (!isNaN(new Date(value))) {
+                            inputField.setText(moment(value).format("DD/MM/YYYY"))
+                        } else {
+                            inputField.setText(value)
+                        }
                     } else if (fieldType === 'checkbox') {
                         let thisPdfField = pdfField.map(f => f.toLowerCase().replace(/chk/g, ''))
-                        const selectedCheckbox = thisPdfField.indexOf(value)
+                        const selectedCheckbox = thisPdfField.indexOf(value.toLowerCase())
                         const checkboxField = form.getCheckBox(pdfField[selectedCheckbox])
                         checkboxField.check()
                     }
