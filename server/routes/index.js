@@ -73,6 +73,11 @@ module.exports = (socketio) => {
                     if (fieldType === 'textField') {
                         const inputField = form.getTextField(pdfField)
                         inputField.setText(value)
+                    } else if (fieldType === 'checkbox') {
+                        let thisPdfField = pdfField.map(f => f.toLowerCase().replace(/chk/g, ''))
+                        const selectedCheckbox = thisPdfField.indexOf(value)
+                        const checkboxField = form.getCheckBox(pdfField[selectedCheckbox])
+                        checkboxField.check()
                     }
                 }
             })
@@ -85,8 +90,6 @@ module.exports = (socketio) => {
         } catch (error) {
             console.error(error)
             res.json({status: 'fail'})
-        } finally {
-            console.log('clean up');
         }
     })
     
