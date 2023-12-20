@@ -61,8 +61,6 @@ module.exports = (socketio) => {
             const pdfData = await readFile(path.join(__dirname, '..', 'doc', 'umrah-visa-application-form.pdf'));
             const pdfDoc = await PDFDocument.load(pdfData)
             const form = pdfDoc.getForm()
-            const fields = form.getFields()
-            
             const dataSrc = req.body.data
 
             Object.entries(dataSrc).map(([field, value]) => {

@@ -37,15 +37,24 @@ const ParsedTable = ({parsed}) => {
                 <table className="table table-auto border">
                     <thead>
                         <tr>
-                            {tableLabel.map(label => <td className="px-3 font-bold">{label}</td>)}
-                            <td className="px-3 font-bold">
+                            {tableLabel.map(label => {
+                                const labelClassName = ['First Name', 'Last Name'].includes(label) ? "px-3 font-bold w-72" : "px-3 font-bold w-28" 
+                                return <td className={labelClassName}>
+                                    {label}
+                                </td>
+                            })}
+                            <td className="px-1 font-bold">
                                 Visa
                             </td>
                         </tr>
                     </thead>
                     <tbody>
                         {filtered.map(row => <tr>
-                            {Object.entries(row).map(col => <td className="px-3">{col[1]}</td>)}
+                            {Object.entries(row).map(col => {
+                                return <td className="px-1">
+                                    <input type="text" className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1 w-full" value={col[1]}></input>
+                                </td>
+                            })}
                             <td>
                                 <button type="button" class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-4 ps-3 py-2 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 mb-2"
                                     onClick={() => generateVisa(row)}>

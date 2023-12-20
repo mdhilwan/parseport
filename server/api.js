@@ -11,6 +11,9 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const apiRouter = require('./routes')
 
+var moment = require("moment");
+var countries = require("i18n-iso-countries");
+
 const io = socketIO(server, {
     cors: {
         origin: '*',
@@ -27,6 +30,10 @@ io.on('connection', socket => {
     })
 
     socket.on('scanned:parsed', ({agent, data}) => {
+        data.nationality = countries.getName(data.nationality, "en")
+        data.issuingState = countries.getName(data.issuingState, "en")
+        data.birthDate = moment.utc(data.birthDate, "YYMMDD").format("DD MMM YYYY")
+        data.expirationDate = moment.utc(data.expirationDate, "YYMMDD").format("DD MMM YYYY")
         socket.to(agent).emit('parsed', data);
     })
 

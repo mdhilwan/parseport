@@ -47,7 +47,7 @@ const QrCode = ({uuid}) => {
                     connectedToWs() ? 
                         scanned ? 
                             <>
-                                <h2 className="text-3xl font-bold tracking-tight">Phone Linked</h2>
+                                <h2 className="text-3xl font-bold tracking-tight mb-3">Phone Linked</h2>
                                 <ParsedTable parsed={scannedData}/>
                             </> :
                             <div className='w-80'>
