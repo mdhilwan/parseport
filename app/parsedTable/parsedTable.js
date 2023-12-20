@@ -23,11 +23,12 @@ const ParsedTable = ({parsed}) => {
 
     const generateVisa = async (visaData) => {
         const doGenerate = await fetch(`http://192.168.1.166:4001/api/generate/${visaData.documentNumber}`, {
-            body: JSON.stringify(visaData),
+            body: JSON.stringify({data: visaData}),
+            headers: new Headers({'content-type': 'application/json'}),
             method: "POST"
         })
         const generateRes = await doGenerate.blob()
-        download(generateRes);
+        download(generateRes, visaData.documentNumber);
     }
 
     return <>
