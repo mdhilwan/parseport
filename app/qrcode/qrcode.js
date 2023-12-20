@@ -26,8 +26,17 @@ const QrCode = ({uuid}) => {
             setScanned(true)
         })
 
+        socket.on('scanned:phone:agent', (agentid) => {
+            console.log(agentid)
+        })
+
         socket.on('parsed', (data) => {
             setScannedData([...scannedData, data])
+        })
+
+        socket.on('disconnected', (socketDisconnected) => {
+            console.log(socket.id)
+            console.log(socketDisconnected)
         })
     }, [])
 

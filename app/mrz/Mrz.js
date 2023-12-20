@@ -21,6 +21,23 @@ const Mrz = () => {
     const [scanState, setScanState] = useState();
     const [parsed, setParsed] = useState({})
 
+    const getMainUuid = () => {
+        const [uuid, mainSocketId] = cookies.guid.split('@@')
+        return uuid;
+    }
+
+    const getMainSocketId = () => {
+        const [uuid, mainSocketId] = cookies.guid.split('@@')
+        return mainSocketId;
+    }
+
+
+    const doHandShake = async (agentId) => {
+        const linkRes = await fetch(`${window.location.protocol}//${window.location.hostname}:4001/api/link/handshake/${getMainUuid()}/${getMainSocketId()}/${agentId}`, { method: 'POST' });
+        const linkData = await linkRes.json();
+        
+    }
+
     useEffect(() => {
         socket.on('disconnected', (socketDisconnected) => {
             if (cookies.guid) {
@@ -29,6 +46,12 @@ const Mrz = () => {
                     setSockDisc(true)
                 }
             }
+        })
+
+        socket.on('connect', () => {
+            const [uuid, thisSocketId] = cookies.guid.split('@@')
+            console.log("thisSocketId:", thisSocketId, "socket.id:", socket.id)
+            doHandShake(socket.id)
         })
         
         if (!cookies.guid) {

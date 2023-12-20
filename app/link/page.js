@@ -17,9 +17,7 @@ const Link = () => {
     const [cookies, setCookie] = useCookies(['guid']);
 
     const doLink = async () => {
-        const linkRes = await fetch(`${window.location.protocol}//${window.location.hostname}:4001/api/link/${mainUuid}/${mainSocketId}`, {
-            method: 'POST'
-        });
+        const linkRes = await fetch(`${window.location.protocol}//${window.location.hostname}:4001/api/link/verify/${mainUuid}/${mainSocketId}`, { method: 'POST' });
         const linkData = await linkRes.json();
         setLinked(linkData.status === 'ok')
         setLinkedErr(linkData.status === 'socket error')

@@ -112,19 +112,30 @@ module.exports = (socketio) => {
         }
     })
     
-    router.post('/link/:uuid/:socketid', async(req, res) => {
+    router.post('/link/verify/:uuid/:socketid', async(req, res) => {
         try {
             const mainSocket = socketio.sockets.sockets.get(req.params.socketid);
             if (mainSocket) {
-                mainSocket.emit('scanned:phone:qr', 'hello world')
+                mainSocket.emit('scanned:phone:qr')
                 res.json({ status: 'ok' })
-                console.log('Linked:::', 'uuid:', req.params.uuid, 'socketid:', req.params.socketid)
             } else {
                 console.error('socket does not exist', req.params.socketid)
                 res.json({ status: 'socket error' })
             }
         } catch (error) {
             console.error(error)
+        }
+    })
+
+    router.post('/link/handshake/:uuid/:socketid/:agentid', async(req, res) => {
+        const mainSocket = socketio.sockets.sockets.get(req.params.socketid);
+        if (mainSocket) {
+            mainSocket.emit('scanned:phone:agent', req.params.agentid)
+            res.json({ status: 'ok' })
+            console.log('Linked:::', 'uuid:', req.params.uuid, 'socketid:', req.params.socketid, 'agentid:', req.params.agentid)
+        } else {
+            console.error('socket does not exist', req.params.socketid)
+            res.json({ status: 'socket error' })
         }
     })
 
