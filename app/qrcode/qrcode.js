@@ -16,18 +16,22 @@ const QrCode = ({uuid}) => {
     const [scanned, setScanned] = useState(false)
     const [qrcodeSrc, setQrcodeSrc] = useState('loading.svg')
     const [scannedData, setScannedData] = useState([])
+    let connectedAgentId = '';
 
     useEffect(() => {
+        console.log('use effect again')
+
         socket.on('connect', () => {
             setGuid(`${guid}@@${socket.id}`);
         })
 
-        socket.on('scanned:phone:qr', () => {
+        socket.on('scanned:phone:qr', (agentId) => {
+            connectedAgentId = agentId
             setScanned(true)
         })
 
         socket.on('scanned:phone:agent', (agentid) => {
-            console.log(agentid)
+            console.log('scanned:phone:agent:::', agentid)
         })
 
         socket.on('parsed', (data) => {
@@ -35,8 +39,9 @@ const QrCode = ({uuid}) => {
         })
 
         socket.on('disconnected', (socketDisconnected) => {
-            console.log(socket.id)
-            console.log(socketDisconnected)
+            if (socketDisconnected === connectedAgentId) {
+                setScanned(false)
+            }
         })
     }, [])
 
