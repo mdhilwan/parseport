@@ -1,3 +1,5 @@
+"use client"
+
 import download from "downloadjs";
 import Input from "./input";
 
@@ -22,6 +24,8 @@ const ParsedTable = ({parsed}) => {
 
     const tableLabel = filtered[0] ? Object.keys(filtered[0]).map(k => tableLabelMap[k]) : []
 
+    const baseLabelClassName = "pe-3 font-bold whitespace-nowrap"
+
     const generateVisa = async (visaData) => {
         const doGenerate = await fetch(`http://192.168.1.166:4001/api/generate/${visaData.documentNumber}`, {
             body: JSON.stringify({data: visaData}),
@@ -35,12 +39,12 @@ const ParsedTable = ({parsed}) => {
     return <>
         {
             parsed.length > 0 ? 
-                <table className="table table-auto border">
+                <table className="table table-auto w-full">
                     <thead>
                         <tr>
-                            {tableLabel.map(label => {
-                                const labelClassName = ['First Name', 'Last Name'].includes(label) ? "px-3 font-bold w-72" : "px-3 font-bold w-28" 
-                                return <td className={labelClassName}>
+                            {tableLabel.map((label, labelIndex) => {
+                                const labelClassName = ['First Name', 'Last Name'].includes(label) ? baseLabelClassName + " w-72" : baseLabelClassName + " w-28" 
+                                return <td key={{label}-{labelIndex}} className={labelClassName}>
                                     {label}
                                 </td>
                             })}
@@ -50,9 +54,9 @@ const ParsedTable = ({parsed}) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {filtered.map(row => <tr>
-                            {Object.entries(row).map(col => {
-                                return <td className="px-1">
+                        {filtered.map((row, rowIndex) => <tr key={rowIndex}>
+                            {Object.entries(row).map((col, colIndex) => {
+                                return <td key={colIndex} className="py-1">
                                     <Input 
                                         val={col[1]} 
                                         onChange={evt => row[col[0]] = evt.target.value}

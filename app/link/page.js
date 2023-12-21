@@ -1,57 +1,82 @@
 'use client'
- 
+
+import io from 'socket.io-client';
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { isMobile } from 'is-mobile'
+import Status from '../status';
+import '../../styles/global.css'
+import { State } from '../enums/state';
 
 const Link = () => {
+    const socketPort = '4001';
+    const socket = io(`:${socketPort}`);
+
     const router = useRouter()
     const searchParams = useSearchParams()
     const idParams = searchParams.get('id')
     const [mainUuid, mainSocketId] = idParams?.split('@@') || ['', '']
-
-    const [linked, setLinked] = useState(false)
-    const [linkedErr, setLinkedErr] = useState(false)
+    const [socketId, setSocketId] = useState('')
+    const [linkedState, setLinkedState] = useState(State.IDLE)
     const [itsMobile, setItsMobile] = useState()
     const [cookies, setCookie] = useCookies(['guid']);
 
-    const doLink = async () => {
-        const linkRes = await fetch(`${window.location.protocol}//${window.location.hostname}:4001/api/link/${mainUuid}/${mainSocketId}`, {
-            method: 'POST'
-        });
+    const doLink = async (socketId) => {
+        setLinkedState(State.LINKING)
+        setSocketId(socketId)
+        const linkRes = await fetch(`${window.location.protocol}//${window.location.hostname}:4001/api/link/verify/${mainUuid}/${mainSocketId}/${socketId}`, { method: 'POST' });
         const linkData = await linkRes.json();
-        setLinked(linkData.status === 'ok')
-        setLinkedErr(linkData.status === 'socket error')
+
+        if (linkData.status === 'ok') {
+            setLinkedState(State.LINKED)
+        } else {
+            setLinkedState(State.ERROR)
+        }
     }
 
     useEffect(() => {
         setItsMobile(isMobile())
 
-        if (isMobile()) {
-            doLink();
-        }
+        socket.on('connect', () => {
+            if (isMobile()) {
+                doLink(socket.id);
+            }
+        })
+
+        socket.on('disconnected', (socketDisconnected) => {
+            if (socketDisconnected === mainSocketId) {
+                setLinkedState(State.DISCONNECTED)
+            }
+        })
     }, [])
 
     useEffect(() => {
-        if (linked) {
+        if (linkedState === State.LINKED) {
+            setCookie('guid', `${mainUuid}@@${mainSocketId}@@${socketId}`)
             setTimeout(() => {
-                setCookie('guid', `${mainUuid}@@${mainSocketId}`)
                 router.push('scan')
             }, 1000)
         }
-    }, [linked])
-   
-    return <>
-    {itsMobile ? 
-        linked ? 
-            <h1>Connecting...</h1> : 
-            linkedErr ?
-                <h1>QR Code Error. Try scanning the QR code again</h1> :
-                <div>Connecting...</div> :
-        <h1>Please use your mobile phone</h1>  
-    }
-    </>
+    }, [linkedState])
+
+    return <div>
+        {
+            itsMobile ?
+                linkedState === State.DISCONNECTED ?
+                    <Status head={"Disconnected from host machine."} body={"Try scanning the QR code again"} /> :
+                    linkedState === State.IDLE ?
+                        <Status head={"Loading..."} /> :
+                        linkedState === State.LINKING ?
+                            <Status head={"Connecting..."} /> :
+                            linkedState === State.LINKED ?
+                                <Status head={"Setting up scanner..."} /> :
+                                linkedState === State.ERROR ?
+                                    <Status head={"QR Code Error."} body={"Try scanning the QR code again"} /> :
+                                    <></> :
+                <Status head={"Not a mobile phone."} body={"Please use a mobile phone and scan the QR code again"} />
+        }
+    </div>
 }
 
 export default Link;
