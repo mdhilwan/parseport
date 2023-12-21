@@ -5,7 +5,6 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { isMobile } from 'is-mobile'
-import Mrz from '../mrz';
 import Status from '../status';
 import '../../styles/global.css'
 import { State } from '../state';

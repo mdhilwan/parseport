@@ -4,7 +4,7 @@ import Script from 'next/script';
 import helper from './helper';
 import { State } from '../state';
 
-const Mrz = () => {
+const Mrz = ({socket}) => {
     const [cookies, setCookies, removeCookie] = useCookies(['guid']);
     
     const [scanState, setScanState] = useState();

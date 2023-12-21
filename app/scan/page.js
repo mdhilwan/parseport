@@ -17,8 +17,12 @@ const Scan = () => {
 
     useEffect(() => {
         socket.on('disconnected', (socketDisconnected) => {
-            const [uuid, mainSocketId, agentSocketId] = cookies.guid.split('@@');
-            if ([mainSocketId, agentSocketId].includes(socketDisconnected)) {
+            if (cookies.guid) {
+                const [uuid, mainSocketId, agentSocketId] = cookies.guid.split('@@');
+                if ([mainSocketId, agentSocketId].includes(socketDisconnected)) {
+                    setLinkedState(State.DISCONNECTED)
+                }
+            } else {
                 setLinkedState(State.DISCONNECTED)
             }
         })
@@ -28,7 +32,7 @@ const Scan = () => {
         <div>
             {
                 linkedState === State.LINKED ? 
-                    <Mrz/> :
+                    <Mrz socket={socket}/> :
                     <Status head={"Disconnected from host machine."} body={"Try scanning the QR code again"}/>
             }
         </div>
