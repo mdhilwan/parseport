@@ -21,6 +21,22 @@ const AppLanding = ({ uuid }) => {
     let connectedAgentId = '';
     let scannedDataCol = [];
 
+    const dragOverHandler = (ev) => ev.preventDefault()
+    const dropHandler = (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        const reader = new FileReader()
+        reader.onload = (e) => {
+            if (e && e.target && e.target.result) {
+                console.log(e.target.result)
+            }
+        }
+        if ([...ev.dataTransfer.files]?.length) {
+            reader.readAsDataURL([...ev.dataTransfer.files][0])
+        }
+    }
+
     useEffect(() => {
         console.log('use effect again', scannedData)
 
@@ -96,9 +112,13 @@ const AppLanding = ({ uuid }) => {
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                                             </svg>
-                                            Or drop a file you want to scan <span className='text-slate-400 text-2xl'>you can still link your phone later on</span>
+                                            Or drop the file(s) you want to scan <span className='text-slate-400 text-2xl'>you can still link your phone later on</span>
                                         </h2>
-                                        <div className="max-w-xl p-8 px-14 my-auto">
+                                        <div
+                                            className="max-w-xl p-8 px-14 my-auto"
+                                            onDragOver={evt => dragOverHandler(evt)}
+                                            onDrop={evt => dropHandler(evt)}
+                                        >
                                             <label
                                                 className="flex justify-center w-full h-60 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
                                                 <span className="flex items-center space-x-2">
@@ -106,11 +126,11 @@ const AppLanding = ({ uuid }) => {
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15m0-3-3-3m0 0-3 3m3-3V15" />
                                                     </svg>
                                                     <span className="font-medium text-gray-600">
-                                                        Drop files to Attach, or
+                                                        Drop files (.png, .jpeg, .jpg) to scan, or
                                                         <span className="text-blue-600 underline"> browse</span>
                                                     </span>
                                                 </span>
-                                                <input type="file" name="file_upload" className="hidden" />
+                                                <input type="file" name="file_upload" className="hidden" onChange={(evt) => { console.log(evt) }} />
                                             </label>
                                         </div>
                                     </div>
@@ -118,7 +138,7 @@ const AppLanding = ({ uuid }) => {
                             </div>
                         :
                         ''
-                }   
+                }
             </div>
             {
                 showQrCodeModal ?
@@ -130,12 +150,12 @@ const AppLanding = ({ uuid }) => {
                                     <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                                         <div className="mt-3 text-center">
                                             <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">Reconnect your phone</h3>
-                                            <Image src={qrcodeSrc} alt="" width={300} height={300} className='mx-auto mt-2 mx-auto' />
+                                            <Image src={qrcodeSrc} alt="" width={300} height={300} className='mt-2 mx-auto' />
                                         </div>
                                     </div>
                                     <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                         <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                                        onClick={() => setShowQrCodeModal(false)}>
+                                            onClick={() => setShowQrCodeModal(false)}>
                                             Cancel
                                         </button>
                                     </div>
@@ -145,7 +165,7 @@ const AppLanding = ({ uuid }) => {
                     </div> :
                     <></>
             }
-            
+
         </>
     )
 }

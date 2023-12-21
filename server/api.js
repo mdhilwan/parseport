@@ -23,7 +23,6 @@ const io = socketIO(server, {
 
 
 io.on('connection', socket => {
-    console.log('Connected:::', socket.id);
 
     socket.on('scanned:phone:qr', mainSocketId => {
         socket.to(mainSocketId).emit('scanned:qr:res', { agent: socket.id })
@@ -42,7 +41,6 @@ io.on('connection', socket => {
         const matchingSockets = await io.in(socket.io).allSockets();
         const isDisconnected = matchingSockets.size === 0;
         if (isDisconnected) {
-            console.log('Disconnected:::', socket.id)
             socket.broadcast.emit('disconnected', socket.id)
         }
     })
