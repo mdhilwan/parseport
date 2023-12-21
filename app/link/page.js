@@ -1,5 +1,5 @@
 'use client'
- 
+
 import io from 'socket.io-client';
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -7,7 +7,7 @@ import { useCookies } from 'react-cookie'
 import { isMobile } from 'is-mobile'
 import Status from '../status';
 import '../../styles/global.css'
-import { State } from '../state';
+import { State } from '../enums/state';
 
 const Link = () => {
     const socketPort = '4001';
@@ -53,28 +53,28 @@ const Link = () => {
 
     useEffect(() => {
         if (linkedState === State.LINKED) {
-            setCookie('guid', `${mainUuid}@@${mainSocketId}@@${socketId}`) 
+            setCookie('guid', `${mainUuid}@@${mainSocketId}@@${socketId}`)
             setTimeout(() => {
                 router.push('scan')
             }, 1000)
         }
     }, [linkedState])
-   
+
     return <div>
         {
-            itsMobile ? 
+            itsMobile ?
                 linkedState === State.DISCONNECTED ?
-                    <Status head={"Disconnected from host machine."} body={"Try scanning the QR code again"}/> :
+                    <Status head={"Disconnected from host machine."} body={"Try scanning the QR code again"} /> :
                     linkedState === State.IDLE ?
-                        <Status head={"Loading..."}/> : 
-                            linkedState === State.LINKING ? 
-                                <Status head={"Connecting..."}/> :
-                                    linkedState === State.LINKED ? 
-                                        <Status head={"Setting up scanner..."}/> : 
-                                        linkedState === State.ERROR ?
-                                            <Status head={"QR Code Error."} body={"Try scanning the QR code again"}/> :
-                                            <></> :
-                <Status head={"Not a mobile phone."} body={"Please use a mobile phone and scan the QR code again"}/>  
+                        <Status head={"Loading..."} /> :
+                        linkedState === State.LINKING ?
+                            <Status head={"Connecting..."} /> :
+                            linkedState === State.LINKED ?
+                                <Status head={"Setting up scanner..."} /> :
+                                linkedState === State.ERROR ?
+                                    <Status head={"QR Code Error."} body={"Try scanning the QR code again"} /> :
+                                    <></> :
+                <Status head={"Not a mobile phone."} body={"Please use a mobile phone and scan the QR code again"} />
         }
     </div>
 }

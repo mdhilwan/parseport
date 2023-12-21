@@ -1,6 +1,7 @@
 import QrCode from "./qrcode/qrcode";
 import { v4 } from "uuid";
 import '../styles/global.css'
+import ParsedTable from "./parsedTable";
 
 export default function Home() {
   return (

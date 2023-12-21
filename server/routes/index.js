@@ -47,7 +47,7 @@ const pdfDataMap = [{
 
 module.exports = (socketio) => {
 
-    router.post('/generate/:filename', async(req, res) => {
+    router.post('/generate/:filename', async (req, res) => {
         try {
             const pdfData = await readFile(path.join(__dirname, '..', 'doc', 'umrah-visa-application-form.pdf'));
             const pdfDoc = await PDFDocument.load(pdfData)
@@ -56,11 +56,11 @@ module.exports = (socketio) => {
 
             Object.entries(dataSrc).map(([field, value]) => {
                 const dataMap = pdfDataMap.find(dat => dat.field === field)
-                
+
                 if (dataMap) {
                     const pdfField = dataMap.pdfField
                     const fieldType = dataMap.type
-                    
+
                     if (fieldType === 'textField') {
                         const inputField = form.getTextField(pdfField)
                         if (!isNaN(new Date(value))) {
@@ -84,11 +84,11 @@ module.exports = (socketio) => {
             res.send(pdfBuffer)
         } catch (error) {
             console.error(error)
-            res.json({status: 'fail'})
+            res.json({ status: 'fail' })
         }
     })
-    
-    router.post('/link/verify/:uuid/:socketid/:agentid', async(req, res) => {
+
+    router.post('/link/verify/:uuid/:socketid/:agentid', async (req, res) => {
         try {
             const mainSocket = socketio.sockets.sockets.get(req.params.socketid);
             if (mainSocket) {

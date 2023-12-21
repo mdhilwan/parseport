@@ -1,3 +1,5 @@
+"use client"
+
 import download from "downloadjs";
 import Input from "./input";
 
@@ -40,7 +42,7 @@ const ParsedTable = ({parsed}) => {
                         <tr>
                             {tableLabel.map(label => {
                                 const labelClassName = ['First Name', 'Last Name'].includes(label) ? "px-3 font-bold w-72" : "px-3 font-bold w-28" 
-                                return <td className={labelClassName}>
+                                return <td key={label} className={labelClassName}>
                                     {label}
                                 </td>
                             })}

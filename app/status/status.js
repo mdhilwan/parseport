@@ -1,7 +1,7 @@
 const Status = ({head, body}) => {
     return (
-        <div class="p-4 m-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
-            <span class="font-bold">{head}</span> {body}
+        <div className="p-4 m-4 text-sm text-red-800 rounded-lg bg-red-50 max-w-md mx-auto" role="alert">
+            <span className="font-bold">{head}</span> {body}
         </div>
     )
 }

@@ -29,7 +29,7 @@ io.on('connection', socket => {
         socket.to(mainSocketId).emit('scanned:qr:res', { agent: socket.id })
     })
 
-    socket.on('scanned:parsed', ({agent, data}) => {
+    socket.on('scanned:parsed', ({ agent, data }) => {
         data.nationality = countries.getName(data.nationality, "en")
         data.issuingState = countries.getName(data.issuingState, "en")
         data.birthDate = moment.utc(data.birthDate, "YYMMDD").format("yyyy-MM-DD")
@@ -38,7 +38,7 @@ io.on('connection', socket => {
         socket.to(agent).emit('parsed', data);
     })
 
-    socket.on('disconnect', async() => {
+    socket.on('disconnect', async () => {
         const matchingSockets = await io.in(socket.io).allSockets();
         const isDisconnected = matchingSockets.size === 0;
         if (isDisconnected) {
@@ -53,7 +53,7 @@ app.use(cookieParser())
 app.use(bodyParser.urlencoded())
 app.use(bodyParser.json())
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api', apiRouter(io))
