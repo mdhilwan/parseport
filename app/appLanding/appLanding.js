@@ -22,18 +22,24 @@ const AppLanding = ({ uuid }) => {
     let scannedDataCol = [];
 
     const dragOverHandler = (ev) => ev.preventDefault()
-    const dropHandler = (ev) => {
-        ev.preventDefault();
-        ev.stopPropagation();
+    const dropHandler = (evt) => {
+        evt.preventDefault();
+        evt.stopPropagation();
+        beginScanning([...evt.dataTransfer.files])
+    }
 
+    const handleFileInput = (evt) => beginScanning(evt.target.files)
+
+    const beginScanning = (inputFiles) => {
+        console.log(inputFiles)
         const reader = new FileReader()
         reader.onload = (e) => {
             if (e && e.target && e.target.result) {
                 console.log(e.target.result)
             }
         }
-        if ([...ev.dataTransfer.files]?.length) {
-            reader.readAsDataURL([...ev.dataTransfer.files][0])
+        if (inputFiles?.length) {
+            reader.readAsDataURL(inputFiles[0])
         }
     }
 
@@ -130,7 +136,7 @@ const AppLanding = ({ uuid }) => {
                                                         <span className="text-blue-600 underline"> browse</span>
                                                     </span>
                                                 </span>
-                                                <input type="file" name="file_upload" className="hidden" onChange={(evt) => { console.log(evt) }} />
+                                                <input type="file" name="file_upload" className="hidden" onChange={(evt) => handleFileInput(evt)} />
                                             </label>
                                         </div>
                                     </div>

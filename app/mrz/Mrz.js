@@ -49,9 +49,10 @@ const Mrz = ({ socket }) => {
         })
     }
 
-    const beginScanning = (evt) => {
+    const handleFileInput = (evt) => beginScanning(evt.target.files)
+
+    const beginScanning = (inputFiles) => {
         const mrzWorker = initMrz()
-        const inputEl = evt.target
         const reader = new FileReader()
         reader.onload = (e) => {
             if (e && e.target && e.target.result) {
@@ -61,8 +62,8 @@ const Mrz = ({ socket }) => {
                 })
             }
         }
-        if (inputEl.files?.length) {
-            reader.readAsDataURL(inputEl.files[0])
+        if (inputFiles?.length) {
+            reader.readAsDataURL(inputFiles[0])
         }
     }
 
@@ -116,7 +117,7 @@ const Mrz = ({ socket }) => {
                             }
                         </p>
                     </div>
-                    <input id="dropzone-file" type="file" className="hidden" onChange={$event => beginScanning($event)} />
+                    <input id="dropzone-file" type="file" className="hidden" onChange={$event => handleFileInput($event)} />
                 </label>
             </div>
         </>
