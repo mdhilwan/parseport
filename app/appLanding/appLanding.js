@@ -6,7 +6,7 @@ import io from 'socket.io-client';
 import QRCode from 'qrcode'
 import ParsedTable from '../parsedTable/parsedTable';
 
-const QrCode = ({ uuid }) => {
+const AppLanding = ({ uuid }) => {
 
     const socketPort = '4001';
     const socket = io(`:${socketPort}`);
@@ -150,4 +150,4 @@ const QrCode = ({ uuid }) => {
     )
 }
 
-export default QrCode;
+export default AppLanding;

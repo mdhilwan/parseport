@@ -1,12 +1,11 @@
-import QrCode from "./qrcode/qrcode";
+import AppLanding from "./appLanding/appLanding";
 import { v4 } from "uuid";
 import '../styles/global.css'
-import ParsedTable from "./parsedTable";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <QrCode uuid={v4().replace(/-/g, '')}/>
+      <AppLanding uuid={v4().replace(/-/g, '')}/>
     </main>
   )
 }
