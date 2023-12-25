@@ -1,6 +1,6 @@
-const helper = ({onCallback, onError}) => {
+const MrzWorker = ({onCallback, onError}) => {
     let mrzWorker
-    if (typeof window !== 'undefined' && window.mrz_worker !== 'undefined') {
+    try {
         const fn = window.mrz_worker.toString()
         const fnBody = fn.substring(fn.indexOf('{') + 1, fn.lastIndexOf('}'));
 
@@ -23,8 +23,11 @@ const helper = ({onCallback, onError}) => {
                 fsRootUrl: document.location.origin + pathName.join('/')
             }
         })
+    } catch (error) {
+        console.error(error)   
     }
+    
     return mrzWorker
 }
 
-export default helper;
+export default MrzWorker;
