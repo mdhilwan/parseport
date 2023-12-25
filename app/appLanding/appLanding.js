@@ -5,6 +5,10 @@ import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import QRCode from 'qrcode'
 import ParsedTable from '../parsedTable/parsedTable';
+import MrzInput from '../mrz/MrzInput';
+import MrzInputHandler from '../mrz/MrzInutHandler';
+import { State } from '../enums/state';
+import { useCookies } from 'react-cookie';
 
 const AppLanding = ({ uuid }) => {
 
@@ -14,10 +18,14 @@ const AppLanding = ({ uuid }) => {
     const connectedToWs = () => guid.includes('@')
     const [guid, setGuid] = useState(uuid)
     const [scanned, setScanned] = useState(false)
-    const [disconnected, setDisconnected] = useState()
+    const [disconnected, setDisconnected] = useState(true)
     const [qrcodeSrc, setQrcodeSrc] = useState('loading.svg')
     const [scannedData, setScannedData] = useState([])
     const [showQrCodeModal, setShowQrCodeModal] = useState(false)
+    const [scanState, setScanState] = useState();
+    const [parsed, setParsed] = useState({})
+    const [cookies, setCookie] = useCookies(['guid']);
+
     let connectedAgentId = '';
     let scannedDataCol = [];
 
@@ -25,22 +33,11 @@ const AppLanding = ({ uuid }) => {
     const dropHandler = (evt) => {
         evt.preventDefault();
         evt.stopPropagation();
-        beginScanning([...evt.dataTransfer.files])
-    }
-
-    const handleFileInput = (evt) => beginScanning(evt.target.files)
-
-    const beginScanning = (inputFiles) => {
-        console.log(inputFiles)
-        const reader = new FileReader()
-        reader.onload = (e) => {
-            if (e && e.target && e.target.result) {
-                console.log(e.target.result)
-            }
-        }
-        if (inputFiles?.length) {
-            reader.readAsDataURL(inputFiles[0])
-        }
+        MrzInputHandler({
+            setParsed,
+            setScanState,
+            $event: [...evt.dataTransfer.files]
+        })
     }
 
     useEffect(() => {
@@ -48,6 +45,7 @@ const AppLanding = ({ uuid }) => {
 
         socket.on('connect', () => {
             setGuid(`${guid}@@${socket.id}`);
+            setCookie('guid', `${guid}@@${socket.id}`)
         })
 
         socket.on('scanned:phone:qr', (agentId) => {
@@ -80,6 +78,16 @@ const AppLanding = ({ uuid }) => {
         }
     }, [guid])
 
+    useEffect(() => {
+        if (scanState === State.SUCCESS) {
+            setScanned(true)
+            socket.emit('scanned:parsed', {
+                agent: cookies.guid.split('@@')[1],
+                data: parsed
+            })
+        }
+    }, [parsed, scanState])
+
     return (
         <>
             <div className='w-full'>
@@ -87,18 +95,19 @@ const AppLanding = ({ uuid }) => {
                     connectedToWs() ?
                         scanned ?
                             <>
-                                <h2 className="text-3xl font-bold tracking-tight mb-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
-                                    </svg>
+                                <h2 className='text-3xl font-bold tracking-tight'>Scans</h2>
+                                <ParsedTable parsed={scannedData} />
+                                <div className="mt-3 w-80">
                                     {
                                         disconnected ?
-                                            <>Phone Disconnected. <small className='text-slate-400 font-medium'>To reconnect your phone please click <a onClick={() => setShowQrCodeModal(true)} className='text-blue-600 dark:text-blue-500 hover:underline'>here</a></small></> :
-                                            <>Phone Linked</>
+                                            <div class="bg-red-50 border border-red-100 text-red-900 px-4 py-3 rounded relative text-sm opacity-50 hover:opacity-100" role="alert">
+                                                <strong class="font-bold">Phone not connected.</strong> <span className='text-red-400'>To connect your phone please click <a onClick={() => setShowQrCodeModal(true)} className='text-red-600 dark:text-red-500 hover:underline hover:cursor-pointer'>here</a></span>
+                                            </div> :
+                                            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative text-sm opacity-50 hover:opacity-100" role="alert">
+                                                <strong class="font-bold">Phone Linked</strong>
+                                            </div>
                                     }
-
-                                </h2>
-                                <ParsedTable parsed={scannedData} />
+                                </div>
                             </> :
                             <div className='grid grid-cols-2 gap-24'>
                                 <div>
@@ -118,7 +127,7 @@ const AppLanding = ({ uuid }) => {
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                                             </svg>
-                                            Or drop the file(s) you want to scan <span className='text-slate-400 text-2xl'>you can still link your phone later on</span>
+                                            Or drag & drop the file here <span className='text-slate-400 text-2xl'>you can still link your phone later on</span>
                                         </h2>
                                         <div
                                             className="max-w-xl p-8 px-14 my-auto"
@@ -136,7 +145,7 @@ const AppLanding = ({ uuid }) => {
                                                         <span className="text-blue-600 underline"> browse</span>
                                                     </span>
                                                 </span>
-                                                <input type="file" name="file_upload" className="hidden" onChange={(evt) => handleFileInput(evt)} />
+                                                <MrzInput setParsed={setParsed} setScanState={setScanState}/>
                                             </label>
                                         </div>
                                     </div>
@@ -168,8 +177,7 @@ const AppLanding = ({ uuid }) => {
                                 </div>
                             </div>
                         </div>
-                    </div> :
-                    <></>
+                    </div> : ''
             }
 
         </>

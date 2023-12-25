@@ -34,7 +34,12 @@ io.on('connection', socket => {
         data.birthDate = moment.utc(data.birthDate, "YYMMDD").format("yyyy-MM-DD")
         data.sex = data.sex.charAt(0).toUpperCase() + data.sex.slice(1).toLowerCase()
         data.expirationDate = moment.utc(data.expirationDate, "YYMMDD").format("yyyy-MM-DD")
-        socket.to(agent).emit('parsed', data);
+        if (agent !== socket.id) {
+            socket.to(agent).emit('parsed', data);
+        } else { 
+            console.log(data)
+            socket.emit('parsed', data);
+        }
     })
 
     socket.on('disconnect', async () => {
