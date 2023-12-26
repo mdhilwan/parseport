@@ -60,7 +60,7 @@ const Mrz = ({ socket }) => {
                                             <span className="font-semibold">Click and choose a file</span> or take a photo
                                         </> : scanState === State.SCANNING ?
                                             <>
-                                                Scanning...
+                                                <span className="font-semibold">Scanning...</span>
                                             </> :
                                             <>
                                                 <span className="font-semibold">Click and choose a file</span> or take a photo
