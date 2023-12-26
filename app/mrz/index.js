@@ -1,1 +1,1 @@
-export { default } from './mrz';
+export { default } from './Mrz';
