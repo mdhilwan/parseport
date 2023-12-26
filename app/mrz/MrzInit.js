@@ -1,25 +1,25 @@
 import { State } from "../enums/state";
 import MrzWorker from "./MrzWorker";
 
-const MrzInit = ({setScanState, setParsed}) => {
+const MrzInit = ({setParsed, updateIdCol}) => {
     return MrzWorker({
-        async onCallback(evt) {
-            const data = evt.data
+        async onCallback({event, id}) {
+            const data = event.data
 
             switch (data.type) {
                 case 'progress':
-                    setScanState(State.SCANNING)
+                    updateIdCol({id: id, state: State.SCANNING})
                     break;
                 case 'error':
-                    setScanState(State.ERROR)
+                    updateIdCol({id: id, state: State.ERROR})
                     break;
                 case 'result':
                     if (data.result?.parsed?.fields) {
                         setParsed(data.result.parsed.fields)
-                        setScanState(State.SUCCESS)
+                        updateIdCol({id: id, state: State.SUCCESS})
                     } else {
                         setParsed({ message: "Please reposition the biometric page and try again." })
-                        setScanState(State.ERROR)
+                        updateIdCol({id: id, state: State.ERROR})
                     }
                     break;
                 default:
