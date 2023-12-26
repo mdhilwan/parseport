@@ -3,7 +3,7 @@ const StatePhoneConnection = ({disconnected, setShowQrCodeModal}) => {
         <div className="mt-3 w-80">
             {
                 disconnected ?
-                    <div className="flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-50" role="alert">
+                    <div className="flex items-center w-full max-w-xs p-4 text-gray-500 bg-gray-50 rounded-lg shadow" role="alert">
                         <div className="text-sm font-normal">
                             Phone not connected.
                         </div>
@@ -12,7 +12,7 @@ const StatePhoneConnection = ({disconnected, setShowQrCodeModal}) => {
                         </div>
                     </div>
                     :
-                    <div className="flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-green-100" role="alert">
+                    <div className="flex items-center w-full max-w-xs p-4 text-lime-800 bg-lime-50 rounded-lg shadow" role="alert">
                         <div className="text-sm font-normal">
                             Phone connected.
                         </div>
