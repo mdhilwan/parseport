@@ -106,12 +106,18 @@ const AppLanding = ({ uuid }) => {
                 setMrzDropZoneClass("flex justify-center w-full h-60 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none")
             }
         }, 1000)
-        
+    }
+
+    const landingClassName = () => {
+        if (scanned) {
+            return 'flex min-h-screen flex-col items-center justify-between p-12 w-full mx-auto'
+        }
+        return 'flex min-h-screen flex-col items-center justify-between p-12 max-w-6xl mx-auto'
     }
 
     return (
         <>
-            <div className='w-full' 
+            <div className={landingClassName()}
                 onDragOver={($event) => dragOverDocHandler($event)}
                 onDragLeave={() => dragEndHandler()}
                 onDrop={() => dragEndHandler()}
