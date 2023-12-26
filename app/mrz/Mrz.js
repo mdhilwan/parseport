@@ -31,13 +31,13 @@ const Mrz = ({ socket }) => {
     }
 
     useEffect(() => {
-        if (scanState === State.SUCCESS) {
+        if (Object.keys(parsed).length > 0) {
             socket.emit('scanned:parsed', {
                 agent: cookies.guid.split('@@')[1],
                 data: parsed
             })
         }
-    }, [parsed, scanState])
+    }, [parsed])
 
     return (
         <>

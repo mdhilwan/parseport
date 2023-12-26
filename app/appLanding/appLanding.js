@@ -73,7 +73,6 @@ const AppLanding = ({ uuid }) => {
 
     useEffect(() => {
         if (connectedToWs()) {
-            console.log('Agent URL', `${window.location.href}link?id=${guid}`)
             QRCode.toDataURL(`${window.location.href}link?id=${guid}`)
                 .then(urlSrc => setQrcodeSrc(urlSrc))
                 .catch(err => console.error(err))
