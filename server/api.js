@@ -21,6 +21,13 @@ const io = socketIO(server, {
     }
 });
 
+const formatBirthDate = (date) => {
+    const thisDate = moment.utc(date, "YYMMDD");
+    if (thisDate > moment(new Date())) {
+        return thisDate.subtract(100, 'years').format("yyyy-MM-DD")
+    }
+    return thisDate.format("yyyy-MM-DD")
+}
 
 io.on('connection', socket => {
 
@@ -31,13 +38,12 @@ io.on('connection', socket => {
     socket.on('scanned:parsed', ({ agent, data }) => {
         data.nationality = countries.getName(data.nationality, "en")
         data.issuingState = countries.getName(data.issuingState, "en")
-        data.birthDate = moment.utc(data.birthDate, "YYMMDD").format("yyyy-MM-DD")
+        data.birthDate = formatBirthDate(data.birthDate)
         data.sex = data.sex.charAt(0).toUpperCase() + data.sex.slice(1).toLowerCase()
         data.expirationDate = moment.utc(data.expirationDate, "YYMMDD").format("yyyy-MM-DD")
         if (agent !== socket.id) {
             socket.to(agent).emit('parsed', data);
         } else { 
-            console.log(data)
             socket.emit('parsed', data);
         }
     })

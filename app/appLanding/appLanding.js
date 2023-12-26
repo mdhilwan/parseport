@@ -9,11 +9,13 @@ import MrzInput from '../mrz/MrzInput';
 import MrzInputHandler from '../mrz/MrzInutHandler';
 import { State } from '../enums/state';
 import { useCookies } from 'react-cookie';
+import StatePhoneConnection from '../statePhoneConnection';
+import StateMrzInput from '../stateMrzInput';
 
 const AppLanding = ({ uuid }) => {
 
-    const socketPort = '4001';
-    const socket = io(`:${socketPort}`);
+    const socketPort = '4001'
+    const socket = io(`:${socketPort}`)
 
     const connectedToWs = () => guid.includes('@')
     const [guid, setGuid] = useState(uuid)
@@ -22,9 +24,12 @@ const AppLanding = ({ uuid }) => {
     const [qrcodeSrc, setQrcodeSrc] = useState('loading.svg')
     const [scannedData, setScannedData] = useState([])
     const [showQrCodeModal, setShowQrCodeModal] = useState(false)
-    const [scanState, setScanState] = useState();
+    const [scanState, setScanState] = useState()
     const [parsed, setParsed] = useState({})
-    const [cookies, setCookie] = useCookies(['guid']);
+    const [cookies, setCookie] = useCookies(['guid'])
+
+    const [mrzDropZoneClass, setMrzDropZoneClass] = useState("flex justify-center w-full h-60 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none")
+    const [mrzStateDropZoneClass, setMrStateDropZoneClass] = useState("mt-10 flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-50")
 
     let connectedAgentId = '';
     let scannedDataCol = [];
@@ -41,7 +46,6 @@ const AppLanding = ({ uuid }) => {
     }
 
     useEffect(() => {
-        console.log('use effect again', scannedData)
 
         socket.on('connect', () => {
             setGuid(`${guid}@@${socket.id}`);
@@ -49,7 +53,6 @@ const AppLanding = ({ uuid }) => {
         })
 
         socket.on('scanned:phone:qr', (agentId) => {
-            console.log('scanned:phone:qr:::', connectedAgentId, agentId)
             connectedAgentId = agentId
             setScanned(true)
             setDisconnected(false)
@@ -58,7 +61,6 @@ const AppLanding = ({ uuid }) => {
 
         socket.on('parsed', (data) => {
             scannedDataCol = [...scannedDataCol, data]
-            console.log('parsed!!!!', scannedDataCol)
             setScannedData(scannedDataCol)
         })
 
@@ -88,27 +90,41 @@ const AppLanding = ({ uuid }) => {
         }
     }, [parsed, scanState])
 
+    const dragOverDocHandler = (ev) => {
+        if (connectedToWs() && scanned) {
+            setMrStateDropZoneClass("mt-10 flex items-center w-full max-w-xs p-4 text-gray-500 rounded-lg shadow text-gray-400 bg-lime-100")
+        } else if (connectedToWs()) {
+            setMrzDropZoneClass("flex justify-center w-full h-60 px-4 transition bg-lime-100 border-2 border-lime-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none")
+        }
+    }
+
+    const dragEndHandler = () => {
+        setTimeout(() => {
+            if (connectedToWs() && scanned) {
+                setMrStateDropZoneClass("mt-10 flex items-center w-full max-w-xs p-4 text-gray-500 rounded-lg shadow text-gray-400 bg-gray-50")
+            } else if (connectedToWs()) {
+                setMrzDropZoneClass("flex justify-center w-full h-60 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none")
+            }
+        }, 1000)
+        
+    }
+
     return (
         <>
-            <div className='w-full'>
+            <div className='w-full' 
+                onDragOver={($event) => dragOverDocHandler($event)}
+                onDragLeave={() => dragEndHandler()}
+                onDrop={() => dragEndHandler()}
+            >
                 {
                     connectedToWs() ?
                         scanned ?
-                            <>
-                                <h2 className='text-3xl font-bold tracking-tight'>Scans</h2>
+                            <div>
+                                <h2 className='text-3xl font-bold tracking-tight mb-10'>Parseport Scans</h2>
                                 <ParsedTable parsed={scannedData} />
-                                <div className="mt-3 w-80">
-                                    {
-                                        disconnected ?
-                                            <div class="bg-red-50 border border-red-100 text-red-900 px-4 py-3 rounded relative text-sm opacity-50 hover:opacity-100" role="alert">
-                                                <strong class="font-bold">Phone not connected.</strong> <span className='text-red-400'>To connect your phone please click <a onClick={() => setShowQrCodeModal(true)} className='text-red-600 dark:text-red-500 hover:underline hover:cursor-pointer'>here</a></span>
-                                            </div> :
-                                            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative text-sm opacity-50 hover:opacity-100" role="alert">
-                                                <strong class="font-bold">Phone Linked</strong>
-                                            </div>
-                                    }
-                                </div>
-                            </> :
+                                <StateMrzInput setParsed={setParsed} setScanState={setScanState} bg={mrzStateDropZoneClass}/>
+                                <StatePhoneConnection disconnected={disconnected} setShowQrCodeModal={setShowQrCodeModal} />
+                            </div> :
                             <div className='grid grid-cols-2 gap-24'>
                                 <div>
                                     <div className='w-96 mx-auto'>
@@ -135,7 +151,7 @@ const AppLanding = ({ uuid }) => {
                                             onDrop={evt => dropHandler(evt)}
                                         >
                                             <label
-                                                className="flex justify-center w-full h-60 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
+                                                className={mrzDropZoneClass}>
                                                 <span className="flex items-center space-x-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15m0-3-3-3m0 0-3 3m3-3V15" />
@@ -145,7 +161,7 @@ const AppLanding = ({ uuid }) => {
                                                         <span className="text-blue-600 underline"> browse</span>
                                                     </span>
                                                 </span>
-                                                <MrzInput setParsed={setParsed} setScanState={setScanState}/>
+                                                <MrzInput setParsed={setParsed} setScanState={setScanState} />
                                             </label>
                                         </div>
                                     </div>

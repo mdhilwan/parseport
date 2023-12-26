@@ -1,13 +1,11 @@
 import { useCookies } from 'react-cookie'
 import { useEffect, useState } from 'react';
 import Script from 'next/script';
-import MrzWorker from './MrzWorker';
 import { State } from '../enums/state';
 import MrzInput from './MrzInput';
 
 const Mrz = ({ socket }) => {
-    const [cookies, setCookies, removeCookie] = useCookies(['guid']);
-
+    const [cookies] = useCookies(['guid']);
     const [scanState, setScanState] = useState();
     const [parsed, setParsed] = useState({})
 
