@@ -56,7 +56,7 @@ const Link = () => {
             setCookie('guid', `${mainUuid}@@${mainSocketId}@@${socketId}`)
             setTimeout(() => {
                 router.push('scan')
-            }, 1000)
+            }, 500)
         }
     }, [linkedState])
 
@@ -64,13 +64,13 @@ const Link = () => {
         {
             itsMobile ?
                 linkedState === State.DISCONNECTED ?
-                    <Status head={"Disconnected from host machine."} body={"Try scanning the QR code again"} /> :
+                    <Status head={"Disconnected from host machine."} body={"Try scanning the QR code again"}/> :
                     linkedState === State.IDLE ?
-                        <Status head={"Loading..."} /> :
+                        <Status head={"Loading..."} state={State.LINKING}/> :
                         linkedState === State.LINKING ?
-                            <Status head={"Connecting..."} /> :
+                            <Status head={"Connecting..."} state={State.LINKING}/> :
                             linkedState === State.LINKED ?
-                                <Status head={"Setting up scanner..."} /> :
+                                <Status head={"Setting up scanner..."} state={State.LINKING}/> :
                                 linkedState === State.ERROR ?
                                     <Status head={"QR Code Error."} body={"Try scanning the QR code again"} /> :
                                     <></> :
