@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useRef } from 'react'
+import Input from "../../shared/input";
 
 const LoginSuper = () => {
 
@@ -30,12 +31,20 @@ const LoginSuper = () => {
         <form onSubmit={handleSubmit}>
             <div>
                 <label>
-                    Email: <input type="text" ref={emailInput} />
+                    Username
+                    <Input value={{
+                        type: "password",
+                        value: "helloworld"
+                    }} />
                 </label>
             </div>
             <div>
                 <label>
-                    Password: <input type="password" ref={passwordInput} />
+                    Password
+                    <Input value={{
+                        type: "password",
+                        value: "helloworld"
+                    }} />
                 </label>
             </div>
             <div>
