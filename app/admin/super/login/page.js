@@ -1,56 +1,25 @@
 "use client"
 
-import { useRouter } from "next/navigation";
-import { useRef } from 'react'
-import Input from "../../shared/input";
+import '../../../../styles/global.css'
+import Login from "../../shared/login/login";
 
 const LoginSuper = () => {
 
-    const router = useRouter();
-    const emailInput = useRef();
-    const passwordInput = useRef();
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const email = emailInput.current.value;
-        const password = passwordInput.current.value;
-
-        const response = await fetch("/api/sessions", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password })
-        });
-
-        if (response.ok) {
-            return router.push("/private");
-        }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>
-                    Username
-                    <Input value={{
-                        type: "password",
-                        value: "helloworld"
-                    }} />
-                </label>
-            </div>
-            <div>
-                <label>
-                    Password
-                    <Input value={{
-                        type: "password",
-                        value: "helloworld"
-                    }} />
-                </label>
-            </div>
-            <div>
-                <button type="submit">Sign in</button>
-            </div>
-        </form>
+        <>
+            <section className="bg-gray-50">
+                <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+                    <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 ">
+                        ParsePort: Super Admin
+                    </a>
+                    <Login handleSubmit={handleSubmit}/>
+                </div>
+            </section>
+        </>
     )
 }
 export default LoginSuper
