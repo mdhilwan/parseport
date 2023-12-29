@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { isMobile } from 'is-mobile'
 import Status from '../status';
-import '../../styles/global.css'
+import '@/styles/global.css'
 import { State } from '../enums/state';
 
 const Link = () => {

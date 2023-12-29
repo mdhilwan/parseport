@@ -22,6 +22,7 @@
     "moment": "^2.29.4",
     "muhammara": "^4.1.0",
     "next": "14.0.4",
+    "next-auth": "^4.24.5",
     "pdf-lib": "^1.17.1",
     "qrcode": "^1.5.3",
     "react": "^18",

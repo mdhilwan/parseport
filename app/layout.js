@@ -1,6 +1,9 @@
-import { Inter } from 'next/font/google'
+import { Open_Sans } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+const googleFont = Open_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '600', '800']
+})
 
 export const metadata = {
   title: 'ParsePort',
@@ -10,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={googleFont.className}>{children}</body>
     </html>
   )
 }

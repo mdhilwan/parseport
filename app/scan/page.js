@@ -1,8 +1,8 @@
 'use client'
 
-import Mrz from "../mrz";
+import MrzPhone from "../mrz/MrzPhone";
 import io from 'socket.io-client';
-import '../../styles/global.css'
+import '@/styles/global.css'
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { State } from "../enums/state";
@@ -37,7 +37,7 @@ const Scan = () => {
             {
                 itsMobile ? 
                     linkedState === State.LINKED ? 
-                        <Mrz socket={socket}/> :
+                        <MrzPhone socket={socket}/> :
                         <Status head={"Disconnected from host machine."} body={"Try scanning the QR code again"}/> :
                     <Status head={"Not a mobile phone."} body={"Please use a mobile phone and scan the QR code again"} />
 
