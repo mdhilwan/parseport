@@ -1,11 +1,18 @@
 import AppLanding from "./appLanding/appLanding";
 import { v4 } from "uuid";
-import '../styles/global.css'
+import '@/styles/global.css'
+import AuthGuard from "./authGuard";
+import { getServerAuthSession } from "./server/auth";
 
-export default function Home() {
+
+export default async function Home() {
+  const authSession = await getServerAuthSession();
+
   return (
-    <main>
-      <AppLanding uuid={v4().replace(/-/g, '')}/>
-    </main>
+    <AuthGuard whichAdmin="">
+      {<main>
+        <AppLanding uuid={v4().replace(/-/g, '')} session={authSession}/>
+      </main>}
+    </AuthGuard>
   )
 }

@@ -1,13 +1,9 @@
-"use client"
+import '@/styles/global.css'
+import Login from "@/app/admin/shared/login";
+import { getServerAuthSession } from '@/app/server/auth';
 
-import '../../../../styles/global.css'
-import Login from "../../shared/login/login";
-
-const LoginSuper = () => {
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-    };
+const LoginSuper = async () => {
+    const authSession = await getServerAuthSession();
 
     return (
         <>
@@ -16,7 +12,7 @@ const LoginSuper = () => {
                     <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 ">
                         ParsePort: Super Admin
                     </a>
-                    <Login handleSubmit={handleSubmit}/>
+                    <Login whichAdmin={"super"} session={authSession}/>
                 </div>
             </section>
         </>

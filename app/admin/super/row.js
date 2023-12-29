@@ -1,5 +1,5 @@
 import utils from "@/app/utils"
-import Input from "../shared/input"
+import Input from "@/app/admin/shared/input"
 
 const Row = ({ userIndex, userObject }) => {
     return (

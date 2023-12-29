@@ -1,8 +1,8 @@
 import { Open_Sans } from 'next/font/google'
 
-const googleFont = Open_Sans({ 
+const googleFont = Open_Sans({
   subsets: ['latin'],
-  weight: "400"
+  weight: ['300', '400', '600', '800']
 })
 
 export const metadata = {
