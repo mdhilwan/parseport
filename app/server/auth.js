@@ -1,44 +1,37 @@
 import { getServerSession } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { userService } from "./services/userService";
+import GoogleProvider from "next-auth/providers/google";
+import IsAllowedUser from "./allowed";
 
 export const authOptions = {
     session: {
         strategy: "jwt",
     },
-    callbacks: {
-        async jwt({ token, account, profile }) { 
-            if (account && account.type === "credentials") {
-                token.userId = account.providerAccountId;
-            }
-            return token;
-        },
-        async session({ session, token, user }) {
-            session.user.id = token.userId;
-            return session;
-        },
-    },
-    pages: {
-        signIn: '/login',
-    },
-    secret: process.env.AUTH_SECRET,
     providers: [
-        CredentialsProvider({
-            name: "Credentials",
-            credentials: {
-                username: { label: "Username", type: "text", placeholder: "username" },
-                password: { label: "Password", type: "password" }
-            },
-            async authorize(credentials, req) {
-                const { username, password } = credentials;
-
-                console.log('------- authorize -------')
-                console.log(userService.authenticate(username, password))
-
-                return userService.authenticate(username, password); 
-            }
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         })
     ],
+    callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            if (user.email && IsAllowedUser(user.email)) {
+                return true
+            }
+            return false
+        },
+        async session({ session, user, token }) {
+            if (session.user.email && IsAllowedUser(session.user.email)) {
+                return session
+            }
+            return {}
+        },
+        async jwt({ token, user, account, profile, isNewUser }) {
+            if (token.email && IsAllowedUser(token.email)) {
+                return token
+            }
+            return {}
+        }
+    }
 };
 
 export const getServerAuthSession = () => getServerSession(authOptions); 
