@@ -1,3 +1,5 @@
+import Login from "../login"
+
 const { default: Link } = require("next/link")
 
 const Unauth = ({whichAdmin}) => {
@@ -22,10 +24,10 @@ const Unauth = ({whichAdmin}) => {
                 </h1>
                 <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
                     <div className="p-6 sm:p-8">
-                        <h1 className="text-md font-bold leading-tight tracking-tight text-gray-900 ">
+                        <h1 className="text-md font-bold leading-tight tracking-tight text-gray-900 mb-4">
                             You are not logged in
                         </h1>
-                        <Link className={linkClassName} href={linkUrl}>Please click here to login</Link>
+                        <Login whichAdmin={whichAdmin}/>
                     </div>
                 </div>
             </div>
