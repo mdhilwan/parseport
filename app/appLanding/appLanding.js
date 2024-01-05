@@ -121,7 +121,7 @@ const AppLanding = ({ uuid, session }) => {
     }
 
     return (
-        <div className='p-4'>
+        <div>
             <Controls session={session} />
             <div className={landingClassName()}
                 onDragOver={($event) => dragOverDocHandler($event)}

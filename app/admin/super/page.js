@@ -42,27 +42,25 @@ const Super = async () => {
 
     return (
         <AuthGuard whichAdmin='super'>
-            <div className='p-4'>
-                <div className="relative overflow-x-auto">
-                    <Controls whichAdmin={"super"} session={authSession} />
-                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
-                            <tr>
-                                <th></th>
-                                {Object.values(keyToLabelMap).map((label, labelIndex) =>
-                                    <th scope="col" key={utils.Rand8digit()} className="px-2 py-1">{label}</th>
-                                )}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {allUsers.map((userObject, userIndex) =>
-                                <Row key={utils.Rand8digit()}
-                                    userIndex={userIndex}
-                                    userObject={userObject} />
+            <div className="relative overflow-x-auto">
+                <Controls whichAdmin={"super"} session={authSession} />
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+                        <tr>
+                            <th></th>
+                            {Object.values(keyToLabelMap).map((label, labelIndex) =>
+                                <th scope="col" key={utils.Rand8digit()} className="px-2 py-1">{label}</th>
                             )}
-                        </tbody>
-                    </table>
-                </div>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {allUsers.map((userObject, userIndex) =>
+                            <Row key={utils.Rand8digit()}
+                                userIndex={userIndex}
+                                userObject={userObject} />
+                        )}
+                    </tbody>
+                </table>
             </div>
         </AuthGuard>
     )
