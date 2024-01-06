@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npx -y concurrently -c \"auto\" \"npm:dev:*\"",
-    "dev:app": "next dev -p 4000 -H 192.168.1.166",
+    "dev:app": "next dev --experimental-https -p 443",
     "dev:api": "npx -y nodemon server/api.js",
     "build": "next build",
     "start": "next start",
