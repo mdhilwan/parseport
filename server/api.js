@@ -1,16 +1,12 @@
-const selfsigned = require('selfsigned');
-const attrs = [{ name: 'localhost', value: 'localhost', type: 'SEQUENCE' }];
-const pems = selfsigned.generate(attrs, { days: 365 });
-
-
 const https = require('https');
 const path = require('path')
+const fs = require('fs')
 const socketIO = require('socket.io')
 const express = require('express')
 const app = express();
 const server = https.createServer({
-    key: pems.private,
-    cert: pems.cert
+    key: fs.readFileSync('certificates/localhost-key.pem'),
+    cert: fs.readFileSync('certificates/localhost.pem')
 }, app);
 
 const cors = require('cors')
