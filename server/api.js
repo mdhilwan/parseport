@@ -3,7 +3,6 @@ const path = require('path')
 const socketIO = require('socket.io')
 const express = require('express')
 const app = express();
-const router = express.Router()
 const server = http.createServer(app);
 
 const cors = require('cors')
