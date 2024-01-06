@@ -1,9 +1,17 @@
-const http = require('http');
+const selfsigned = require('selfsigned');
+const attrs = [{ name: 'localhost', value: 'localhost', type: 'SEQUENCE' }];
+const pems = selfsigned.generate(attrs, { days: 365 });
+
+
+const https = require('https');
 const path = require('path')
 const socketIO = require('socket.io')
 const express = require('express')
 const app = express();
-const server = http.createServer(app);
+const server = https.createServer({
+    key: pems.private,
+    cert: pems.cert
+}, app);
 
 const cors = require('cors')
 const bodyParser = require('body-parser')
