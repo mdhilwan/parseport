@@ -37,7 +37,6 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "postcss": "^8",
-    "selfsigned": "^2.4.1",
     "tailwindcss": "^3.3.0"
   }
 }
