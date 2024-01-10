@@ -1,24 +1,65 @@
-import { doAdd, doLogin, doLogout } from './operations';
+import { doAdd, doLogin, doLogout, doPdf, doScan } from './operations';
+
+/**
+ * Example: api/acct/add-new-user
+ */
+export const ADD_NEW_USER = "add-new-user"
+export const USER_LOGIN = "user-login"
+export const USER_LOGOUT = "user-logout"
+export const USER_DO_SCAN = "user-scan"
+export const USER_DO_PDF = "user-generate-pdf"
+export const GET_ALL_USER = "get-all-users"
+export const GET_ALL_COMPANIES = "get-all-companies"
+export const GET_SCANS_HISTORY = "get-scans-history"
+export const GET_PDFS_HISTORY = "get-pdfs-history"
+
+// UNUSED
+export const NEW_CLIENT_USER_TABLE = "new-client-user-table"
+export const NEW_SCANS_TABLE = "new-scans-table"
+export const NEW_PDFS_TABLE = "new-pdfs-table"
 
 export async function POST(request, { params: { action } }) {
     switch (action) {
-        case "add":
-            // new user
+        case ADD_NEW_USER:
             return doAdd(request)
-        case "login":
-            // user login
+        case USER_LOGIN:
             return doLogin(request)
-        case "logout":
-            // user logout
+        case USER_LOGOUT:
             return doLogout(request)
-        case "scan":
-            // user scan passport
+        case USER_DO_SCAN:
+            return doScan(request)
+        case USER_DO_PDF:
+            return doPdf(request)
+        case GET_ALL_USER:
+            /**
+             * get all users
+             * extract users list (userEmail) from table
+             */
             break;
-        case "psd":
-            // user generate pdf
+        case GET_ALL_COMPANIES:
+            /**
+             * get all companies
+             * extract companies list (company, companyAddress, companyNumber) from table
+             */
             break;
-        // case "newClientUserTable":
+        case GET_SCANS_HISTORY:
+            /**
+             * get scans history
+             * retrieve scans history from table `scan`
+             */
+            break;
+        case GET_PDFS_HISTORY:
+            /**
+             * get pdfs history
+             * retrieve pdfs history from table `pdf`
+             */
+            break;
+        // case NEW_CLIENT_USER_TABLE:
         //     return doNewClientUserTable();
+        // case NEW_SCANS_TABLE:
+        //     return doNewScansTable();
+        // case NEW_PDFS_TABLE:
+        //     return doNewPdfsTable();
         default:
             break;
     }
