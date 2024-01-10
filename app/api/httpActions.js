@@ -1,4 +1,4 @@
-import { GET_USER_BY_EMAIL } from "./acct/[action]/route"
+import { GET_ALL_USER, GET_USER_BY_EMAIL } from "./acct/[action]/route"
 
 const postHeader = {
     method: 'POST'
@@ -10,6 +10,13 @@ export const HttpActions = {
         const res = await fetch(url, {
             ...postHeader,
             body: JSON.stringify({ data: { userEmail: userEmail } })
+        })
+        return res.json()
+    },
+    async GetAllUsers() {
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/acct/${GET_ALL_USER}`
+        const res = await fetch(url, {
+            ...postHeader
         })
         return res.json()
     }

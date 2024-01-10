@@ -1,4 +1,4 @@
-import { doAdd, doLogin, doLogout, doPdf, doScan, getAllUser, getPdfsHistory, getScansHistory, getUser } from './operations';
+import { doAdd, doLogin, doLogout, doPdf, doScan, getAllCompanies, getAllUser, getPdfsHistory, getScansHistory, getUser } from './operations';
 
 /**
  * Example: api/acct/add-new-user
@@ -36,7 +36,7 @@ export async function POST(request, { params: { action } }) {
         case GET_ALL_USER:
             return getAllUser()
         case GET_ALL_COMPANIES:
-            return getAllUser()
+            return getAllCompanies()
         case GET_SCANS_HISTORY:
             return getScansHistory()
         case GET_PDFS_HISTORY:

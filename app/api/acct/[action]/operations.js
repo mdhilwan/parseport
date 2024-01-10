@@ -165,8 +165,8 @@ export const getUser = async (request) => {
  */
 export const getAllUser = async () => {
     try {
-        const result = await sql`SELECT * FROM clientuser;`
-        return doReturn200(result)
+        const { rows } = await sql`SELECT * FROM clientuser;`
+        return doReturn200(rows)
     } catch (error) {
         return doReturn500(error)
     }
