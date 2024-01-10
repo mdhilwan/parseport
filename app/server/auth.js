@@ -31,7 +31,8 @@ export const authOptions = {
             }
             return {}
         }
-    }
+    },
+    secret: '2GKB1yaVuv8mZkG/ppx4Jw8h90ZWf8Oa6lU+Yu5C5kY='
 };
 
 export const getServerAuthSession = () => getServerSession(authOptions); 
