@@ -19,11 +19,16 @@ const Controls = ({ whichAdmin, session }) => {
             <ControlLink text={"Home"} url={"/"} />
             <ControlLink text={"Settings"} url={"/admin"} />
             <ControlLink text={"Logout"} clickEvent={async () => await signOut({ callbackUrl: cbUrl })} extraClass={"rounded-e border-e"} />
-            {
-                whichAdmin === 'super' ?
-                    <ControlLink text={"Add Account"} url={"/add"} color="yellow" extraClass="ms-4 border-s rounded-s" />
-                    : <></>
-            }
+
+            <span className="flex">
+                {
+                    whichAdmin === 'super' ?
+                        <ControlLink text={"Add Account"} url={"/add"} color="yellow" extraClass="ms-4 border-s rounded-s" />
+                        : <></>
+                }
+            </span>
+
+
         </div>
     )
 }
