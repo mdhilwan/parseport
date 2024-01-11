@@ -1,4 +1,4 @@
-import { doAdd, doLogin, doLogout, doPdf, doScan, getAllCompanies, getAllUser, getPdfsHistory, getScansHistory, getUser } from './operations';
+import { activateUser, deactivateUser, doAdd, doLogin, doLogout, doPdf, doScan, getAllCompanies, getAllUser, getPdfsHistory, getScansHistory, getUser } from './operations';
 
 /**
  * Example: api/acct/add-new-user
@@ -13,6 +13,9 @@ export const GET_USER_BY_EMAIL = "get-user-by-email"
 export const GET_ALL_COMPANIES = "get-all-companies"
 export const GET_SCANS_HISTORY = "get-scans-history"
 export const GET_PDFS_HISTORY = "get-pdfs-history"
+export const DEACTIVATE_USER = "deactivate-user"
+export const ACTIVATE_USER = "activate-user"
+export const DELETE_USER = "delete-user"
 
 // UNUSED
 export const NEW_CLIENT_USER_TABLE = "new-client-user-table"
@@ -41,6 +44,12 @@ export async function POST(request, { params: { action } }) {
             return getScansHistory()
         case GET_PDFS_HISTORY:
             return getPdfsHistory()
+        case ACTIVATE_USER:
+            return activateUser(request)
+        case DEACTIVATE_USER:
+            return deactivateUser(request)
+        case DELETE_USER:
+            break;
         // case NEW_CLIENT_USER_TABLE:
         //     return doNewClientUserTable();
         // case NEW_SCANS_TABLE:
