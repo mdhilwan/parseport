@@ -173,6 +173,46 @@ export const getAllUser = async () => {
 }
 
 /**
+ * deactivate a user
+ */
+export const deactivateUser = async (request) => {
+    const { data: { userEmail } } = await request.json();
+    if (!userEmail) {
+        return doReturn500(`userEmail: missing`)
+    }
+    const exist = await isEmailExist(userEmail)
+    if (!exist) {
+        return doReturn500(`userEmail: ${userEmail} does not exist`)
+    }
+    try {
+        const { rows } = await sql`UPDATE clientuser SET active = false WHERE useremail = ${userEmail};`
+        return doReturn200(rows)
+    } catch (error) {
+        return doReturn500(error)
+    }
+}
+
+/**
+ * activate a user
+ */
+export const activateUser = async (request) => {
+    const { data: { userEmail } } = await request.json();
+    if (!userEmail) {
+        return doReturn500(`userEmail: missing`)
+    }
+    const exist = await isEmailExist(userEmail)
+    if (!exist) {
+        return doReturn500(`userEmail: ${userEmail} does not exist`)
+    }
+    try {
+        const { rows } = await sql`UPDATE clientuser SET active = true WHERE useremail = ${userEmail};`
+        return doReturn200(rows)
+    } catch (error) {
+        return doReturn500(error)
+    }
+}
+
+/**
  * get all companies
  * extract companies list from table
  */
