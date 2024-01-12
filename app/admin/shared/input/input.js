@@ -26,7 +26,7 @@ const Input = ({ value, colKey, disabled, userObject, setUserObject }) => {
                     aria-label="input"
                     disabled
                     readOnly
-                    className={classNameVar()} value={val} />
+                    className={classNameVar()} value={val ? val : ''} />
             )
         } 
         return (
@@ -34,7 +34,7 @@ const Input = ({ value, colKey, disabled, userObject, setUserObject }) => {
                 type="text"
                 aria-label="input"
                 onChange={el => setVal(el.target.value)}
-                className={classNameVar()} value={val} />
+                className={classNameVar()} value={val ? val : ''} />
         )
     }
 
