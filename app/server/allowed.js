@@ -1,7 +1,13 @@
+/**
+ * Hard coded users
+ */
 const allowed = [
     {
         email: "parse.pass.port@gmail.com",
         type: "super"
+    },
+    {
+        email: "mdhilwan@gmail.com"
     }
 ]
 
