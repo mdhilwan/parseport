@@ -193,6 +193,26 @@ export const deactivateUser = async (request) => {
 }
 
 /**
+ * delete a user
+ */
+export const deleteUser = async (request) => {
+    const { data: { userEmail } } = await request.json();
+    if (!userEmail) {
+        return doReturn500(`userEmail: missing`)
+    }
+    const exist = await isEmailExist(userEmail)
+    if (!exist) {
+        return doReturn500(`userEmail: ${userEmail} does not exist`)
+    }
+    try {
+        const { rows } = await sql`DELETE FROM clientuser WHERE useremail = ${userEmail};`
+        return doReturn200(rows)
+    } catch (error) {
+        return doReturn500(error)
+    }
+}
+
+/**
  * activate a user
  */
 export const activateUser = async (request) => {

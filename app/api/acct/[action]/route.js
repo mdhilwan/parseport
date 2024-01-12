@@ -1,4 +1,5 @@
-import { activateUser, deactivateUser, doAdd, doLogin, doLogout, doPdf, doScan, getAllCompanies, getAllUser, getPdfsHistory, getScansHistory, getUser } from './operations';
+import { NextResponse } from 'next/server';
+import { activateUser, deactivateUser, deleteUser, doAdd, doLogin, doLogout, doPdf, doScan, getAllCompanies, getAllUser, getPdfsHistory, getScansHistory, getUser, saveUser } from './operations';
 
 /**
  * Example: api/acct/add-new-user
@@ -16,6 +17,7 @@ export const GET_PDFS_HISTORY = "get-pdfs-history"
 export const DEACTIVATE_USER = "deactivate-user"
 export const ACTIVATE_USER = "activate-user"
 export const DELETE_USER = "delete-user"
+export const SAVE_USER = "save-user"
 
 // UNUSED
 export const NEW_CLIENT_USER_TABLE = "new-client-user-table"
@@ -49,6 +51,7 @@ export async function POST(request, { params: { action } }) {
         case DEACTIVATE_USER:
             return deactivateUser(request)
         case DELETE_USER:
+            return deleteUser(request)
             break;
         // case NEW_CLIENT_USER_TABLE:
         //     return doNewClientUserTable();
@@ -57,6 +60,7 @@ export async function POST(request, { params: { action } }) {
         // case NEW_PDFS_TABLE:
         //     return doNewPdfsTable();
         default:
+            return NextResponse.json({action: `Action not supported "${action}"`})
             break;
     }
 }

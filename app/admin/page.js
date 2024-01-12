@@ -7,8 +7,22 @@ import { HttpActions } from '../api/httpActions';
 const Admin = async () => {
     const authSession = await getServerAuthSession();
     const { name, email, id } = authSession.user;
+    
+    if (!email) {
+        return (<></>)
+    }
 
-    const {result: {company, companyaddress, companynumber, useremail, sessionid, issuedatetime, invaliddatetime}} = await HttpActions.GetUserByEmail(email)
+    const {result} = await HttpActions.GetUserByEmail(email)
+
+    if (!result) {
+        return (<></>)
+    }
+
+    const {company, companyaddress, companynumber, useremail, sessionid, issuedatetime, invaliddatetime} = result
+
+    if (!company || !companyaddress || !companynumber || !useremail) {
+        return (<></>)
+    }
 
     return (
         <AuthGuard>

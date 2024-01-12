@@ -7,7 +7,6 @@ import { getServerAuthSession } from '@/app/server/auth';
 import { HttpActions } from '@/app/api/httpActions';
 
 const keyToLabelMap = {
-    "userId": "User ID",
     "company": "Company Name",
     "companyAddress": "Company Address",
     "companyNumber": "Number",
@@ -38,6 +37,7 @@ const Super = async () => {
                     </thead>
                     <tbody>
                         {result.map((userObject, userIndex) =>
+
                             <Row key={utils.Rand8digit()}
                                 userIndex={userIndex}
                                 userObject={userObject} />
