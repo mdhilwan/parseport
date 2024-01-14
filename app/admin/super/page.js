@@ -37,8 +37,8 @@ const Super = async () => {
                     </thead>
                     <tbody>
                         {result.map((userObject, userIndex) =>
-
                             <Row key={utils.Rand8digit()}
+                                session={authSession}
                                 userIndex={userIndex}
                                 userObject={userObject} />
                         )}
