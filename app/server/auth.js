@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import IsAllowedUser from "./allowed";
+import { IsAllowedUser } from "./allowed";
 
 export const authOptions = {
     session: {

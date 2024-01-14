@@ -4,12 +4,13 @@ import Row from './row'
 import Controls from '../shared/controls';
 import AuthGuard from '@/app/authGuard';
 import { getServerAuthSession } from '@/app/server/auth';
+import { HttpActions } from '@/app/api/httpActions';
 
 const keyToLabelMap = {
-    "companyName": "Company Name",
-    "emailAdd": "Email",
-    "auth": "Auth",
-    "address": "address",
+    "company": "Company Name",
+    "companyAddress": "Company Address",
+    "companyNumber": "Number",
+    "emailAddress": "Email Address",
     "scanCount": "Total Scans",
     "pdfCount": "Total PDFs",
     "billed": "Billed",
@@ -18,27 +19,8 @@ const keyToLabelMap = {
 
 const Super = async () => {
 
-    const authSession = await getServerAuthSession();
-
-    const allUsers = [{
-        "companyName": "Coy A",
-        "emailAdd": "coya@gmail.com",
-        "auth": "Google",
-        "address": "some random address",
-        "scanCount": "100",
-        "pdfCount": "100",
-        "billed": "$2.00",
-        "active": true,
-    }, {
-        "companyName": "Coy B",
-        "emailAdd": "coyb@gmail.com",
-        "auth": "Google",
-        "address": "some random address",
-        "scanCount": "100",
-        "pdfCount": "100",
-        "billed": "$2.00",
-        "active": true,
-    }]
+    const authSession = await getServerAuthSession()
+    const { result } = await HttpActions.GetAllUsers()
 
     return (
         <AuthGuard whichAdmin='super'>
@@ -54,8 +36,9 @@ const Super = async () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {allUsers.map((userObject, userIndex) =>
+                        {result.map((userObject, userIndex) =>
                             <Row key={utils.Rand8digit()}
+                                session={authSession}
                                 userIndex={userIndex}
                                 userObject={userObject} />
                         )}

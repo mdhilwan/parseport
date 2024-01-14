@@ -1,9 +1,20 @@
+/**
+ * Hard coded users
+ */
 const allowed = [
-    "parse.pass.port@gmail.com"
+    {
+        email: "parse.pass.port@gmail.com",
+        type: "super"
+    },
+    {
+        email: "mdhilwan@gmail.com"
+    }
 ]
 
-const IsAllowedUser = (email) => {
-    return allowed.includes(email)
+export const IsAllowedUser = (email) => {
+    return allowed.map(a => a.email).includes(email)
 }
 
-export default IsAllowedUser;
+export const GetType = (email) => {
+    return allowed.find(a => a.email === email).type
+}

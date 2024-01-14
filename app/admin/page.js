@@ -2,10 +2,27 @@ import Controls from '@/app/admin/shared/controls';
 import '@/styles/global.css'
 import AuthGuard from '../authGuard';
 import { getServerAuthSession } from '@/app/server/auth';
+import { HttpActions } from '../api/httpActions';
 
 const Admin = async () => {
     const authSession = await getServerAuthSession();
     const { name, email, id } = authSession.user;
+    
+    if (!email) {
+        return (<></>)
+    }
+
+    const {result} = await HttpActions.GetUserByEmail(email)
+
+    if (!result) {
+        return (<></>)
+    }
+
+    const {company, companyaddress, companynumber, useremail, sessionid, issuedatetime, invaliddatetime} = result
+
+    if (!company || !companyaddress || !companynumber || !useremail) {
+        return (<></>)
+    }
 
     return (
         <AuthGuard>
@@ -15,19 +32,27 @@ const Admin = async () => {
                     <tbody>
                         <tr>
                             <th className="px-4 py-2 border">Email</th>
-                            <td className="px-4 py-2 border">{name} - {email}</td>
+                            <td className="px-4 py-2 border">{useremail}</td>
                         </tr>
                         <tr>
                             <th className="px-4 py-2 border">Company Name</th>
-                            <td className="px-4 py-2 border"></td>
+                            <td className="px-4 py-2 border">{company}</td>
                         </tr>
                         <tr>
-                            <th className="px-4 py-2 border">Auth</th>
-                            <td className="px-4 py-2 border"></td>
+                            <th className="px-4 py-2 border">Company Address</th>
+                            <td className="px-4 py-2 border">{companyaddress}</td>
                         </tr>
                         <tr>
-                            <th className="px-4 py-2 border">Address</th>
-                            <td className="px-4 py-2 border"></td>
+                            <th className="px-4 py-2 border">Company Number</th>
+                            <td className="px-4 py-2 border">{companynumber}</td>
+                        </tr>
+                        <tr>
+                            <th className="px-4 py-2 border">Session ID</th>
+                            <td className="px-4 py-2 border">{sessionid}</td>
+                        </tr>
+                        <tr>
+                            <th className="px-4 py-2 border">Session ID Valid</th>
+                            <td className="px-4 py-2 border">{issuedatetime} - {invaliddatetime}</td>
                         </tr>
                         <tr>
                             <th className="px-4 py-2 border">Total Scans</th>
