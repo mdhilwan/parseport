@@ -3,6 +3,7 @@
 import { useState } from "react"
 import EmailInput from "./email-input"
 import utils from "@/app/utils"
+import PhoneInput from "./phone-input";
 
 const AddUserForm = () => {
 
@@ -24,7 +25,8 @@ const AddUserForm = () => {
                             company={company}
                             email={e}
                             emailList={emailList}
-                            setEmailList={setEmailList} />
+                            setEmailList={setEmailList}
+                            setValidForm={setValidForm} />
                     ))
                 }
                 <button type="button" className="text-slate-300 bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-slate-300 font-medium rounded-lg text-sm px-3 py-1.5 mt-4 text-center"
@@ -56,21 +58,13 @@ const AddUserForm = () => {
                         setCompany(newCompany)
                     }} />
             </div>
-            <div className="mb-5">
-                <label htmlFor="companyNumber" className="block mb-2 text-xs font-medium text-gray-900 uppercase">Number</label>
-                <input type="tel" id="companyNumber" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full py-1 px-2" placeholder="Company Co Pte Ltd" required
-                    value={company.number}
-                    onChange={(e) => {
-                        let newCompany = { ...company }
-                        newCompany.number = e.target.value
-                        setCompany(newCompany)
-                    }} />
-            </div>
+
+            <PhoneInput company={company} setCompany={setCompany}/>
 
             <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center"
                 onClick={() => {
+                    console.log(emailList)
                     console.table({
-                        emailList: emailList,
                         company: company
                     })
                 }}>
