@@ -25,8 +25,7 @@ const AddUserForm = () => {
                             company={company}
                             email={e}
                             emailList={emailList}
-                            setEmailList={setEmailList}
-                            setValidForm={setValidForm} />
+                            setEmailList={setEmailList} />
                     ))
                 }
                 <button type="button" className="text-slate-300 bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-slate-300 font-medium rounded-lg text-sm px-3 py-1.5 mt-4 text-center"
@@ -59,7 +58,7 @@ const AddUserForm = () => {
                     }} />
             </div>
 
-            <PhoneInput company={company} setCompany={setCompany}/>
+            <PhoneInput company={company} setCompany={setCompany} />
 
             <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center"
                 onClick={() => {
