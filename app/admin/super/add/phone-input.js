@@ -35,6 +35,9 @@ const PhoneInput = ({company, setCompany}) => {
                     let newCompany = { ...company }
                     newCompany.number = e.target.value
                     setCompany(newCompany)
+                }}
+                onBlur={() => {
+                    setValid(true)
                 }} />
         </div>
     </>)
