@@ -16,7 +16,7 @@ const Input = ({ value, colKey, userObject, setUserObject }) => {
         const color = value ? 'blue' : 'red'
         const text = value ? 'Active' : 'Inactive'
         return (
-            <span className={`bg-${color}-100 text-${color}-800 text-xs font-medium px-2.5 py-0.5 rounded-full`}>{text}</span>
+            <span className={`bg-${color}-600 text-white text-xs font-medium px-2.5 py-0.5 rounded-full`}>{text}</span>
         )
     } else {
         return (
