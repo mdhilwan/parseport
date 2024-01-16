@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { IsAllowedUser } from "./allowed";
+import { HttpActions } from "../api/httpActions";
 
 export const authOptions = {
     session: {
@@ -13,20 +14,23 @@ export const authOptions = {
         })
     ],
     callbacks: {
-        async signIn({ user, account, profile, email, credentials }) {
-            if (user.email && IsAllowedUser(user.email)) {
+        async signIn({ user }) {
+            const { result } = await HttpActions.GetUserByEmail(user.email)
+            if (user.email && result.active) {
                 return true
             }
             return false
         },
-        async session({ session, user, token }) {
-            if (session.user.email && IsAllowedUser(session.user.email)) {
+        async session({ session }) {
+            const { result } = await HttpActions.GetUserByEmail(session.user.email)
+            if (session.user.email && result.active) {
                 return session
             }
             return {}
         },
-        async jwt({ token, user, account, profile, isNewUser }) {
-            if (token.email && IsAllowedUser(token.email)) {
+        async jwt({ token }) {
+            const { result } = await HttpActions.GetUserByEmail(token.email)
+            if (token.email && result.active) {
                 return token
             }
             return {}
