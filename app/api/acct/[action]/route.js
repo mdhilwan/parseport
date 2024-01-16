@@ -17,7 +17,6 @@ export const GET_PDFS_HISTORY = "get-pdfs-history"
 export const DEACTIVATE_USER = "deactivate-user"
 export const ACTIVATE_USER = "activate-user"
 export const DELETE_USER = "delete-user"
-export const SAVE_USER = "save-user"
 
 // UNUSED
 export const NEW_CLIENT_USER_TABLE = "new-client-user-table"

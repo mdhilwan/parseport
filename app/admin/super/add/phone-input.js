@@ -7,7 +7,7 @@ const PhoneInput = ({company, setCompany}) => {
     const [classStyle, setClassStyle] = useState(defaultClassStyle)
 
     const validatePhone = (value) => {
-        if (isMobilePhone(value)) {
+        if (isMobilePhone(value.replaceAll(/ /g, ''))) {
             setValid(true)
         } else {
             setValid(false)
@@ -35,9 +35,6 @@ const PhoneInput = ({company, setCompany}) => {
                     let newCompany = { ...company }
                     newCompany.number = e.target.value
                     setCompany(newCompany)
-                }}
-                onBlur={() => {
-                    setValid(true)
                 }} />
         </div>
     </>)

@@ -46,7 +46,7 @@ export const doNewPdfsTable = async () => {
 }
 
 export const doAdd = async (request) => {
-    const { data: { company, companyAddress, companyNumber, userEmail, sessionId, issueDateTime, invalidDateTime } } = await request.json();
+    const { data: { company, companyAddress, companyNumber, userEmail, sessionId = '', issueDateTime = '', invalidDateTime = '' } } = await request.json();
     if (!userEmail) {
         return doReturn500(`userEmail: missing`)
     }
@@ -55,7 +55,7 @@ export const doAdd = async (request) => {
         return doReturn500(`userEmail: ${userEmail} already exist`)
     }
     try {
-        const result = await sql`INSERT INTO clientuser ( userId, company, companyAddress, companyNumber, userEmail, sessionId, issueDateTime, invalidDateTime ) VALUES (${v4()}, ${company}, ${companyAddress}, ${companyNumber}, ${userEmail}, ${sessionId}, ${issueDateTime}, ${invalidDateTime});`;
+        const result = await sql`INSERT INTO clientuser ( userId, company, companyAddress, companyNumber, userEmail, sessionId, issueDateTime, invalidDateTime, active ) VALUES (${v4()}, ${company}, ${companyAddress}, ${companyNumber}, ${userEmail}, ${sessionId}, ${issueDateTime}, ${invalidDateTime}, true);`;
         return doReturn200(result)
     } catch (error) {
         return doReturn500(error)
