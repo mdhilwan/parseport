@@ -9,5 +9,9 @@ const allowed = [
 ]
 
 export const GetType = (email) => {
-    return allowed.find(a => a.email === email).type
+    const user = allowed.find(a => a.email === email);
+    if (user) {
+        return user.type
+    }
+    return undefined
 }
