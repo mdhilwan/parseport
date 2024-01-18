@@ -21,8 +21,8 @@ export const authOptions = {
         async signIn({ user }) {
             const { res: { result } } = await HttpActions.GetUserByEmail(user.email)
             if (user.email && result.active) {
-                const { res: { result: { sessionId } } } = await HttpActions.UserLogin(user.email)
-                if (sessionId) {
+                const { res: { result: { sessionid } } } = await HttpActions.UserLogin(user.email)
+                if (sessionid) {
                     return true
                 }
                 return false
@@ -33,9 +33,9 @@ export const authOptions = {
             let { res: { result } } = await HttpActions.GetUserByEmail(session.user.email)
             if (session.user.email && result.active) {
                 if (isSessionIdExpired(result.invaliddatetime)) {
-                    const res = await HttpActions.RefreshSessionId(session.user.email)
-                    console.log(":::::::: authOptions :::::::: res :", res)
-                    result.sessionid = res.result.sessionid
+                    const { res: { result: { sessionid } } } = await HttpActions.RefreshSessionId(session.user.email)
+                    console.log(":::::::: authOptions :::::::: res :", sessionid)
+                    result.sessionid = sessionid
                 }
 
                 return {
