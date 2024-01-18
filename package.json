@@ -2,6 +2,11 @@
   "name": "parseport",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "email": "mdhilwan@gmail.com",
+    "name": "mdhilwan",
+    "url": "https://www.mdhilwan.dev"
+  },
   "scripts": {
     "dev": "npx -y concurrently -c \"auto\" \"npm:dev:*\"",
     "dev:app": "next dev --experimental-https -p 443",
