@@ -34,7 +34,6 @@ export const authOptions = {
             if (session.user.email && result.active) {
                 if (isSessionIdExpired(result.invaliddatetime)) {
                     const { res: { result: { sessionid } } } = await HttpActions.RefreshSessionId(session.user.email)
-                    console.log(":::::::: authOptions :::::::: res :", sessionid)
                     result.sessionid = sessionid
                 }
 
