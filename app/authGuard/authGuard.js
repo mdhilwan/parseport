@@ -8,7 +8,7 @@ const AuthGuard = async ({ children, whichAdmin = "admin" }) => {
         return <Unauth whichAdmin={whichAdmin} />
     }
     const { user: { name, email } } = authSession
-    const { result } = await HttpActions.GetUserByEmail(email)
+    const { res: { result } } = await HttpActions.GetUserByEmail(email)
 
     if (authSession && result.active) {
         return (<>{children}</>)
