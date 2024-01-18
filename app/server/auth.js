@@ -14,7 +14,7 @@ export const authOptions = {
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET
         })
     ],
     callbacks: {
@@ -31,6 +31,7 @@ export const authOptions = {
         },
         async session({ session }) {
             let { res: { result } } = await HttpActions.GetUserByEmail(session.user.email)
+            console.log(":::::::: authOptions ::::::::", result)
             if (session.user.email && result.active) {
                 if (isSessionIdExpired(result.invaliddatetime)) {
                     const res = await HttpActions.RefreshSessionId(session.user.email)
