@@ -23,7 +23,7 @@ const AddUserForm = () => {
     })
 
     const allEmailValid = () => !emailList.map(e => isEmail(e.address)).includes(false)
-    const companyDetailValid = () => (company.name && company.address && isMobilePhone(company.number))
+    const companyDetailValid = () => (company.name && company.address && isMobilePhone(company.number.replace(/\+/g, '').replace(/ /g, '')))
     const isFormValid = () => allEmailValid() && companyDetailValid()
 
     const checkAllDone = () => {
@@ -111,11 +111,14 @@ const AddUserForm = () => {
 
             <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center"
                 onClick={() => {
+                    console.log(isFormValid(), allEmailValid(), companyDetailValid(), !saving)
                     if (isFormValid() && !saving) {
                         const newEmailList = [...emailList]
                         newEmailList.forEach(e => e.state = "saving")
                         setEmailList(newEmailList)
                         setSaving(true)
+                    } else {
+                        console.log('Form not valid')
                     }
                 }}>
                 {
