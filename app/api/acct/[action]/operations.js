@@ -74,7 +74,7 @@ export const doLogin = async (request) => {
     try {
         const sessionId = v4()
         await sql`UPDATE clientuser SET sessionId = ${sessionId}, issueDateTime = ${getDateTimeStamp()}, invalidDateTime = ${getInvalidDateTime()} WHERE userEmail = ${userEmail};`
-        return doReturn200({sessionId: sessionId})
+        return doReturn200({sessionid: sessionId})
     } catch (error) {
         return doReturn500(error)
     }
