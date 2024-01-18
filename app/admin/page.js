@@ -6,19 +6,19 @@ import { HttpActions } from '../api/httpActions';
 
 const Admin = async () => {
     const authSession = await getServerAuthSession();
-    const { name, email, id } = authSession.user;
-    
+    const { name, email } = authSession.user;
+
     if (!email) {
         return (<></>)
     }
 
-    const {result} = await HttpActions.GetUserByEmail(email)
+    const { res: { result } } = await HttpActions.GetUserByEmail(email)
 
     if (!result) {
         return (<></>)
     }
 
-    const {company, companyaddress, companynumber, useremail, sessionid, issuedatetime, invaliddatetime} = result
+    const { company, companyaddress, companynumber, useremail, sessionid, issuedatetime, invaliddatetime } = result
 
     if (!company || !companyaddress || !companynumber || !useremail) {
         return (<></>)
