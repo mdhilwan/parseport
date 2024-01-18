@@ -20,7 +20,7 @@ const keyToLabelMap = {
 const Super = async () => {
 
     const authSession = await getServerAuthSession()
-    const { result } = await HttpActions.GetAllUsers()
+    const { res: { result } } = await HttpActions.GetAllUsers()
 
     return (
         <AuthGuard whichAdmin='super'>

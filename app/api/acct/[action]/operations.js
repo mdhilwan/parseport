@@ -13,7 +13,7 @@ const isEmailExist = async (userEmail) => {
     return getByEmail.length > 0
 }
 
-const getInvalidDateTime = () => moment(new Date()).add(7, 'days').format("DD-MM-YYYY hh:mm:ss")
+const getInvalidDateTime = () => moment(new Date()).add(10, 'minutes').format("DD-MM-YYYY hh:mm:ss")
 const getDateTimeStamp = () => moment(new Date()).format("DD-MM-YYYY hh:mm:ss")
 const doReturn200 = (result) => NextResponse.json({ result: result }, { status: 200 })
 const doReturn500 = (error) => NextResponse.json({ error: error }, { status: 500 })
@@ -46,7 +46,7 @@ export const doNewPdfsTable = async () => {
 }
 
 export const doAdd = async (request) => {
-    const { data: { company, companyAddress, companyNumber, userEmail, sessionId, issueDateTime, invalidDateTime } } = await request.json();
+    const { data: { company, companyAddress, companyNumber, userEmail, sessionId = '', issueDateTime = '', invalidDateTime = '' } } = await request.json();
     if (!userEmail) {
         return doReturn500(`userEmail: missing`)
     }
@@ -55,7 +55,7 @@ export const doAdd = async (request) => {
         return doReturn500(`userEmail: ${userEmail} already exist`)
     }
     try {
-        const result = await sql`INSERT INTO clientuser ( userId, company, companyAddress, companyNumber, userEmail, sessionId, issueDateTime, invalidDateTime ) VALUES (${v4()}, ${company}, ${companyAddress}, ${companyNumber}, ${userEmail}, ${sessionId}, ${issueDateTime}, ${invalidDateTime});`;
+        const result = await sql`INSERT INTO clientuser ( userId, company, companyAddress, companyNumber, userEmail, sessionId, issueDateTime, invalidDateTime, active ) VALUES (${v4()}, ${company}, ${companyAddress}, ${companyNumber}, ${userEmail}, ${sessionId}, ${issueDateTime}, ${invalidDateTime}, true);`;
         return doReturn200(result)
     } catch (error) {
         return doReturn500(error)
@@ -72,8 +72,9 @@ export const doLogin = async (request) => {
         return doReturn500(`userEmail: ${userEmail} does not exist`)
     }
     try {
-        const result = await sql`UPDATE clientuser SET sessionId = ${v4()}, issueDateTime = ${getDateTimeStamp()}, invalidDateTime = ${getInvalidDateTime()} WHERE userEmail = ${userEmail};`
-        return doReturn200(result)
+        const sessionId = v4()
+        await sql`UPDATE clientuser SET sessionId = ${sessionId}, issueDateTime = ${getDateTimeStamp()}, invalidDateTime = ${getInvalidDateTime()} WHERE userEmail = ${userEmail};`
+        return doReturn200({sessionId: sessionId})
     } catch (error) {
         return doReturn500(error)
     }

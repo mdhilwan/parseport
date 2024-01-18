@@ -18,7 +18,6 @@ const MrzInputHandler = ({setParsed, setScanState, $event}) => {
         }
     }
     const beginScanning = (inputFiles) => {
-        console.log(inputFiles)
         if (inputFiles?.length) {
             [...inputFiles].map((file, fileIndex) => {
                 const reader = new FileReader()
