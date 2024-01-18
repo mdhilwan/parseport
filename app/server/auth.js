@@ -15,21 +15,21 @@ export const authOptions = {
     ],
     callbacks: {
         async signIn({ user }) {
-            const { result } = await HttpActions.GetUserByEmail(user.email)
+            const { res: { result } } = await HttpActions.GetUserByEmail(user.email)
             if (user.email && result.active) {
                 return true
             }
             return false
         },
         async session({ session }) {
-            const { result } = await HttpActions.GetUserByEmail(session.user.email)
+            const { res: { result } } = await HttpActions.GetUserByEmail(session.user.email)
             if (session.user.email && result.active) {
                 return session
             }
             return {}
         },
         async jwt({ token }) {
-            const { result } = await HttpActions.GetUserByEmail(token.email)
+            const { res: { result } } = await HttpActions.GetUserByEmail(token.email)
             if (token.email && result.active) {
                 return token
             }

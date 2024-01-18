@@ -51,7 +51,6 @@ export async function POST(request, { params: { action } }) {
             return deactivateUser(request)
         case DELETE_USER:
             return deleteUser(request)
-            break;
         // case NEW_CLIENT_USER_TABLE:
         //     return doNewClientUserTable();
         // case NEW_SCANS_TABLE:
