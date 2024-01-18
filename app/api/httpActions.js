@@ -1,4 +1,4 @@
-import { ACTIVATE_USER, ADD_NEW_USER, DEACTIVATE_USER, DELETE_USER, GET_ALL_USER, GET_USER_BY_EMAIL, SAVE_NEW_USER } from "./acct/[action]/route"
+import { ACTIVATE_USER, ADD_NEW_USER, DEACTIVATE_USER, DELETE_USER, GET_ALL_USER, GET_USER_BY_EMAIL, SAVE_NEW_USER, USER_LOGIN } from "./acct/[action]/route"
 
 const postHeader = { method: 'POST' }
 const doFetchPost = (route, body) => {
@@ -17,6 +17,13 @@ export const HttpActions = {
     async GetUserByEmail(userEmail) {
         const res = await doFetchPost(GET_USER_BY_EMAIL, { data: { userEmail: userEmail } })
         return { res: await res.json(), email: userEmail }
+    },
+    async UserLogin(userEmail) {
+        const res = await doFetchPost(USER_LOGIN, { data: { userEmail: userEmail } })
+        return { res: await res.json(), email: userEmail }
+    },
+    async RefreshSessionId(userEmail) {
+        return await this.UserLogin(userEmail)
     },
     async GetAllUsers() {
         const res = await doFetchPost(GET_ALL_USER)

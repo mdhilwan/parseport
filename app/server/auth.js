@@ -1,7 +1,11 @@
 import { getServerSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { IsAllowedUser } from "./allowed";
 import { HttpActions } from "../api/httpActions";
+import moment from 'moment';
+
+const isSessionIdExpired = (invaliddatetime) => {
+    return moment().diff(moment(invaliddatetime, "DD-MM-YYYY hh:mm:ss"), "minutes") >= 0
+}
 
 export const authOptions = {
     session: {
@@ -17,14 +21,25 @@ export const authOptions = {
         async signIn({ user }) {
             const { res: { result } } = await HttpActions.GetUserByEmail(user.email)
             if (user.email && result.active) {
-                return true
+                const { res: { result: { sessionId } } } = await HttpActions.UserLogin(user.email)
+                if (sessionId) {
+                    return true
+                }
+                return false
             }
             return false
         },
         async session({ session }) {
-            const { res: { result } } = await HttpActions.GetUserByEmail(session.user.email)
+            let { res: { result } } = await HttpActions.GetUserByEmail(session.user.email)
             if (session.user.email && result.active) {
-                return session
+                if (isSessionIdExpired(result.invaliddatetime)) {
+                    const res = await HttpActions.RefreshSessionId(session.user.email)
+                    result = res.result
+                }
+                return {
+                    ...session,
+                    sessionId: result.sessionid
+                }
             }
             return {}
         },
