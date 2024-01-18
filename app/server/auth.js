@@ -31,12 +31,12 @@ export const authOptions = {
         },
         async session({ session }) {
             let { res: { result } } = await HttpActions.GetUserByEmail(session.user.email)
-            console.log(":::::::: authOptions ::::::::", result)
             if (session.user.email && result.active) {
                 if (isSessionIdExpired(result.invaliddatetime)) {
                     const res = await HttpActions.RefreshSessionId(session.user.email)
                     result = res.result
                 }
+                console.log(":::::::: authOptions ::::::::", result)
                 return {
                     ...session,
                     sessionId: result.sessionid
