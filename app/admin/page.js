@@ -9,6 +9,10 @@ const Admin = async () => {
 
     console.log("Admin:", authSession);
 
+    if (!authSession) {
+        return (<></>)
+    }
+
     const { name, email } = authSession.user;
 
     if (!email) {
