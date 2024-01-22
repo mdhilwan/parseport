@@ -8,6 +8,9 @@ const nextConfig = {
                 hostname: "*.googleusercontent.com"
             }
         ]
+    },
+    compiler: {
+        removeConsole: false
     }
 }
 
