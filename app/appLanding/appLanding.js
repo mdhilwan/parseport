@@ -18,7 +18,6 @@ const AppLanding = ({ uuid, session }) => {
     const socketPort = '4001'
     const socket = io(`:${socketPort}`)
 
-    const connectedToWs = () => guid.includes('@')
     const [guid, setGuid] = useState(uuid)
     const [scanned, setScanned] = useState(false)
     const [disconnected, setDisconnected] = useState(true)
@@ -28,6 +27,7 @@ const AppLanding = ({ uuid, session }) => {
     const [scanState, setScanState] = useState(State.IDLE)
     const [parsed, setParsed] = useState({})
     const [cookies, setCookie] = useCookies(['guid'])
+    const connectedToWs = () => guid ? guid.includes('@') : false
 
     const [mrzDropZoneClass, setMrzDropZoneClass] = useState("flex justify-center w-full h-60 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none")
     const [mrzStateDropZoneClass, setMrStateDropZoneClass] = useState("mt-10 flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-50")
