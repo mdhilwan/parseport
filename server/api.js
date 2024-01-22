@@ -4,7 +4,7 @@ const fs = require('fs')
 const socketIO = require('socket.io')
 const express = require('express')
 const app = express();
-require('dotenv')
+require('dotenv').config({ path: `.env` })
 
 console.log(process.env)
 
