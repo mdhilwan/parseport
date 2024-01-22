@@ -6,6 +6,9 @@ import { HttpActions } from '../api/httpActions';
 
 const Admin = async () => {
     const authSession = await getServerAuthSession();
+
+    console.log("Admin:", authSession);
+
     const { name, email } = authSession.user;
 
     if (!email) {
