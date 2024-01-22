@@ -6,6 +6,8 @@ const express = require('express')
 const app = express();
 require('dotenv')
 
+console.log(process.env)
+
 const server = https.createServer({
     key: fs.readFileSync(process.env.WEBSOCKET_KEY),
     cert: fs.readFileSync(process.env.WEBSOCKET_CERT)
