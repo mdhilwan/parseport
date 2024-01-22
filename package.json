@@ -10,8 +10,9 @@
   "scripts": {
     "dev": "npx -y concurrently -c \"auto\" \"npm:dev:*\"",
     "dev:app": "next dev --experimental-https -p 443",
-    "dev:api": "npx -y nodemon server/api.js",
+    "dev:api": "NODE_ENV=local npx -y nodemon server/api.js",
     "build": "next build",
+    "build:api": "NODE_ENV=production npx -y nodemon server/api.js",
     "start": "next start",
     "lint": "next lint"
   },
@@ -21,6 +22,7 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
+    "dotenv": "^16.3.2",
     "downloadjs": "^1.4.7",
     "express": "^4.18.2",
     "i18n-iso-countries": "^7.7.0",

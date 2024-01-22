@@ -4,9 +4,11 @@ const fs = require('fs')
 const socketIO = require('socket.io')
 const express = require('express')
 const app = express();
+require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
+
 const server = https.createServer({
-    key: fs.readFileSync('certificates/localhost-key.pem'),
-    cert: fs.readFileSync('certificates/localhost.pem')
+    key: fs.readFileSync(process.env.WEBSOCKET_KEY),
+    cert: fs.readFileSync(process.env.WEBSOCKET_CERT)
 }, app);
 
 const cors = require('cors')
