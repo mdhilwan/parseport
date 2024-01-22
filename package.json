@@ -11,10 +11,9 @@
     "dev": "npx -y concurrently -c \"auto\" \"npm:dev:*\"",
     "dev:app": "next dev --experimental-https -p 443",
     "dev:api": "NODE_ENV=local npx -y nodemon server/api.js",
-    "build": "npx -y concurrently -c \"auto\" \"npm:build:*\"",
-    "build:app": "next build",
-    "build:api": "NODE_ENV=production npx -y nodemon server/api.js",
-    "start": "next start",
+    "prod": "npm run prod:app && npx -y concurrently -c \"auto\" \"next start\" \"npm:prod:api\"",
+    "prod:app": "next build",
+    "prod:api": "NODE_ENV=production npx -y nodemon server/api.js",
     "lint": "next lint"
   },
   "dependencies": {
