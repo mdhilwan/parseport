@@ -103,5 +103,9 @@ module.exports = (socketio) => {
         }
     })
 
+    router.post('/', (req, res) => {
+        res.json({messeage: 'welcome'})
+    })
+
     return router
 }
