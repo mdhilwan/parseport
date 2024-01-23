@@ -1,0 +1,9 @@
+{
+    "apps": [
+        {
+            "name": "parseport",
+            "script": "npm",
+            "args" : "run prod"
+        }
+    ]
+}
