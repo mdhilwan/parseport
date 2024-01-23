@@ -131,7 +131,7 @@ const AppLanding = ({ uuid, session }) => {
                 {
                     scanned ?
                         <div>
-                            <h2 className='text-3xl font-bold tracking-tight mb-10'>Parseport Scans</h2>
+                            <h2 className='text-3xl font-bold tracking-tight mb-10'>Passport to Visa Scans</h2>
                             <ParsedTable parsed={scannedData} />
                             <StateMrzInput setParsed={setParsed} scanState={scanState} setScanState={setScanState} bg={mrzStateDropZoneClass} />
                             <StatePhoneConnection disconnected={disconnected} setShowQrCodeModal={setShowQrCodeModal} />

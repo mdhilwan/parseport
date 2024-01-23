@@ -6,7 +6,7 @@ const googleFont = Open_Sans({
 })
 
 export const metadata = {
-  title: 'ParsePort',
+  title: 'Passport to Visa',
   description: 'Connect your phone to your computer, use your phone and parse a passport MRZ and send it to the linked computer.',
 }
 
