@@ -1,8 +1,25 @@
 import { v4 } from "uuid";
+import { encrypt } from "../mrz/crypt";
+
+const parsedIsValid = (parsed) => {
+    return parsed && parsed.data && parsed.iv && Object.keys(parsed.data).length > 0
+}
 
 const utils = {
     Rand8digit() {
         return v4().slice(0, 8)
+    },
+    HandleParsed(parsed, socket, guid) {
+        const [uuid, agent] = guid.split('@@')
+        console.log(uuid, agent)
+        if (parsedIsValid(parsed)) {
+            socket.emit('scanned:parsed', {
+                agent: agent,
+                data: encrypt(parsed.data, uuid, parsed.iv),
+                uuid: uuid,
+                iv: parsed.iv
+            })
+        }
     }
 }
 

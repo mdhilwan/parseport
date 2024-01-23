@@ -12,6 +12,7 @@ import { useCookies } from 'react-cookie';
 import StatePhoneConnection from '../statePhoneConnection';
 import StateMrzInput from '../stateMrzInput';
 import Controls from '../admin/shared/controls';
+import utils from '../utils';
 
 const AppLanding = ({ uuid, session }) => {
 
@@ -80,14 +81,7 @@ const AppLanding = ({ uuid, session }) => {
         }
     }, [guid, connectedToWs()])
 
-    useEffect(() => {
-        if (Object.keys(parsed).length > 0) {
-            socket.emit('scanned:parsed', {
-                agent: cookies.guid.split('@@')[1],
-                data: parsed
-            })
-        }
-    }, [parsed])
+    useEffect(() => utils.HandleParsed(parsed, socket, cookies.guid), [parsed])
 
     useEffect(() => {
         if (scanState === State.SUCCESS) {
