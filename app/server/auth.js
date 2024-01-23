@@ -20,40 +20,36 @@ export const authOptions = {
     callbacks: {
         async signIn({ user }) {
             const { res: { result } } = await HttpActions.GetUserByEmail(user.email)
-            console.log("signIn:::::", result)
-            // if (user.email && result.active) {
-            //     const { res: { result: { sessionid } } } = await HttpActions.UserLogin(user.email)
-            //     if (sessionid) {
+            if (user.email && result.active) {
+                const { res: { result: { sessionid } } } = await HttpActions.UserLogin(user.email)
+                if (sessionid) {
                     return true
-            //     }
-            //     return false
-            // }
-            // return false
+                }
+                return false
+            }
+            return false
         },
         async session({ session }) {
             let { res: { result } } = await HttpActions.GetUserByEmail(session.user.email)
-            console.log("session:::::", result)
-            // if (session.user.email && result.active) {
-            //     if (isSessionIdExpired(result.invaliddatetime)) {
-            //         const { res: { result: { sessionid } } } = await HttpActions.RefreshSessionId(session.user.email)
-            //         result.sessionid = sessionid
-            //     }
+            if (session.user.email && result.active) {
+                if (isSessionIdExpired(result.invaliddatetime)) {
+                    const { res: { result: { sessionid } } } = await HttpActions.RefreshSessionId(session.user.email)
+                    result.sessionid = sessionid
+                }
 
-            //     return {
-            //         ...session,
-            //         sessionId: result.sessionid
-            //     }
-            // }
-            // return {}
-            return session
+                return {
+                    ...session,
+                    sessionId: result.sessionid
+                }
+            }
+            return {}
         },
         async jwt({ token }) {
             const { res: { result } } = await HttpActions.GetUserByEmail(token.email)
-            console.log("jwt:::::", result)
-            // if (token.email && result.active) {
+            if (token.email && result.active) {
                 return token
-            // }
-            // return {}
+            }
+            return {}
         }
     },
     secret: process.env.NEXTAUTH_SECRET
