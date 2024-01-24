@@ -5,7 +5,7 @@ const encrypt = (data, uuid, iv) => {
 }
 
 const decrypt = (encryted, uuid, iv) => {
-    return CryptoJS.AES.decrypt(encryted.data.toString(), uuid, {iv: iv}).toString(CryptoJS.env.Utf8);
+    return CryptoJS.AES.decrypt(encryted.toString(), uuid, {iv: iv}).toString(CryptoJS.enc.Utf8);
 }
 
 export { encrypt, decrypt }

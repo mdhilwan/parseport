@@ -13,6 +13,7 @@ import StatePhoneConnection from '../statePhoneConnection';
 import StateMrzInput from '../stateMrzInput';
 import Controls from '../admin/shared/controls';
 import utils from '../utils';
+import { decrypt } from '../mrz/crypt';
 
 const AppLanding = ({ uuid, session }) => {
 
@@ -61,8 +62,9 @@ const AppLanding = ({ uuid, session }) => {
             setShowQrCodeModal(false)
         })
 
-        socket.on('parsed', (data) => {
-            scannedDataCol = [...scannedDataCol, data]
+        socket.on('parsed', ({parsed, iv}) => {
+            const decrypted = decrypt(parsed, guid, iv)
+            scannedDataCol = [...scannedDataCol, JSON.parse(decrypted)]
             setScannedData(scannedDataCol)
         })
 

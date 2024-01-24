@@ -11,7 +11,6 @@ const utils = {
     },
     HandleParsed(parsed, socket, guid) {
         const [uuid, agent] = guid.split('@@')
-        console.log(uuid, agent)
         if (parsedIsValid(parsed)) {
             socket.emit('scanned:parsed', {
                 agent: agent,

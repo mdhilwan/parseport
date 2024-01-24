@@ -18,7 +18,7 @@ const apiRouter = require('./routes')
 
 const moment = require("moment");
 const countries = require("i18n-iso-countries");
-const { decrypt } = require('./crypt');
+const { decrypt, encrypt } = require('./crypt');
 
 const io = socketIO(server, {
     cors: {
@@ -35,6 +35,15 @@ const formatBirthDate = (date) => {
     return thisDate.format("yyyy-MM-DD")
 }
 
+const hydrate = (data) => {
+    data.nationality = countries.getName(data.nationality, "en")
+    data.issuingState = countries.getName(data.issuingState, "en")
+    data.birthDate = formatBirthDate(data.birthDate)
+    data.sex = data.sex.charAt(0).toUpperCase() + data.sex.slice(1).toLowerCase()
+    data.expirationDate = moment.utc(data.expirationDate, "YYMMDD").format("yyyy-MM-DD")
+    return data
+}
+
 io.on('connection', socket => {
 
     socket.on('scanned:phone:qr', mainSocketId => {
@@ -42,19 +51,14 @@ io.on('connection', socket => {
     })
 
     socket.on('scanned:parsed', ({ agent, data, iv, uuid }) => {
-        const decrypted = decrypt(data, uuid, iv)
-        console.log(decrypted)
-        // data.nationality = countries.getName(data.nationality, "en")
-        // data.issuingState = countries.getName(data.issuingState, "en")
-        // data.birthDate = formatBirthDate(data.birthDate)
-        // data.sex = data.sex.charAt(0).toUpperCase() + data.sex.slice(1).toLowerCase()
-        // data.expirationDate = moment.utc(data.expirationDate, "YYMMDD").format("yyyy-MM-DD")
-        // data.iv = iv
-        // if (agent !== socket.id) {
-        //     socket.to(agent).emit('parsed', data);
-        // } else { 
-        //     socket.emit('parsed', data);
-        // }
+        const decrypted = JSON.parse(decrypt(data, uuid, iv))
+        const encryted = encrypt(hydrate(decrypted), uuid, iv)
+        const body = { parsed: encryted, iv: iv }
+        if (agent !== socket.id) {
+            socket.to(agent).emit('parsed', body)
+        } else {
+            socket.emit('parsed', body)
+        }
     })
 
     socket.on('disconnect', async () => {
