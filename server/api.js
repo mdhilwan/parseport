@@ -18,6 +18,7 @@ const apiRouter = require('./routes')
 
 const moment = require("moment");
 const countries = require("i18n-iso-countries");
+const { decrypt, encrypt } = require('./crypt');
 
 const io = socketIO(server, {
     cors: {
@@ -34,22 +35,29 @@ const formatBirthDate = (date) => {
     return thisDate.format("yyyy-MM-DD")
 }
 
+const hydrate = (data) => {
+    data.nationality = countries.getName(data.nationality, "en")
+    data.issuingState = countries.getName(data.issuingState, "en")
+    data.birthDate = formatBirthDate(data.birthDate)
+    data.sex = data.sex.charAt(0).toUpperCase() + data.sex.slice(1).toLowerCase()
+    data.expirationDate = moment.utc(data.expirationDate, "YYMMDD").format("yyyy-MM-DD")
+    return data
+}
+
 io.on('connection', socket => {
 
     socket.on('scanned:phone:qr', mainSocketId => {
         socket.to(mainSocketId).emit('scanned:qr:res', { agent: socket.id })
     })
 
-    socket.on('scanned:parsed', ({ agent, data }) => {
-        data.nationality = countries.getName(data.nationality, "en")
-        data.issuingState = countries.getName(data.issuingState, "en")
-        data.birthDate = formatBirthDate(data.birthDate)
-        data.sex = data.sex.charAt(0).toUpperCase() + data.sex.slice(1).toLowerCase()
-        data.expirationDate = moment.utc(data.expirationDate, "YYMMDD").format("yyyy-MM-DD")
+    socket.on('scanned:parsed', ({ agent, data, iv, uuid }) => {
+        const decrypted = JSON.parse(decrypt(data, uuid, iv))
+        const encryted = encrypt(hydrate(decrypted), uuid, iv)
+        const body = { parsed: encryted, iv: iv }
         if (agent !== socket.id) {
-            socket.to(agent).emit('parsed', data);
-        } else { 
-            socket.emit('parsed', data);
+            socket.to(agent).emit('parsed', body)
+        } else {
+            socket.emit('parsed', body)
         }
     })
 

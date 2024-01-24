@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Script from 'next/script';
 import { State } from '../enums/state';
 import Mrz from './Mrz';
+import utils from '../utils';
 
 const MrzPhone = ({ socket }) => {
     const [cookies] = useCookies(['guid']);
@@ -30,14 +31,7 @@ const MrzPhone = ({ socket }) => {
         return truncateString(name)
     }
 
-    useEffect(() => {
-        if (Object.keys(parsed).length > 0) {
-            socket.emit('scanned:parsed', {
-                agent: cookies.guid.split('@@')[1],
-                data: parsed
-            })
-        }
-    }, [parsed])
+    useEffect(() => utils.EmitToSocket(parsed, socket, cookies.guid), [parsed])
 
     return (
         <>
