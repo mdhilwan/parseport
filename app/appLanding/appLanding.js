@@ -83,7 +83,7 @@ const AppLanding = ({ uuid, session }) => {
         }
     }, [guid, connectedToWs()])
 
-    useEffect(() => utils.HandleParsed(parsed, socket, cookies.guid), [parsed])
+    useEffect(() => utils.EmitToSocket(parsed, socket, cookies.guid), [parsed])
 
     useEffect(() => {
         if (scanState === State.SUCCESS) {

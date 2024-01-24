@@ -31,7 +31,7 @@ const MrzPhone = ({ socket }) => {
         return truncateString(name)
     }
 
-    useEffect(() => utils.HandleParsed(parsed, socket, cookies.guid), [parsed])
+    useEffect(() => utils.EmitToSocket(parsed, socket, cookies.guid), [parsed])
 
     return (
         <>

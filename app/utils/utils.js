@@ -9,7 +9,7 @@ const utils = {
     Rand8digit() {
         return v4().slice(0, 8)
     },
-    HandleParsed(parsed, socket, guid) {
+    EmitToSocket(parsed, socket, guid) {
         const [uuid, agent] = guid.split('@@')
         if (parsedIsValid(parsed)) {
             socket.emit('scanned:parsed', {
