@@ -12,9 +12,19 @@ const server = https.createServer({
 }, app);
 
 const cors = require('cors')
+const helmet = require('helmet')
+const rateLimit = require('express-rate-limit')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const apiRouter = require('./routes')
+
+ // limit each IP to 100 request per 5 min
+const limiter = rateLimit({
+	limit: 100,
+	windowMs: 5 * 60 * 1000,
+	standardHeaders: 'draft-7',
+	legacyHeaders: false,
+})
 
 const moment = require("moment");
 const countries = require("i18n-iso-countries");
@@ -75,6 +85,9 @@ io.on('connection', socket => {
 })
 
 app.use(cors())
+app.use(helmet())
+app.use(limiter)
+app.disable('x-powered-by')
 app.use(cookieParser())
 app.use(bodyParser.urlencoded())
 app.use(bodyParser.json())
