@@ -22,8 +22,11 @@ const { decrypt, encrypt } = require('./crypt');
 
 const io = socketIO(server, {
     cors: {
-        origin: '*',
-        methods: ['GET', 'POST']
+        origin: [
+            'https://passport-to-visa.com',
+            'https://parseport.vercel.app',
+            'https://localhost'
+        ]
     }
 });
 
@@ -50,7 +53,8 @@ io.on('connection', socket => {
         socket.to(mainSocketId).emit('scanned:qr:res', { agent: socket.id })
     })
 
-    socket.on('scanned:parsed', ({ agent, data, iv, uuid }) => {
+    socket.on('scanned:parsed', (rawData) => {
+        const { agent, data, iv, uuid } = JSON.parse(atob(rawData))
         const decrypted = JSON.parse(decrypt(data, uuid, iv))
         const encryted = encrypt(hydrate(decrypted), uuid, iv)
         const body = { parsed: encryted, iv: iv }

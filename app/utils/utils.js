@@ -12,12 +12,12 @@ const utils = {
     EmitToSocket(parsed, socket, guid) {
         const [uuid, agent] = guid.split('@@')
         if (parsedIsValid(parsed)) {
-            socket.emit('scanned:parsed', {
+            socket.emit('scanned:parsed', btoa(JSON.stringify({
                 agent: agent,
                 data: encrypt(parsed.data, uuid, parsed.iv),
                 uuid: uuid,
                 iv: parsed.iv
-            })
+            })))
         }
     }
 }
