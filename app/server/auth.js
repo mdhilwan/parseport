@@ -44,9 +44,9 @@ export const authOptions = {
             }
             return {}
         },
-        async jwt({ token }) {
+        async jwt({ token, account }) {
             const { res: { result } } = await HttpActions.GetUserByEmail(token.email)
-            if (token.email && result.active) {
+            if (token.email && result.active && account) {
                 return token
             }
             return {}
