@@ -2,6 +2,8 @@ import moment from 'moment';
 import { NextResponse } from 'next/server';
 import { v4 } from 'uuid';
 import { sql } from '@vercel/postgres';
+import { getServerAuthSession } from '@/app/server/auth';
+import jwt from 'jsonwebtoken';
 
 const doGetByEmail = async (userEmail) => {
     const { rows } = await sql`SELECT * FROM clientuser WHERE userEmail = ${userEmail};`
@@ -74,7 +76,7 @@ export const doLogin = async (request) => {
     try {
         const sessionId = v4()
         await sql`UPDATE clientuser SET sessionId = ${sessionId}, issueDateTime = ${getDateTimeStamp()}, invalidDateTime = ${getInvalidDateTime()} WHERE userEmail = ${userEmail};`
-        return doReturn200({sessionid: sessionId})
+        return doReturn200({ sessionid: sessionId })
     } catch (error) {
         return doReturn500(error)
     }
@@ -211,6 +213,23 @@ export const deleteUser = async (request) => {
     } catch (error) {
         return doReturn500(error)
     }
+}
+
+export const generateVisa = async (request) => {
+    const { data } = await request.json();
+    console.log(data)
+
+    const authSession = await getServerAuthSession();
+    const tokenForApi = `${btoa(JSON.stringify(authSession))}`
+    const jwtForApi = jwt.sign(tokenForApi, process.env.NEXTAUTH_SECRET)
+    return await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/generate/${data.documentNumber}`, {
+        method: 'POST',
+        body: JSON.stringify({data: data}),
+        headers: new Headers({
+            'content-type': 'application/json',
+            'cookie': `token=${jwtForApi}`
+        })
+    })
 }
 
 /**

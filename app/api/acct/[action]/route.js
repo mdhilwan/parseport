@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { activateUser, deactivateUser, deleteUser, doAdd, doLogin, doLogout, doPdf, doScan, getAllCompanies, getAllUser, getPdfsHistory, getScansHistory, getUser, saveUser } from './operations';
+import { activateUser, deactivateUser, deleteUser, doAdd, doLogin, doLogout, doPdf, doScan, generateVisa, getAllCompanies, getAllUser, getPdfsHistory, getScansHistory, getUser, saveUser } from './operations';
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/app/server/auth";
 
@@ -19,6 +19,7 @@ export const GET_PDFS_HISTORY = "get-pdfs-history"
 export const DEACTIVATE_USER = "deactivate-user"
 export const ACTIVATE_USER = "activate-user"
 export const DELETE_USER = "delete-user"
+export const GENERATE_VISA = "generate-visa"
 
 // UNUSED
 export const NEW_CLIENT_USER_TABLE = "new-client-user-table"
@@ -60,6 +61,8 @@ export async function POST(request, { params: { action } }) {
                 return deactivateUser(request)
             case DELETE_USER:
                 return deleteUser(request)
+            case GENERATE_VISA:
+                return generateVisa(request)
             // case NEW_CLIENT_USER_TABLE:
             //     return doNewClientUserTable();
             // case NEW_SCANS_TABLE:

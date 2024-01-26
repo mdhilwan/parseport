@@ -4,6 +4,7 @@ const { readFile } = require('fs').promises
 const router = express.Router()
 const { PDFDocument } = require('pdf-lib');
 const moment = require("moment");
+const jwt = require('jsonwebtoken')
 
 const pdfDataMap = [{
     field: 'firstName',
@@ -48,6 +49,8 @@ module.exports = (socketio) => {
 
     router.post('/generate/:filename', async (req, res) => {
         try {
+            const decodedToken = jwt.verify(req.cookies.token, process.env.NEXTAUTH_SECRET)
+            if (!decodedToken) throw new Error("token invalid")
             const pdfData = await readFile(path.join(__dirname, '..', 'doc', 'umrah-visa-application-form.pdf'));
             const pdfDoc = await PDFDocument.load(pdfData)
             const form = pdfDoc.getForm()
@@ -83,7 +86,7 @@ module.exports = (socketio) => {
             res.send(pdfBuffer)
         } catch (error) {
             console.error(error)
-            res.json({ status: 'fail' })
+            res.json({ status: error })
         }
     })
 
@@ -100,10 +103,6 @@ module.exports = (socketio) => {
         } catch (error) {
             console.error(error)
         }
-    })
-
-    router.post('/', (req, res) => {
-        res.json({ messeage: 'welcome' })
     })
 
     return router

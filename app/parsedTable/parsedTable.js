@@ -27,7 +27,7 @@ const ParsedTable = ({parsed}) => {
     const baseLabelClassName = "pe-3 font-bold whitespace-nowrap"
 
     const generateVisa = async (visaData) => {
-        const doGenerate = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/generate/${visaData.documentNumber}`, {
+        const doGenerate = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/acct/generate-visa`, {
             body: JSON.stringify({data: visaData}),
             headers: new Headers({'content-type': 'application/json'}),
             method: "POST"

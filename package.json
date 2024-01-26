@@ -29,6 +29,7 @@
     "helmet": "^7.1.0",
     "i18n-iso-countries": "^7.7.0",
     "is-mobile": "^4.0.0",
+    "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
     "muhammara": "^4.1.0",
     "next": "14.0.4",
