@@ -10,14 +10,16 @@ const utils = {
         return v4().slice(0, 8)
     },
     EmitToSocket(parsed, socket, guid) {
-        const [uuid, agent] = guid.split('@@')
-        if (parsedIsValid(parsed)) {
-            socket.emit('scanned:parsed', btoa(JSON.stringify({
-                agent: agent,
-                data: encrypt(parsed.data, uuid, parsed.iv),
-                uuid: uuid,
-                iv: parsed.iv
-            })))
+        if (guid) {
+            const [uuid, agent] = guid.split('@@')
+            if (parsedIsValid(parsed)) {
+                socket.emit('scanned:parsed', btoa(JSON.stringify({
+                    agent: agent,
+                    data: encrypt(parsed.data, uuid, parsed.iv),
+                    uuid: uuid,
+                    iv: parsed.iv
+                })))
+            }
         }
     }
 }
