@@ -29,49 +29,46 @@ export const NEW_PDFS_TABLE = "new-pdfs-table"
 export async function POST(request, { params: { action } }) {
     const authSession = await getServerSession(authOptions);
 
-    if (!authSession) {
-        // only these actions are allowed unauthenticated
-        switch (action) {
-            case GET_USER_BY_EMAIL:
-                return getUser(request)
-            case USER_LOGIN:
-                return doLogin(request)
-        }
-    } else {
-        switch (action) {
-            case ADD_NEW_USER:
-                return doAdd(request)
-            case USER_LOGOUT:
-                return doLogout(request)
-            case USER_DO_SCAN:
-                return doScan(request)
-            case USER_DO_PDF:
-                return doPdf(request)
-            case GET_ALL_USER:
-                return getAllUser()
-            case GET_ALL_COMPANIES:
-                return getAllCompanies()
-            case GET_SCANS_HISTORY:
-                return getScansHistory()
-            case GET_PDFS_HISTORY:
-                return getPdfsHistory()
-            case ACTIVATE_USER:
-                return activateUser(request)
-            case DEACTIVATE_USER:
-                return deactivateUser(request)
-            case DELETE_USER:
-                return deleteUser(request)
-            case GENERATE_VISA:
-                return generateVisa(request)
-            // case NEW_CLIENT_USER_TABLE:
-            //     return doNewClientUserTable();
-            // case NEW_SCANS_TABLE:
-            //     return doNewScansTable();
-            // case NEW_PDFS_TABLE:
-            //     return doNewPdfsTable();
-            default:
-                return NextResponse.json({ action: `Action not supported "${action}"` })
-                break;
-        }
+    // TODO: AuthSession is invalid on server side
+    
+    switch (action) {
+        case GET_USER_BY_EMAIL:
+            return getUser(request)
+        case USER_LOGIN:
+            return doLogin(request)
+        case ADD_NEW_USER:
+            return doAdd(request)
+        case USER_LOGOUT:
+            return doLogout(request)
+        case USER_DO_SCAN:
+            return doScan(request)
+        case USER_DO_PDF:
+            return doPdf(request)
+        case GET_ALL_USER:
+            console.log(":::: GET_ALL_USER ::::")
+            return getAllUser()
+        case GET_ALL_COMPANIES:
+            return getAllCompanies()
+        case GET_SCANS_HISTORY:
+            return getScansHistory()
+        case GET_PDFS_HISTORY:
+            return getPdfsHistory()
+        case ACTIVATE_USER:
+            return activateUser(request)
+        case DEACTIVATE_USER:
+            return deactivateUser(request)
+        case DELETE_USER:
+            return deleteUser(request)
+        case GENERATE_VISA:
+            return generateVisa(request)
+        // case NEW_CLIENT_USER_TABLE:
+        //     return doNewClientUserTable();
+        // case NEW_SCANS_TABLE:
+        //     return doNewScansTable();
+        // case NEW_PDFS_TABLE:
+        //     return doNewPdfsTable();
+        default:
+            return NextResponse.json({ action: `Action not supported "${action}"` })
+            break;
     }
 }
