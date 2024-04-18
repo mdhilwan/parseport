@@ -14,14 +14,16 @@ import StateMrzInput from '../stateMrzInput'
 import Controls from '../admin/shared/controls'
 import utils from '../utils'
 import { decrypt } from '../mrz/crypt'
-import { Provider, useSelector } from 'react-redux'
+import { Provider, useDispatch, useSelector } from 'react-redux'
 import store from '../store'
+import { addNewScan } from '../slice/slice'
 
 const AppLanding = ({ uuid, session }) => {
   const socketPort = '4001'
   const socket = io(`:${socketPort}`)
 
   const state = useSelector((state) => state.mrzStore)
+  const dispatch = useDispatch()
 
   console.log(state)
 
@@ -71,9 +73,11 @@ const AppLanding = ({ uuid, session }) => {
     })
 
     socket.on('parsed', ({ parsed, iv }) => {
+      console.log('parsed!!!!')
       const decrypted = decrypt(parsed, guid, iv)
       scannedDataCol = [...scannedDataCol, JSON.parse(decrypted)]
       setScannedData(scannedDataCol)
+      dispatch(addNewScan(scannedDataCol))
     })
 
     socket.on('disconnected', (socketDisconnected) => {
