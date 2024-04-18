@@ -1,1 +1,1 @@
-export { default } from './parsedTable';
+export { default } from './parsedTable'

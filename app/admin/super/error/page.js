@@ -1,7 +1,5 @@
 const SuperError = () => {
-    return (
-        <>Error</>
-    )
+  return <>Error</>
 }
 
 export default SuperError

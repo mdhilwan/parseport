@@ -2,12 +2,13 @@ import { Open_Sans } from 'next/font/google'
 
 const googleFont = Open_Sans({
   subsets: ['latin'],
-  weight: ['300', '400', '600', '800']
+  weight: ['300', '400', '600', '800'],
 })
 
 export const metadata = {
   title: 'Passport to Visa',
-  description: 'Connect your phone to your computer, use your phone and parse a passport MRZ and send it to the linked computer.',
+  description:
+    'Connect your phone to your computer, use your phone and parse a passport MRZ and send it to the linked computer.',
 }
 
 export default function RootLayout({ children }) {

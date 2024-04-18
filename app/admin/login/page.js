@@ -1,21 +1,23 @@
-import Login from "@/app/admin/shared/login"
+import Login from '@/app/admin/shared/login'
 import '@/styles/global.css'
-import { getServerAuthSession } from '@/app/server/auth';
+import { getServerAuthSession } from '@/app/server/auth'
 
+const LoginAdmin = async () => {
+  const authSession = await getServerAuthSession()
 
-const LoginAdmin = async() => {
-    const authSession = await getServerAuthSession();
-
-    return (
-        <section className="bg-gray-50">
-            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 ">
-                    ParsePort
-                </a>
-                <Login whichAdmin={"admin"} session={authSession}/>
-            </div>
-        </section>
-    )
+  return (
+    <section className="bg-gray-50">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <a
+          href="#"
+          className="flex items-center mb-6 text-2xl font-semibold text-gray-900 "
+        >
+          ParsePort
+        </a>
+        <Login whichAdmin={'admin'} session={authSession} />
+      </div>
+    </section>
+  )
 }
 
 export default LoginAdmin
