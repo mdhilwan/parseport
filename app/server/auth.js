@@ -20,6 +20,7 @@ export const authOptions = {
     callbacks: {
         async signIn({ user }) {
             const { res: { result } } = await HttpActions.GetUserByEmail(user.email)
+            console.log('callbacks', result, result.active, user.email)
             if (user.email && result.active) {
                 const { res: { result: { sessionid } } } = await HttpActions.UserLogin(user.email)
                 if (sessionid) {
