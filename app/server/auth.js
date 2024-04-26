@@ -20,7 +20,7 @@ export const authOptions = {
     callbacks: {
         async signIn({ user }) {
             const { res: { result } } = await HttpActions.GetUserByEmail(user.email)
-            console.log('signIn', result, result.active, user.email)
+            console.log('signIn ::::::::', result)
             if (user.email && result.active) {
                 const { res: { result: { sessionid } } } = await HttpActions.UserLogin(user.email)
                 if (sessionid) {
@@ -32,7 +32,7 @@ export const authOptions = {
         },
         async session({ session }) {
             let { res: { result } } = await HttpActions.GetUserByEmail(session.user.email)
-            console.log('session', result, result.active, user.email)
+            console.log('session ::::::::', result)
             if (session.user.email && result.active) {
                 if (isSessionIdExpired(result.invaliddatetime)) {
                     const { res: { result: { sessionid } } } = await HttpActions.RefreshSessionId(session.user.email)
@@ -48,7 +48,7 @@ export const authOptions = {
         },
         async jwt({ token, account }) {
             const { res: { result } } = await HttpActions.GetUserByEmail(token.email)
-            console.log('jwt', result, result.active, token.email, account)
+            console.log('jwt ::::::::', result)
             if (token.email && result.active && account) {
                 return token
             }
