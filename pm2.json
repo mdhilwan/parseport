@@ -3,7 +3,7 @@
         {
             "name": "parseport",
             "script": "npm",
-            "args" : "run dev"
+            "args" : "run prod"
         }
     ]
 }
