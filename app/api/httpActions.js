@@ -2,6 +2,7 @@ import { ACTIVATE_USER, ADD_NEW_USER, DEACTIVATE_USER, DELETE_USER, GET_ALL_USER
 
 const postHeader = { method: 'POST' }
 const doFetchPost = (route, body) => {
+    console.log(process.env.NEXT_PUBLIC_BASE_URL)
     if (body) {
         return fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/acct/${route}`, {
             ...postHeader,
