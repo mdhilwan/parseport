@@ -2,6 +2,7 @@
 
 import download from 'downloadjs'
 import Input from './input'
+import { useSelector } from 'react-redux'
 
 const tableLabelMap = {
   issuingState: 'Issuing State',
@@ -17,8 +18,10 @@ const tableLabelMap = {
 
 const tableLabelKeys = Object.keys(tableLabelMap)
 
-const ParsedTable = ({ parsed }) => {
-  const filtered = parsed.map((row) =>
+const ParsedTable = () => {
+  const { scannedData } = useSelector((state) => state.mrzStore)
+
+  const filtered = scannedData.map((row) =>
     Object.fromEntries(
       Object.entries(row).filter((r) => tableLabelKeys.includes(r[0]))
     )
@@ -45,7 +48,7 @@ const ParsedTable = ({ parsed }) => {
 
   return (
     <>
-      {parsed.length > 0 ? (
+      {scannedData.length > 0 ? (
         <table className="table table-auto w-full">
           <thead>
             <tr>

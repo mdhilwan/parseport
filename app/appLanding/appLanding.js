@@ -33,18 +33,8 @@ const AppLanding = ({ uuid, session }) => {
   const socket = io(`:${socketPort}`)
 
   const state = useSelector((state) => state.mrzStore)
-  const {
-    parsed,
-    guid,
-    scanned,
-    qrcodeSrc,
-    scannedData,
-    showQrCodeModal,
-    scanState,
-  } = state
+  const { parsed, guid, scanned, qrcodeSrc, showQrCodeModal, scanState } = state
   const dispatch = useDispatch()
-
-  console.log(state)
 
   if (guid === '') {
     dispatch(setGuid(uuid))
@@ -92,7 +82,6 @@ const AppLanding = ({ uuid, session }) => {
       })
 
       socket.on('parsed', ({ parsed, iv }) => {
-        console.log('parsed!!!!', { guid, iv, state })
         const decrypted = decrypt(parsed, guid, iv)
         scannedDataCol = [...scannedDataCol, JSON.parse(decrypted)]
         dispatch(setScannedData(scannedDataCol))
@@ -104,8 +93,6 @@ const AppLanding = ({ uuid, session }) => {
           dispatch(setDisconnected(true))
         }
       })
-
-      console.log('useEffect:::', guid)
     }
   }, [guid])
 
@@ -172,11 +159,10 @@ const AppLanding = ({ uuid, session }) => {
             <h2 className="text-3xl font-bold tracking-tight mb-10">
               Passport to Visa Scans
             </h2>
-            <ParsedTable parsed={scannedData} session={session} />
+            <ParsedTable />
             <StateMrzInput
               setParsedCb={setParsedCb}
               setScanStateCb={setScanStateCb}
-              scanState={scanState}
               bg={mrzStateDropZoneClass}
             />
             <StatePhoneConnection />

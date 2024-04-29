@@ -1,8 +1,11 @@
+import { useSelector } from 'react-redux'
 import { State } from '../enums/state'
 import Mrz from '../mrz'
 import MrzInputHandler from '../mrz/MrzInutHandler'
 
-const StateMrzInput = ({ setParsedCb, setScanStateCb, scanState, bg }) => {
+const StateMrzInput = ({ setParsedCb, setScanStateCb, bg }) => {
+  const { scanState } = useSelector((state) => state.mrzStore)
+
   const dragOverHandler = (ev) => ev.preventDefault()
   const dropHandler = (evt) => {
     evt.preventDefault()
