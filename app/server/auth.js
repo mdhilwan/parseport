@@ -25,6 +25,7 @@ export const authOptions = {
       const {
         res: { result },
       } = await HttpActions.GetUserByEmail(user.email)
+      console.log('signIn ::::::::', result)
       if (user.email && result.active) {
         const {
           res: {
@@ -42,6 +43,7 @@ export const authOptions = {
       let {
         res: { result },
       } = await HttpActions.GetUserByEmail(session.user.email)
+      console.log('session ::::::::', result)
       if (session.user.email && result.active) {
         if (isSessionIdExpired(result.invaliddatetime)) {
           const {
@@ -63,6 +65,7 @@ export const authOptions = {
       const {
         res: { result },
       } = await HttpActions.GetUserByEmail(token.email)
+      console.log('jwt ::::::::', result)
       if (token.email && result.active && account) {
         return token
       }
