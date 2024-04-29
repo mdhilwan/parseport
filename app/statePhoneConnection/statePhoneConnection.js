@@ -1,4 +1,10 @@
-const StatePhoneConnection = ({ disconnected, setShowQrCodeModal }) => {
+import { useDispatch, useSelector } from 'react-redux'
+import { setShowQrCodeModal } from '../slice/slice'
+
+const StatePhoneConnection = () => {
+  const { disconnected } = useSelector((state) => state.mrzStore)
+  const dispatch = useDispatch()
+
   return (
     <div className="mt-3 w-80">
       {disconnected ? (
@@ -11,7 +17,7 @@ const StatePhoneConnection = ({ disconnected, setShowQrCodeModal }) => {
             <a
               className="text-sm font-medium text-blue-600 p-1.5 hover:bg-blue-100 rounded-lg dark:text-blue-500 dark:hover:bg-gray-200"
               href="#"
-              onClick={() => setShowQrCodeModal(true)}
+              onClick={() => dispatch(setShowQrCodeModal(true))}
             >
               Connect
             </a>

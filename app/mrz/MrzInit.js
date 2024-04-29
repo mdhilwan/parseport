@@ -2,7 +2,7 @@ import { State } from '../enums/state'
 import MrzWorker from './MrzWorker'
 import * as CryptoJS from 'crypto-js'
 
-const MrzInit = ({ setParsed, updateIdCol }) => {
+const MrzInit = ({ setParsedCb, updateIdCol }) => {
   return MrzWorker({
     async onCallback({ event, id }) {
       const data = event.data
@@ -16,13 +16,13 @@ const MrzInit = ({ setParsed, updateIdCol }) => {
           break
         case 'result':
           if (data.result?.parsed?.fields) {
-            setParsed({
+            setParsedCb({
               data: data.result.parsed.fields,
               iv: JSON.stringify(CryptoJS.lib.WordArray.random(16)),
             })
             updateIdCol({ id: id, state: State.SUCCESS })
           } else {
-            setParsed({
+            setParsedCb({
               message: 'Please reposition the biometric page and try again.',
             })
             updateIdCol({ id: id, state: State.ERROR })

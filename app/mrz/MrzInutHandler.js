@@ -1,7 +1,7 @@
 import { State } from '../enums/state'
 import MrzInit from './MrzInit'
 
-const MrzInputHandler = ({ setParsed, setScanState, $event }) => {
+const MrzInputHandler = ({ setParsedCb, setScanStateCb, $event }) => {
   let workerIdCol = []
   const updateIdCol = ({ id, state }) => {
     const idToUpdate = workerIdCol.find((i) => i.id === id)
@@ -10,11 +10,11 @@ const MrzInputHandler = ({ setParsed, setScanState, $event }) => {
     }
     const states = workerIdCol.map((id) => id.state)
     if (states.includes(State.SCANNING)) {
-      setScanState(State.SCANNING)
+      setScanStateCb(State.SCANNING)
     } else if (states.includes(State.ERROR)) {
-      setScanState(State.ERROR)
+      setScanStateCb(State.ERROR)
     } else if ([...new Set(states)].includes(State.SUCCESS)) {
-      setScanState(State.SUCCESS)
+      setScanStateCb(State.SUCCESS)
     }
   }
   const beginScanning = (inputFiles) => {
@@ -23,7 +23,7 @@ const MrzInputHandler = ({ setParsed, setScanState, $event }) => {
         const reader = new FileReader()
         reader.onload = (e) => {
           if (e && e.target && e.target.result) {
-            let mrzWorker = MrzInit({ setParsed, setScanState, updateIdCol })
+            let mrzWorker = MrzInit({ setParsedCb, updateIdCol })
             workerIdCol.push({ id: mrzWorker.id, state: State.SCANNING })
             mrzWorker.postMessage({
               cmd: 'process',

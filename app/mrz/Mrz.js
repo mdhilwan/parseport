@@ -1,7 +1,7 @@
 import Script from 'next/script'
 import MrzInputHandler from './MrzInutHandler'
 
-const Mrz = ({ setScanState, setParsed }) => {
+const Mrz = ({ setScanStateCb, setParsedCb }) => {
   return (
     <>
       <Script
@@ -16,7 +16,7 @@ const Mrz = ({ setScanState, setParsed }) => {
         className="hidden"
         multiple
         onChange={($event) =>
-          MrzInputHandler({ setScanState, setParsed, $event })
+          MrzInputHandler({ setScanStateCb, setParsedCb, $event })
         }
       />
     </>

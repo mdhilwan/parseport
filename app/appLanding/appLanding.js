@@ -16,27 +16,45 @@ import utils from '../utils'
 import { decrypt } from '../mrz/crypt'
 import { Provider, useDispatch, useSelector } from 'react-redux'
 import store from '../store'
-import { addNewScan } from '../slice/slice'
+import {
+  addNewScan,
+  setGuid,
+  setParsed,
+  setScanned,
+  setDisconnected,
+  setScannedData,
+  setQrcodeSrc,
+  setShowQrCodeModal,
+  setScanState,
+} from '../slice/slice'
 
 const AppLanding = ({ uuid, session }) => {
   const socketPort = '4001'
   const socket = io(`:${socketPort}`)
 
   const state = useSelector((state) => state.mrzStore)
+  const {
+    parsed,
+    guid,
+    scanned,
+    qrcodeSrc,
+    scannedData,
+    showQrCodeModal,
+    scanState,
+  } = state
   const dispatch = useDispatch()
 
   console.log(state)
 
-  const [guid, setGuid] = useState(uuid)
-  const [scanned, setScanned] = useState(false)
-  const [disconnected, setDisconnected] = useState(true)
-  const [qrcodeSrc, setQrcodeSrc] = useState('loading.svg')
-  const [scannedData, setScannedData] = useState([])
-  const [showQrCodeModal, setShowQrCodeModal] = useState(false)
-  const [scanState, setScanState] = useState(State.IDLE)
-  const [parsed, setParsed] = useState({})
+  if (guid === '') {
+    dispatch(setGuid(uuid))
+  }
+
   const [cookies, setCookie] = useCookies(['guid'])
   const connectedToWs = () => (guid ? guid.includes('@') : false)
+
+  const setParsedCb = (obj) => dispatch(setParsed(obj))
+  const setScanStateCb = (obj) => dispatch(setScanState(obj))
 
   const [mrzDropZoneClass, setMrzDropZoneClass] = useState(
     'flex justify-center w-full h-60 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none'
@@ -53,44 +71,48 @@ const AppLanding = ({ uuid, session }) => {
     evt.preventDefault()
     evt.stopPropagation()
     MrzInputHandler({
-      setParsed,
-      setScanState,
+      setParsedCb,
+      setScanStateCb,
       $event: [...evt.dataTransfer.files],
     })
   }
 
   useEffect(() => {
-    socket.on('connect', () => {
-      setGuid(`${guid}@@${socket.id}`)
-      setCookie('guid', `${guid}@@${socket.id}`)
-    })
+    if (!connectedToWs()) {
+      socket.on('connect', () => {
+        dispatch(setGuid(`${guid}@@${socket.id}`))
+        setCookie('guid', `${uuid}@@${socket.id}`)
+      })
 
-    socket.on('scanned:phone:qr', (agentId) => {
-      connectedAgentId = agentId
-      setScanned(true)
-      setDisconnected(false)
-      setShowQrCodeModal(false)
-    })
+      socket.on('scanned:phone:qr', (agentId) => {
+        connectedAgentId = agentId
+        dispatch(setScanned(true))
+        dispatch(setDisconnected(false))
+        dispatch(setShowQrCodeModal(false))
+      })
 
-    socket.on('parsed', ({ parsed, iv }) => {
-      console.log('parsed!!!!')
-      const decrypted = decrypt(parsed, guid, iv)
-      scannedDataCol = [...scannedDataCol, JSON.parse(decrypted)]
-      setScannedData(scannedDataCol)
-      dispatch(addNewScan(scannedDataCol))
-    })
+      socket.on('parsed', ({ parsed, iv }) => {
+        console.log('parsed!!!!', { guid, iv, state })
+        const decrypted = decrypt(parsed, guid, iv)
+        scannedDataCol = [...scannedDataCol, JSON.parse(decrypted)]
+        dispatch(setScannedData(scannedDataCol))
+        dispatch(addNewScan(scannedDataCol))
+      })
 
-    socket.on('disconnected', (socketDisconnected) => {
-      if (socketDisconnected === connectedAgentId) {
-        setDisconnected(true)
-      }
-    })
-  }, [])
+      socket.on('disconnected', (socketDisconnected) => {
+        if (socketDisconnected === connectedAgentId) {
+          dispatch(setDisconnected(true))
+        }
+      })
+
+      console.log('useEffect:::', guid)
+    }
+  }, [guid])
 
   useEffect(() => {
     if (connectedToWs()) {
       QRCode.toDataURL(`${window.location.href}link?id=${guid}`)
-        .then((urlSrc) => setQrcodeSrc(urlSrc))
+        .then((urlSrc) => dispatch(setQrcodeSrc(urlSrc)))
         .catch((err) => console.error(err))
     }
   }, [guid, connectedToWs()])
@@ -99,7 +121,7 @@ const AppLanding = ({ uuid, session }) => {
 
   useEffect(() => {
     if (scanState === State.SUCCESS) {
-      setScanned(true)
+      dispatch(setScanned(true))
     }
   }, [scanState])
 
@@ -152,15 +174,12 @@ const AppLanding = ({ uuid, session }) => {
             </h2>
             <ParsedTable parsed={scannedData} session={session} />
             <StateMrzInput
-              setParsed={setParsed}
+              setParsedCb={setParsedCb}
+              setScanStateCb={setScanStateCb}
               scanState={scanState}
-              setScanState={setScanState}
               bg={mrzStateDropZoneClass}
             />
-            <StatePhoneConnection
-              disconnected={disconnected}
-              setShowQrCodeModal={setShowQrCodeModal}
-            />
+            <StatePhoneConnection />
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-24">
@@ -276,8 +295,8 @@ const AppLanding = ({ uuid, session }) => {
                           </span>
                         </span>
                         <Mrz
-                          setParsed={setParsed}
-                          setScanState={setScanState}
+                          setParsedCb={setParsedCb}
+                          setScanStateCb={setScanStateCb}
                         />
                       </label>
                     </div>
@@ -320,7 +339,7 @@ const AppLanding = ({ uuid, session }) => {
                   <button
                     type="button"
                     className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                    onClick={() => setShowQrCodeModal(false)}
+                    onClick={() => dispatch(setShowQrCodeModal(false))}
                   >
                     Cancel
                   </button>
