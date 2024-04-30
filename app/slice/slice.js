@@ -22,7 +22,6 @@ export const slice = createSlice({
       state.parsed = action.payload
     },
     setGuid: (state, action) => {
-      console.log('action:::', action.payload)
       state.guid = action.payload
     },
     addNewScan: (state, action) => {

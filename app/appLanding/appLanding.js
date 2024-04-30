@@ -70,8 +70,10 @@ const AppLanding = ({ uuid, session }) => {
   useEffect(() => {
     if (!connectedToWs()) {
       socket.on('connect', () => {
-        dispatch(setGuid(`${guid}@@${socket.id}`))
-        setCookie('guid', `${uuid}@@${socket.id}`)
+        if (guid !== '') {
+          dispatch(setGuid(`${guid}@@${socket.id}`))
+          setCookie('guid', `${uuid}@@${socket.id}`)
+        }
       })
 
       socket.on('scanned:phone:qr', (agentId) => {
