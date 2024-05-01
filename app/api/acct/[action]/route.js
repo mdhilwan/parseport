@@ -61,7 +61,6 @@ export async function POST(request, { params: { action } }) {
     case USER_DO_PDF:
       return doPdf(request)
     case GET_ALL_USER:
-      console.log(':::: GET_ALL_USER ::::')
       return getAllUser()
     case GET_ALL_COMPANIES:
       return getAllCompanies()
