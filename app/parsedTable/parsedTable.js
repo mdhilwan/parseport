@@ -1,6 +1,5 @@
 'use client'
 
-import download from 'downloadjs'
 import Input from './input'
 import { useSelector } from 'react-redux'
 import GenerateVisa from '../generate/visa'

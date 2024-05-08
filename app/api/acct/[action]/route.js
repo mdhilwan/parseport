@@ -7,6 +7,7 @@ import {
   doLogin,
   doLogout,
   doPdf,
+  doExcel,
   doScan,
   generateVisa,
   getAllCompanies,
@@ -27,6 +28,7 @@ export const USER_LOGIN = 'user-login'
 export const USER_LOGOUT = 'user-logout'
 export const USER_DO_SCAN = 'user-scan'
 export const USER_DO_PDF = 'user-generate-pdf'
+export const USER_DO_EXCEL = 'user-generate-excel'
 export const GET_ALL_USER = 'get-all-users'
 export const GET_USER_BY_EMAIL = 'get-user-by-email'
 export const GET_ALL_COMPANIES = 'get-all-companies'
@@ -76,6 +78,8 @@ export async function POST(request, { params: { action } }) {
       return deleteUser(request)
     case GENERATE_VISA:
       return generateVisa(request)
+    case USER_DO_EXCEL:
+      return doExcel(request)
     // case NEW_CLIENT_USER_TABLE:
     //     return doNewClientUserTable();
     // case NEW_SCANS_TABLE:

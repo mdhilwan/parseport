@@ -1,11 +1,12 @@
 import { useSelector } from 'react-redux'
 import * as XLXS from 'xlsx'
 import { saveAs } from 'file-saver'
+import { HttpActions } from '@/app/api/httpActions'
 
-const GenerateCsv = () => {
+const GenerateCsv = ({ user }) => {
   const { scannedData } = useSelector((state) => state.mrzStore)
 
-  const doGenerateCsv = () => {
+  const doGenerateCsv = async () => {
     const formatDate = (dat) => {
       dat.birthDate = dat.birthDate.split('-').reverse().join('-')
       dat.expirationDate = dat.expirationDate.split('-').reverse().join('-')
@@ -55,7 +56,10 @@ const GenerateCsv = () => {
       renameKey(formatDate(dat))
     )
 
-    console.log(cleanedData)
+    await HttpActions.DoExcel({
+      userEmail: user.email,
+      company: user.res.result.company,
+    })
 
     const worksheet = XLXS.utils.json_to_sheet(cleanedData)
     const workbook = XLXS.utils.book_new()
