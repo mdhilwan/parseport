@@ -20,6 +20,7 @@ const tableLabelKeys = Object.keys(tableLabelMap)
 
 const ParsedTable = () => {
   const { scannedData } = useSelector((state) => state.mrzStore)
+  const visaFeature = false
 
   const filtered = scannedData.map((row) =>
     Object.fromEntries(
@@ -68,9 +69,7 @@ const ParsedTable = () => {
                     </td>
                   )
                 })}
-                <td>
-                  <GenerateVisa row={row} />
-                </td>
+                <td>{visaFeature ? <GenerateVisa row={row} /> : <></>}</td>
               </tr>
             ))}
           </tbody>
