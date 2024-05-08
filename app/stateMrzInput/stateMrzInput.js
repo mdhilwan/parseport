@@ -3,7 +3,7 @@ import { State } from '../enums/state'
 import Mrz from '../mrz'
 import MrzInputHandler from '../mrz/MrzInutHandler'
 
-const StateMrzInput = ({ setParsedCb, setScanStateCb, bg }) => {
+const StateMrzInput = ({ dpSetParsed, dpSetScanState, bg }) => {
   const { scanState } = useSelector((state) => state.mrzStore)
 
   const dragOverHandler = (ev) => ev.preventDefault()
@@ -11,8 +11,8 @@ const StateMrzInput = ({ setParsedCb, setScanStateCb, bg }) => {
     evt.preventDefault()
     evt.stopPropagation()
     MrzInputHandler({
-      setParsedCb,
-      setScanStateCb,
+      dpSetParsed,
+      dpSetScanState,
       $event: [...evt.dataTransfer.files],
     })
   }
@@ -38,7 +38,7 @@ const StateMrzInput = ({ setParsedCb, setScanStateCb, bg }) => {
               <span className="text-sm font-medium text-blue-600 p-1.5 hover:bg-blue-100 rounded-lg dark:text-blue-500 dark:hover:bg-gray-200 hover:cursor-pointer">
                 Or browse
               </span>
-              <Mrz setParsedCb={setParsedCb} setScanStateCb={setScanStateCb} />
+              <Mrz dpSetParsed={dpSetParsed} dpSetScanState={dpSetScanState} />
             </label>
           </>
         )}

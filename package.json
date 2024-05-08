@@ -45,7 +45,8 @@
     "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2",
     "uuid": "^9.0.1",
-    "validator": "^13.11.0"
+    "validator": "^13.11.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.7",

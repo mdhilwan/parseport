@@ -43,8 +43,8 @@ const AppLanding = ({ uuid, session }) => {
   const [cookies, setCookie] = useCookies(['guid'])
   const connectedToWs = () => (guid ? guid.includes('@') : false)
 
-  const setParsedCb = (obj) => dispatch(setParsed(obj))
-  const setScanStateCb = (obj) => dispatch(setScanState(obj))
+  const dpSetParsed = (obj) => dispatch(setParsed(obj))
+  const dpSetScanState = (obj) => dispatch(setScanState(obj))
 
   const [mrzDropZoneClass, setMrzDropZoneClass] = useState(
     'flex justify-center w-full h-60 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none'
@@ -61,8 +61,8 @@ const AppLanding = ({ uuid, session }) => {
     evt.preventDefault()
     evt.stopPropagation()
     MrzInputHandler({
-      setParsedCb,
-      setScanStateCb,
+      dpSetParsed,
+      dpSetScanState,
       $event: [...evt.dataTransfer.files],
     })
   }
@@ -147,6 +147,10 @@ const AppLanding = ({ uuid, session }) => {
     return 'flex min-h-screen flex-col items-center justify-between p-12 max-w-6xl mx-auto'
   }
 
+  const generateCsv = () => {
+    console.log(scanned)
+  }
+
   return (
     <div>
       <Controls session={session} />
@@ -162,9 +166,16 @@ const AppLanding = ({ uuid, session }) => {
               Passport to Visa Scans
             </h2>
             <ParsedTable />
+            <button
+              type="button"
+              className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-xs px-2 py-1 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+              onClick={() => generateCsv()}
+            >
+              Generate CSV
+            </button>
             <StateMrzInput
-              setParsedCb={setParsedCb}
-              setScanStateCb={setScanStateCb}
+              dpSetParsed={dpSetParsed}
+              dpSetScanState={dpSetScanState}
               bg={mrzStateDropZoneClass}
             />
             <StatePhoneConnection />
@@ -283,8 +294,8 @@ const AppLanding = ({ uuid, session }) => {
                           </span>
                         </span>
                         <Mrz
-                          setParsedCb={setParsedCb}
-                          setScanStateCb={setScanStateCb}
+                          dpSetParsed={dpSetParsed}
+                          dpSetScanState={dpSetScanState}
                         />
                       </label>
                     </div>
