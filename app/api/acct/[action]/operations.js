@@ -139,7 +139,7 @@ export const doScan = async (request) => {
   }
   try {
     const result =
-      await sql`INSERT INTO scans SET scanId = ${v4()}, userEmail = ${userEmail}, company = ${company}, dateTimeStamp = ${getDateTimeStamp()};`
+      await sql`INSERT INTO scans ( scanId, userEmail, company, dateTimeStamp ) VALUES (${v4()}, ${userEmail}, ${company}, ${getDateTimeStamp()});`
     return doReturn200(result)
   } catch (error) {
     return doReturn500(error)

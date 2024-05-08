@@ -27,8 +27,10 @@ import {
   setShowQrCodeModal,
   setScanState,
 } from '../slice/slice'
+import GenerateCsv from '../generate/csv'
+import { HttpActions } from '../api/httpActions'
 
-const AppLanding = ({ uuid, session }) => {
+const AppLanding = ({ uuid, session, user }) => {
   const socketPort = '4001'
   const socket = io(`:${socketPort}`)
 
@@ -43,7 +45,13 @@ const AppLanding = ({ uuid, session }) => {
   const [cookies, setCookie] = useCookies(['guid'])
   const connectedToWs = () => (guid ? guid.includes('@') : false)
 
-  const dpSetParsed = (obj) => dispatch(setParsed(obj))
+  const dpSetParsed = async (obj) => {
+    await HttpActions.DoScan({
+      userEmail: user.email,
+      company: user.res.result.company,
+    })
+    dispatch(setParsed(obj))
+  }
   const dpSetScanState = (obj) => dispatch(setScanState(obj))
 
   const [mrzDropZoneClass, setMrzDropZoneClass] = useState(
@@ -147,10 +155,6 @@ const AppLanding = ({ uuid, session }) => {
     return 'flex min-h-screen flex-col items-center justify-between p-12 max-w-6xl mx-auto'
   }
 
-  const generateCsv = () => {
-    console.log(scanned)
-  }
-
   return (
     <div>
       <Controls session={session} />
@@ -166,13 +170,7 @@ const AppLanding = ({ uuid, session }) => {
               Passport to Visa Scans
             </h2>
             <ParsedTable />
-            <button
-              type="button"
-              className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-xs px-2 py-1 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
-              onClick={() => generateCsv()}
-            >
-              Generate CSV
-            </button>
+            <GenerateCsv />
             <StateMrzInput
               dpSetParsed={dpSetParsed}
               dpSetScanState={dpSetScanState}
@@ -354,10 +352,10 @@ const AppLanding = ({ uuid, session }) => {
   )
 }
 
-const AppLandingStore = ({ uuid, session }) => {
+const AppLandingStore = ({ uuid, session, user }) => {
   return (
     <Provider store={store}>
-      <AppLanding uuid={uuid} session={session} />
+      <AppLanding uuid={uuid} session={session} user={user} />
     </Provider>
   )
 }

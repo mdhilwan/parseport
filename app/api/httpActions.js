@@ -6,6 +6,7 @@ import {
   GET_ALL_USER,
   GET_USER_BY_EMAIL,
   SAVE_NEW_USER,
+  USER_DO_SCAN,
   USER_LOGIN,
 } from './acct/[action]/route'
 
@@ -69,6 +70,15 @@ export const HttpActions = {
         companyAddress: companyAddress,
         companyNumber: companyNumber,
         userEmail: userEmail,
+      },
+    })
+    return { res: await res.json(), email: userEmail }
+  },
+  async DoScan({ userEmail, company }) {
+    const res = await doFetchPost(USER_DO_SCAN, {
+      data: {
+        userEmail,
+        company,
       },
     })
     return { res: await res.json(), email: userEmail }
