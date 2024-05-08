@@ -6,6 +6,8 @@ import {
   GET_ALL_USER,
   GET_USER_BY_EMAIL,
   SAVE_NEW_USER,
+  USER_DO_EXCEL,
+  USER_DO_PDF,
   USER_DO_SCAN,
   USER_LOGIN,
 } from './acct/[action]/route'
@@ -76,6 +78,24 @@ export const HttpActions = {
   },
   async DoScan({ userEmail, company }) {
     const res = await doFetchPost(USER_DO_SCAN, {
+      data: {
+        userEmail,
+        company,
+      },
+    })
+    return { res: await res.json(), email: userEmail }
+  },
+  async DoPdf({ userEmail, company }) {
+    const res = await doFetchPost(USER_DO_PDF, {
+      data: {
+        userEmail,
+        company,
+      },
+    })
+    return { res: await res.json(), email: userEmail }
+  },
+  async DoExcel({ userEmail, company }) {
+    const res = await doFetchPost(USER_DO_EXCEL, {
       data: {
         userEmail,
         company,

@@ -163,7 +163,31 @@ export const doPdf = async (request) => {
   }
   try {
     const result =
-      await sql`INSERT INTO pdfs SET pdfId = ${v4()}, userEmail = ${userEmail}, company = ${company}, dateTimeStamp = ${getDateTimeStamp()};`
+      await sql`INSERT INTO pdfs ( pdfId, userEmail, company, dateTimeStamp ) VALUES (${v4()}, ${userEmail}, ${company}, ${getDateTimeStamp()});`
+    return doReturn200(result)
+  } catch (error) {
+    return doReturn500(error)
+  }
+}
+
+/**
+ * user generate pdf
+ * Store pdf date-time stamp, userEmail, company who did the scan
+ */
+export const doExcel = async (request) => {
+  const {
+    data: { userEmail, company },
+  } = await request.json()
+  if (!userEmail) {
+    return doReturn500(`userEmail: missing`)
+  }
+  const exist = await isEmailExist(userEmail)
+  if (!exist) {
+    return doReturn500(`userEmail: ${userEmail} does not exist`)
+  }
+  try {
+    const result =
+      await sql`INSERT INTO downloads ( downloadId, userEmail, company, dateTimeStamp ) VALUES (${v4()}, ${userEmail}, ${company}, ${getDateTimeStamp()});`
     return doReturn200(result)
   } catch (error) {
     return doReturn500(error)
@@ -255,11 +279,12 @@ export const deleteUser = async (request) => {
 
 export const generateVisa = async (request) => {
   const { data } = await request.json()
-  console.log(data)
-
   const authSession = await getServerAuthSession()
   const tokenForApi = `${btoa(JSON.stringify(authSession))}`
   const jwtForApi = jwt.sign(tokenForApi, process.env.NEXTAUTH_SECRET)
+
+  console.log(data)
+
   return await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/generate/${data.documentNumber}`,
     {

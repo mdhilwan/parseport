@@ -170,7 +170,7 @@ const AppLanding = ({ uuid, session, user }) => {
               Passport to Visa Scans
             </h2>
             <ParsedTable />
-            <GenerateCsv />
+            <GenerateCsv user={user} />
             <StateMrzInput
               dpSetParsed={dpSetParsed}
               dpSetScanState={dpSetScanState}

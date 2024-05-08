@@ -1,4 +1,9 @@
+import download from 'downloadjs'
+import { useSelector } from 'react-redux'
+
 const GenerateVisa = ({ row }) => {
+  const state = useSelector((state) => state.mrzStore)
+
   const generateVisa = async (visaData) => {
     const doGenerate = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/acct/generate-visa`,
