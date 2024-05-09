@@ -62,10 +62,7 @@ const ParsedTable = () => {
                 {Object.entries(row).map((col, colIndex) => {
                   return (
                     <td key={colIndex} className="py-1">
-                      <Input
-                        val={col[1]}
-                        onChange={(evt) => (row[col[0]] = evt.target.value)}
-                      />
+                      <Input colIndex={col[0]} rowIndex={rowIndex} />
                     </td>
                   )
                 })}
