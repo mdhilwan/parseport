@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, current } from '@reduxjs/toolkit'
 import { State } from '../enums/state'
 
 export const slice = createSlice({
@@ -26,6 +26,14 @@ export const slice = createSlice({
     },
     addNewScan: (state, action) => {
       state.scans = [...state.scans, action.payload]
+    },
+    setNewValue: (state, action) => {
+      const { colKey, rowKey, newValue } = action.payload
+      const newScannedDate = JSON.parse(
+        JSON.stringify([...current(state.scannedData)])
+      )
+      newScannedDate[rowKey][colKey] = newValue
+      state.scannedData = newScannedDate
     },
     setDisconnected: (state, action) => {
       state.disconnected = action.payload
@@ -55,6 +63,7 @@ export const {
   setScannedData,
   setShowQrCodeModal,
   setScanState,
+  setNewValue,
 } = slice.actions
 
 export default slice.reducer

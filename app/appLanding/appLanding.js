@@ -150,9 +150,9 @@ const AppLanding = ({ uuid, session, user }) => {
 
   const landingClassName = () => {
     if (scanned) {
-      return 'flex min-h-screen flex-col items-center justify-between p-12 w-full mx-auto'
+      return 'flex flex-col items-center justify-between p-12 w-full mx-auto'
     }
-    return 'flex min-h-screen flex-col items-center justify-between p-12 max-w-6xl mx-auto'
+    return 'flex flex-col items-center justify-between p-12 max-w-6xl mx-auto'
   }
 
   return (
