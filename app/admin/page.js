@@ -1,8 +1,8 @@
 import Controls from '@/app/admin/shared/controls'
-import '@/styles/global.css'
-import AuthGuard from '../authGuard'
 import { getServerAuthSession } from '@/app/server/auth'
+import '@/styles/global.css'
 import { HttpActions } from '../api/httpActions'
+import AuthGuard from '../authGuard'
 
 const Admin = async () => {
   const authSession = await getServerAuthSession()

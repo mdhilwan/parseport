@@ -1,34 +1,34 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
-import io from 'socket.io-client'
 import QRCode from 'qrcode'
-import ParsedTable from '../parsedTable'
+import { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie'
+import { Provider, useDispatch, useSelector } from 'react-redux'
+import io from 'socket.io-client'
+import Controls from '../admin/shared/controls'
+import { HttpActions } from '../api/httpActions'
+import { State } from '../enums/state'
+import GenerateCsv from '../generate/csv'
 import Mrz from '../mrz'
 import MrzInputHandler from '../mrz/MrzInutHandler'
-import { State } from '../enums/state'
-import { useCookies } from 'react-cookie'
-import StatePhoneConnection from '../statePhoneConnection'
-import StateMrzInput from '../stateMrzInput'
-import Controls from '../admin/shared/controls'
-import utils from '../utils'
 import { decrypt } from '../mrz/crypt'
-import { Provider, useDispatch, useSelector } from 'react-redux'
-import store from '../store'
+import ParsedTable from '../parsedTable'
 import {
   addNewScan,
+  setDisconnected,
   setGuid,
   setParsed,
-  setScanned,
-  setDisconnected,
-  setScannedData,
   setQrcodeSrc,
-  setShowQrCodeModal,
   setScanState,
+  setScanned,
+  setScannedData,
+  setShowQrCodeModal,
 } from '../slice/slice'
-import GenerateCsv from '../generate/csv'
-import { HttpActions } from '../api/httpActions'
+import StateMrzInput from '../stateMrzInput'
+import StatePhoneConnection from '../statePhoneConnection'
+import store from '../store'
+import utils from '../utils'
 
 const AppLanding = ({ uuid, session, user }) => {
   const socketPort = '4001'
@@ -128,7 +128,7 @@ const AppLanding = ({ uuid, session, user }) => {
       window.removeEventListener('beforeunload', alertUser)
     }
   }, [])
-  
+
   const alertUser = (e) => {
     e.preventDefault()
     e.returnValue = ''

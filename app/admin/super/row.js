@@ -1,10 +1,10 @@
 'use client'
 
-import utils from '@/app/utils'
 import Input from '@/app/admin/shared/input'
 import { HttpActions } from '@/app/api/httpActions'
-import { useState } from 'react'
+import utils from '@/app/utils'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 const DeActivateButton = ({ user, currUser, setUser }) => {
   const [usr, setUsr] = useState(user)

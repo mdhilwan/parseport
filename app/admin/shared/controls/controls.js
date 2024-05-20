@@ -1,10 +1,10 @@
 'use client'
 
+import { GetType } from '@/app/server/allowed'
 import { signOut } from 'next-auth/react'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import ControlLink from './controlLink'
-import Image from 'next/image'
-import { GetType } from '@/app/server/allowed'
 
 const Controls = ({ whichAdmin, session }) => {
   const pathName = usePathname()

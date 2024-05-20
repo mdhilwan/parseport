@@ -1,8 +1,8 @@
-import AppLanding from './appLanding/appLanding'
 import '@/styles/global.css'
+import { HttpActions } from './api/httpActions'
+import AppLanding from './appLanding/appLanding'
 import AuthGuard from './authGuard'
 import { getServerAuthSession } from './server/auth'
-import { HttpActions } from './api/httpActions'
 
 export default async function Home() {
   const authSession = await getServerAuthSession()

@@ -1,13 +1,13 @@
 'use client'
 
-import io from 'socket.io-client'
-import { useSearchParams, useRouter } from 'next/navigation'
+import '@/styles/global.css'
+import { isMobile } from 'is-mobile'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
-import { isMobile } from 'is-mobile'
-import Status from '../status'
-import '@/styles/global.css'
+import io from 'socket.io-client'
 import { State } from '../enums/state'
+import Status from '../status'
 
 const Link = () => {
   const socketPort = '4001'

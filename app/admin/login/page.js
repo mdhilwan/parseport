@@ -1,6 +1,6 @@
 import Login from '@/app/admin/shared/login'
-import '@/styles/global.css'
 import { getServerAuthSession } from '@/app/server/auth'
+import '@/styles/global.css'
 
 const LoginAdmin = async () => {
   const authSession = await getServerAuthSession()

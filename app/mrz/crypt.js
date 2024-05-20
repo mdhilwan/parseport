@@ -10,4 +10,4 @@ const decrypt = (encryted, uuid, iv) => {
   )
 }
 
-export { encrypt, decrypt }
+export { decrypt, encrypt }

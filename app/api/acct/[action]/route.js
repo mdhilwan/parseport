@@ -1,13 +1,15 @@
+import { authOptions } from '@/app/server/auth'
+import { getServerSession } from 'next-auth/next'
 import { NextResponse } from 'next/server'
 import {
   activateUser,
   deactivateUser,
   deleteUser,
   doAdd,
+  doExcel,
   doLogin,
   doLogout,
   doPdf,
-  doExcel,
   doScan,
   generateVisa,
   getAllCompanies,
@@ -15,10 +17,7 @@ import {
   getPdfsHistory,
   getScansHistory,
   getUser,
-  saveUser,
 } from './operations'
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '@/app/server/auth'
 
 /**
  * Example: api/acct/add-new-user

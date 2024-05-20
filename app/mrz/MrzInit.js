@@ -1,6 +1,6 @@
+import * as CryptoJS from 'crypto-js'
 import { State } from '../enums/state'
 import MrzWorker from './MrzWorker'
-import * as CryptoJS from 'crypto-js'
 
 const MrzInit = ({ dpSetParsed, updateIdCol }) => {
   return MrzWorker({

@@ -1,12 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import EmailInput from './email-input'
+import { HttpActions } from '@/app/api/httpActions'
 import utils from '@/app/utils'
-import PhoneInput from './phone-input'
+import { useEffect, useState } from 'react'
 import isEmail from 'validator/lib/isEmail'
 import isMobilePhone from 'validator/lib/isMobilePhone'
-import { HttpActions } from '@/app/api/httpActions'
+import EmailInput from './email-input'
+import PhoneInput from './phone-input'
 
 const AddUserForm = () => {
   const newEmail = {

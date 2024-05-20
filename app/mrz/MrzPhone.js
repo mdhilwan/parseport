@@ -1,9 +1,9 @@
-import { useCookies } from 'react-cookie'
-import { useEffect, useState } from 'react'
 import Script from 'next/script'
+import { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie'
 import { State } from '../enums/state'
-import Mrz from './Mrz'
 import utils from '../utils'
+import Mrz from './Mrz'
 
 const MrzPhone = ({ socket }) => {
   const [cookies] = useCookies(['guid'])

@@ -1,7 +1,7 @@
+import { HttpActions } from '@/app/api/httpActions'
+import { saveAs } from 'file-saver'
 import { useSelector } from 'react-redux'
 import * as XLXS from 'xlsx'
-import { saveAs } from 'file-saver'
-import { HttpActions } from '@/app/api/httpActions'
 
 const GenerateCsv = ({ user }) => {
   const { scannedData } = useSelector((state) => state.mrzStore)

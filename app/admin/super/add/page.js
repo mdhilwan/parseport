@@ -1,7 +1,7 @@
-import '@/styles/global.css'
-import AuthGuard from '@/app/authGuard'
 import Controls from '@/app/admin/shared/controls'
+import AuthGuard from '@/app/authGuard'
 import { getServerAuthSession } from '@/app/server/auth'
+import '@/styles/global.css'
 import AddUserForm from './add-user-form'
 
 const AddAccount = async () => {

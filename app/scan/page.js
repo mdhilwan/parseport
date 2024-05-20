@@ -1,13 +1,13 @@
 'use client'
 
-import MrzPhone from '../mrz/MrzPhone'
-import io from 'socket.io-client'
 import '@/styles/global.css'
+import { isMobile } from 'is-mobile'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import io from 'socket.io-client'
 import { State } from '../enums/state'
+import MrzPhone from '../mrz/MrzPhone'
 import Status from '../status'
-import { isMobile } from 'is-mobile'
 
 const Scan = () => {
   const socketPort = '4001'

@@ -1,8 +1,8 @@
 'use client'
 
-import Input from './input'
 import { useSelector } from 'react-redux'
 import GenerateVisa from '../generate/visa'
+import Input from './input'
 
 const tableLabelMap = {
   issuingState: 'Issuing State',

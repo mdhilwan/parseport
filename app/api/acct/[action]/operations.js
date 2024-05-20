@@ -1,9 +1,9 @@
+import { getServerAuthSession } from '@/app/server/auth'
+import { sql } from '@vercel/postgres'
+import jwt from 'jsonwebtoken'
 import moment from 'moment'
 import { NextResponse } from 'next/server'
 import { v4 } from 'uuid'
-import { sql } from '@vercel/postgres'
-import { getServerAuthSession } from '@/app/server/auth'
-import jwt from 'jsonwebtoken'
 
 const doGetByEmail = async (userEmail) => {
   const { rows } =
