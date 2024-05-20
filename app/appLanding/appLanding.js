@@ -122,6 +122,18 @@ const AppLanding = ({ uuid, session, user }) => {
     }
   }, [scanState])
 
+  useEffect(() => {
+    window.addEventListener('beforeunload', alertUser)
+    return () => {
+      window.removeEventListener('beforeunload', alertUser)
+    }
+  }, [])
+  
+  const alertUser = (e) => {
+    e.preventDefault()
+    e.returnValue = ''
+  }
+
   const dragOverDocHandler = (ev) => {
     if (connectedToWs() && scanned) {
       setMrStateDropZoneClass(
