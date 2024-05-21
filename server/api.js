@@ -69,7 +69,6 @@ io.on('connection', (socket) => {
 
   socket.on('scanned:parsed', (rawData) => {
     const { agent, data, iv, uuid } = JSON.parse(atob(rawData))
-    console.log('scanned:parsed', iv)
     const decrypted = JSON.parse(decrypt(data, uuid, iv))
     const encryted = encrypt(hydrate(decrypted), uuid, iv)
     const body = { parsed: encryted, iv: iv }
