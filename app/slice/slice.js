@@ -1,6 +1,12 @@
 import { createSlice, current } from '@reduxjs/toolkit'
 import { State } from '../enums/state'
 
+const defaultMrzStateDropZoneClass =
+  'mt-10 flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-50'
+
+const defaultMrzDropZoneClass =
+  'flex justify-center w-full h-60 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none'
+
 export const slice = createSlice({
   name: 'slice',
   initialState: {
@@ -13,6 +19,8 @@ export const slice = createSlice({
     scannedData: [],
     showQrCodeModal: false,
     scanState: State.IDLE,
+    mrzStateDropZoneClass: defaultMrzStateDropZoneClass,
+    mrzDropZoneClass: defaultMrzDropZoneClass,
   },
   reducers: {
     setScanned: (state, action) => {
@@ -50,6 +58,12 @@ export const slice = createSlice({
     setScanState: (state, action) => {
       state.scanState = action.payload
     },
+    setMrzStateDropZoneClass: (state, action) => {
+      state.mrzStateDropZoneClass = action.payload
+    },
+    setMrzDropZoneClass: (state, action) => {
+      state.mrzDropZoneClass = action.payload
+    },
   },
 })
 
@@ -64,6 +78,8 @@ export const {
   setShowQrCodeModal,
   setScanState,
   setNewValue,
+  setMrzStateDropZoneClass,
+  setMrzDropZoneClass,
 } = slice.actions
 
 export default slice.reducer

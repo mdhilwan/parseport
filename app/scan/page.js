@@ -9,10 +9,10 @@ import { State } from '../enums/state'
 import MrzPhone from '../mrz/MrzPhone'
 import Status from '../status'
 
-const Scan = () => {
-  const socketPort = '4001'
-  const socket = io(`:${socketPort}`)
+const socketPort = '4001'
+const socket = io(`:${socketPort}`)
 
+const Scan = () => {
   const [cookies] = useCookies(['guid'])
   const [linkedState, setLinkedState] = useState(State.LINKED)
   const [itsMobile, setItsMobile] = useState()
@@ -27,6 +27,7 @@ const Scan = () => {
       } else {
         setLinkedState(State.DISCONNECTED)
       }
+      socket.removeAllListeners()
     })
 
     setItsMobile(isMobile())
