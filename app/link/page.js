@@ -9,10 +9,10 @@ import io from 'socket.io-client'
 import { State } from '../enums/state'
 import Status from '../status'
 
-const Link = () => {
-  const socketPort = '4001'
-  const socket = io(`:${socketPort}`)
+const socketPort = '4001'
+const socket = io(`:${socketPort}`)
 
+const Link = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const idParams = searchParams.get('id')
@@ -50,6 +50,7 @@ const Link = () => {
     socket.on('disconnected', (socketDisconnected) => {
       if (socketDisconnected === mainSocketId) {
         setLinkedState(State.DISCONNECTED)
+        socket.removeAllListeners()
       }
     })
   }, [])
