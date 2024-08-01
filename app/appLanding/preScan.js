@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import { useDispatch, useSelector } from 'react-redux'
-import { HttpActions } from '../api/httpActions'
 import { State } from '../enums/state'
 import Mrz from '../mrz'
 import MrzInputHandler from '../mrz/MrzInutHandler'
@@ -25,10 +24,10 @@ const PreScan = ({ user }) => {
 
   const dpSetParsed = async (obj) => {
     console.log('dpSetParsed', obj)
-    await HttpActions.DoScan({
-      userEmail: user.email,
-      company: user.res.result.company,
-    })
+    // await HttpActions.DoScan({
+    //   userEmail: user.email,
+    //   company: user.res.result.company,
+    // })
     dispatch(setParsed(obj))
   }
   const dpSetScanState = (obj) => dispatch(setScanState(obj))

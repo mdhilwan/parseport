@@ -1,4 +1,3 @@
-import { HttpActions } from '@/app/api/httpActions'
 import { saveAs } from 'file-saver'
 import { useSelector } from 'react-redux'
 import * as XLXS from 'xlsx'
@@ -56,10 +55,10 @@ const GenerateCsv = ({ user }) => {
       renameKey(formatDate(dat))
     )
 
-    await HttpActions.DoExcel({
-      userEmail: user.email,
-      company: user.res.result.company,
-    })
+    // await HttpActions.DoExcel({
+    //   userEmail: user.email,
+    //   company: user.res.result.company,
+    // })
 
     const worksheet = XLXS.utils.json_to_sheet(cleanedData)
     const workbook = XLXS.utils.book_new()
