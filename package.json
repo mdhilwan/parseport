@@ -19,6 +19,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@next/third-parties": "^14.2.5",
     "@reduxjs/toolkit": "^2.2.3",
     "@vercel/postgres": "^0.5.1",
     "body-parser": "^1.20.2",
