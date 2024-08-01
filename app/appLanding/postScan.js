@@ -1,3 +1,4 @@
+import { sendGAEvent } from '@next/third-parties/google'
 import { useDispatch, useSelector } from 'react-redux'
 import GenerateCsv from '../generate/csv/generate-csv'
 import ParsedTable from '../parsedTable'
@@ -9,10 +10,7 @@ const PostScan = ({ user }) => {
   const dispatch = useDispatch()
   const { mrzStateDropZoneClass } = useSelector((state) => state.mrzStore)
   const dpSetParsed = async (obj) => {
-    await HttpActions.DoScan({
-      userEmail: user.email,
-      company: user.res.result.company,
-    })
+    sendGAEvent({ event: 'new_scan', value: user.email })
     dispatch(setParsed(obj))
   }
   const dpSetScanState = (obj) => dispatch(setScanState(obj))
