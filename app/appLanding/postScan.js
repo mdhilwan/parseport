@@ -10,7 +10,7 @@ const PostScan = ({ user }) => {
   const dispatch = useDispatch()
   const { mrzStateDropZoneClass } = useSelector((state) => state.mrzStore)
   const dpSetParsed = async (obj) => {
-    sendGAEvent({ event: 'new_scan', value: user.email })
+    sendGAEvent('event', 'new_scan', { value: user.email })
     dispatch(setParsed(obj))
   }
   const dpSetScanState = (obj) => dispatch(setScanState(obj))

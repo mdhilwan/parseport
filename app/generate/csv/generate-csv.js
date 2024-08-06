@@ -56,7 +56,7 @@ const GenerateCsv = ({ user }) => {
       renameKey(formatDate(dat))
     )
 
-    sendGAEvent({ event: 'generate_excel', value: user.email })
+    sendGAEvent('event', 'generate_excel', { value: user.email })
 
     const worksheet = XLXS.utils.json_to_sheet(cleanedData)
     const workbook = XLXS.utils.book_new()
