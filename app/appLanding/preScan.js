@@ -23,11 +23,7 @@ const PreScan = ({ user }) => {
   }
 
   const dpSetParsed = async (obj) => {
-    console.log('dpSetParsed', obj)
-    // await HttpActions.DoScan({
-    //   userEmail: user.email,
-    //   company: user.res.result.company,
-    // })
+    window.gtag('event', 'new_scan', { value: user.email })
     dispatch(setParsed(obj))
   }
   const dpSetScanState = (obj) => dispatch(setScanState(obj))

@@ -1,4 +1,3 @@
-import { sendGAEvent } from '@next/third-parties/google'
 import { saveAs } from 'file-saver'
 import { useSelector } from 'react-redux'
 import * as XLXS from 'xlsx'
@@ -56,7 +55,7 @@ const GenerateCsv = ({ user }) => {
       renameKey(formatDate(dat))
     )
 
-    sendGAEvent('event', 'generate_excel', { value: user.email })
+    window.gtag('event', 'generate_excel', { value: user.email })
 
     const worksheet = XLXS.utils.json_to_sheet(cleanedData)
     const workbook = XLXS.utils.book_new()
