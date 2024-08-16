@@ -23,7 +23,7 @@ const PreScan = ({ user }) => {
   }
 
   const dpSetParsed = async (obj) => {
-    window.gtag('event', 'new_scan', { value: user.email })
+    window.gtag('event', 'new_scan', { 'user_email': user.email })
     dispatch(setParsed(obj))
   }
   const dpSetScanState = (obj) => dispatch(setScanState(obj))

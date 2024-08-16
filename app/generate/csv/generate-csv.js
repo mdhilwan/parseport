@@ -55,7 +55,7 @@ const GenerateCsv = ({ user }) => {
       renameKey(formatDate(dat))
     )
 
-    window.gtag('event', 'generate_excel', { value: user.email })
+    window.gtag('event', 'generate_excel', { 'user_email': user.email })
 
     const worksheet = XLXS.utils.json_to_sheet(cleanedData)
     const workbook = XLXS.utils.book_new()
