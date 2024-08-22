@@ -70,8 +70,8 @@ io.on('connection', (socket) => {
   socket.on('scanned:parsed', (rawData) => {
     const { agent, data, iv, uuid } = JSON.parse(atob(rawData))
     const decrypted = JSON.parse(decrypt(data, uuid, iv))
-    const encryted = encrypt(hydrate(decrypted), uuid, iv)
-    const body = { parsed: encryted, iv: iv }
+    const encrypted = encrypt(hydrate(decrypted), uuid, iv)
+    const body = { parsed: encrypted, iv: iv }
     if (agent !== socket.id) {
       socket.to(agent).emit('parsed', body)
     } else {
@@ -101,4 +101,4 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api', apiRouter(io))
 
-server.listen(4001, () => console.log('API:4001'))
+server.listen(4001, () => console.log('API started!:4001'))

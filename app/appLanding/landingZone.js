@@ -6,7 +6,7 @@ const LandingZone = ({ children }) => {
   const dispatch = useDispatch()
   const landingClassName = () => {
     if (scanned) {
-      return 'flex flex-col items-center justify-between p-12 w-full mx-auto'
+      return 'flex flex-col items-start justify-between p-12 w-full mx-auto'
     }
     return 'flex flex-col items-center justify-between p-12 max-w-6xl mx-auto'
   }

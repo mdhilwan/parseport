@@ -37,13 +37,13 @@ const AppLanding = ({ uuid, session, user }) => {
   }
 
   const [cookies, setCookie] = useCookies(['guid'])
-  const connectedToWs = () => (guid ? guid.includes('@') : false)
+  const connectedToWs = (guid) => (guid ? guid.includes('@') : false)
 
   let connectedAgentId = ''
   let scannedDataCol = []
 
   useEffect(() => {
-    if (!connectedToWs()) {
+    if (!connectedToWs(guid)) {
       socket.on('connect', () => {
         if (guid !== '') {
           dispatch(setGuid(`${guid}@@${socket.id}`))
@@ -72,15 +72,15 @@ const AppLanding = ({ uuid, session, user }) => {
         }
       })
     }
-  }, [guid])
+  }, [guid, connectedToWs(guid)])
 
   useEffect(() => {
-    if (connectedToWs()) {
+    if (connectedToWs(guid)) {
       QRCode.toDataURL(`${window.location.href}link?id=${guid}`)
         .then((urlSrc) => dispatch(setQrcodeSrc(urlSrc)))
         .catch((err) => console.error(err))
     }
-  }, [guid, connectedToWs()])
+  }, [guid, connectedToWs(guid)])
 
   useEffect(() => utils.EmitToSocket(parsed, socket, cookies.guid), [parsed])
 
@@ -103,7 +103,7 @@ const AppLanding = ({ uuid, session, user }) => {
   }
 
   return (
-    <div>
+    <>
       <Controls session={session} />
       <LandingZone>
         {scanned ? <PostScan user={user} /> : <PreScan user={user} />}
@@ -152,7 +152,7 @@ const AppLanding = ({ uuid, session, user }) => {
       ) : (
         ''
       )}
-    </div>
+    </>
   )
 }
 

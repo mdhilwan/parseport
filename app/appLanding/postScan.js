@@ -14,7 +14,7 @@ const PostScan = ({ user }) => {
   }
   const dpSetScanState = (obj) => dispatch(setScanState(obj))
   return (
-    <div>
+    <div className="max-w-full overflow-auto">
       <h2 className="text-3xl font-bold tracking-tight mb-10">
         Passport to Visa Scans
       </h2>
