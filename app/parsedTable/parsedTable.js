@@ -3,6 +3,7 @@
 import { useSelector } from 'react-redux'
 import GenerateVisa from '../generate/visa'
 import Input from './input'
+import ProgressBar from '@/app/progressBar'
 
 const tableLabelMap = {
   issuingState: 'Issuing State',
@@ -36,6 +37,7 @@ const ParsedTable = () => {
 
   return (
     <>
+      <ProgressBar/>
       {scannedData.length > 0 ? (
         <table className="table table-auto w-full">
           <thead>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../enums/state'
 import Mrz from '../mrz'
 import MrzInputHandler from '../mrz/MrzInutHandler'
-import { setParsed, setScanState } from '../slice/slice'
+import { setParsed, setScanState, setTargetScan } from '../slice/slice'
 
 const PreScan = ({ user }) => {
   const { qrcodeSrc, guid, scanState, mrzDropZoneClass } = useSelector(
@@ -15,6 +15,7 @@ const PreScan = ({ user }) => {
   const dropHandler = (evt) => {
     evt.preventDefault()
     evt.stopPropagation()
+    dispatch(setTargetScan(evt.dataTransfer.files.length))
     MrzInputHandler({
       dpSetParsed,
       dpSetScanState,

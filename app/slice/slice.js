@@ -19,6 +19,7 @@ export const slice = createSlice({
     scannedData: [],
     showQrCodeModal: false,
     scanState: State.IDLE,
+    targetScan: 0,
     mrzStateDropZoneClass: defaultMrzStateDropZoneClass,
     mrzDropZoneClass: defaultMrzDropZoneClass,
   },
@@ -45,6 +46,9 @@ export const slice = createSlice({
     },
     setDisconnected: (state, action) => {
       state.disconnected = action.payload
+    },
+    setTargetScan: (state, action) => {
+      state.targetScan = action.payload
     },
     setQrcodeSrc: (state, action) => {
       state.qrcodeSrc = action.payload
@@ -80,6 +84,7 @@ export const {
   setNewValue,
   setMrzStateDropZoneClass,
   setMrzDropZoneClass,
+  setTargetScan
 } = slice.actions
 
 export default slice.reducer

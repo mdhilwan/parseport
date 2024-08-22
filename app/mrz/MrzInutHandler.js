@@ -19,7 +19,7 @@ const MrzInputHandler = ({ dpSetParsed, dpSetScanState, $event }) => {
   }
   const beginScanning = (inputFiles) => {
     if (inputFiles?.length) {
-      ;[...inputFiles].map((file, fileIndex) => {
+      [...inputFiles].map((file, fileIndex) => {
         const reader = new FileReader()
         reader.onload = (e) => {
           if (e && e.target && e.target.result) {
