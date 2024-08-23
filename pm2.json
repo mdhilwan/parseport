@@ -3,7 +3,9 @@
         {
             "name": "parseport",
             "script": "npm",
-            "args" : "run prod"
+            "args" : "run prod",
+            "exec_mode" : "cluster",
+            "instances" : 4
         }
     ]
 }
