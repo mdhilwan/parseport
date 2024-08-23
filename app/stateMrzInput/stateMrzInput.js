@@ -5,7 +5,7 @@ import MrzInputHandler from '../mrz/MrzInutHandler'
 import { setShowQrCodeModal, setTargetScan } from '@/app/slice/slice'
 
 const StateMrzInput = ({ dpSetParsed, dpSetScanState }) => {
-  const { scanState, scannedData, targetScan, mrzStateDropZoneClass } = useSelector((state) => state.mrzStore)
+  const { scanState, targetScan, mrzStateDropZoneClass } = useSelector((state) => state.mrzStore)
   const dispatch = useDispatch()
 
   const dragOverHandler = (ev) => ev.preventDefault()

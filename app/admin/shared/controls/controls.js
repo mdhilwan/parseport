@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation'
 import ControlLink from './controlLink'
 
 const Controls = ({ whichAdmin, session }) => {
-  const pathName = usePathname()
   const {
     user: { name, email, image },
   } = session

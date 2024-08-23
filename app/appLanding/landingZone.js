@@ -1,10 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setMrzStateDropZoneClass } from '../slice/slice'
 
 const LandingZone = ({ children }) => {
   const dispatch = useDispatch()
 
-  const dragOverDocHandler = (ev) => {
+  const dragOverDocHandler = () => {
     dispatch(
       setMrzStateDropZoneClass(
         'bg-blue-100'

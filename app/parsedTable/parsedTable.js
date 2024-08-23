@@ -21,7 +21,7 @@ const tableLabelMap = {
 const tableLabelKeys = Object.keys(tableLabelMap)
 
 const ParsedTable = ({ user }) => {
-  const { scannedData, parsed, disconnected, mrzStateDropZoneClass } = useSelector(
+  const { scannedData, disconnected } = useSelector(
     (state) => state.mrzStore
   )
   const visaFeature = false
