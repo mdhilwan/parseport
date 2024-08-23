@@ -5,14 +5,14 @@ import MrzInputHandler from '../mrz/MrzInutHandler'
 import { setTargetScan } from '@/app/slice/slice'
 
 const StateMrzInput = ({ dpSetParsed, dpSetScanState, bg }) => {
-  const { scanState } = useSelector((state) => state.mrzStore)
+  const { scanState, targetScan } = useSelector((state) => state.mrzStore)
   const dispatch = useDispatch()
 
   const dragOverHandler = (ev) => ev.preventDefault()
   const dropHandler = (evt) => {
     evt.preventDefault()
     evt.stopPropagation()
-    dispatch(setTargetScan(evt.dataTransfer.files.length))
+    dispatch(setTargetScan(targetScan + evt.dataTransfer.files.length))
     MrzInputHandler({
       dpSetParsed,
       dpSetScanState,

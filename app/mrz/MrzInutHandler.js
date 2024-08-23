@@ -9,12 +9,13 @@ const MrzInputHandler = ({ dpSetParsed, dpSetScanState, $event }) => {
       idToUpdate.state = state
     }
     const states = workerIdCol.map((id) => id.state)
-    if (states.includes(State.SCANNING)) {
+
+    if (states.filter(s => s === State.SUCCESS).length >= 1) {
+      dpSetScanState(State.SUCCESS)
+    } else if (states.includes(State.SCANNING)) {
       dpSetScanState(State.SCANNING)
     } else if (states.includes(State.ERROR)) {
       dpSetScanState(State.ERROR)
-    } else if ([...new Set(states)].includes(State.SUCCESS)) {
-      dpSetScanState(State.SUCCESS)
     }
   }
   const beginScanning = (inputFiles) => {

@@ -6,7 +6,7 @@ import MrzInputHandler from '../mrz/MrzInutHandler'
 import { setParsed, setScanState, setTargetScan } from '../slice/slice'
 
 const PreScan = ({ user }) => {
-  const { qrcodeSrc, guid, scanState, mrzDropZoneClass } = useSelector(
+  const { qrcodeSrc, guid, scanState, mrzDropZoneClass, targetScan } = useSelector(
     (state) => state.mrzStore
   )
   const dispatch = useDispatch()
@@ -15,7 +15,7 @@ const PreScan = ({ user }) => {
   const dropHandler = (evt) => {
     evt.preventDefault()
     evt.stopPropagation()
-    dispatch(setTargetScan(evt.dataTransfer.files.length))
+    dispatch(setTargetScan(targetScan + evt.dataTransfer.files.length))
     MrzInputHandler({
       dpSetParsed,
       dpSetScanState,
