@@ -17,7 +17,7 @@ const Controls = ({ whichAdmin, session }) => {
       ? `${process.env.NEXT_PUBLIC_BASE_URL}/admin/super/login`
       : `${process.env.NEXT_PUBLIC_BASE_URL}/admin/login`
   return (
-    <div className="mb-4 sticky top-0 bg-slate-300 py-2 flex ps-4">
+    <div className="sticky top-0 bg-slate-300 py-2 flex ps-4">
       <Image
         src={image}
         width="24"

@@ -1,17 +1,12 @@
 import { createSlice, current } from '@reduxjs/toolkit'
 import { State } from '../enums/state'
 
-const defaultMrzStateDropZoneClass =
-  'mt-10 flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-50'
-
-const defaultMrzDropZoneClass =
-  'flex justify-center w-full h-60 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none'
+const defaultMrzStateDropZoneClass = 'bg-white'
 
 export const slice = createSlice({
   name: 'slice',
   initialState: {
     scanned: false,
-    scans: [],
     parsed: [],
     guid: '',
     disconnected: true,
@@ -21,7 +16,6 @@ export const slice = createSlice({
     scanState: State.IDLE,
     targetScan: 0,
     mrzStateDropZoneClass: defaultMrzStateDropZoneClass,
-    mrzDropZoneClass: defaultMrzDropZoneClass,
   },
   reducers: {
     setScanned: (state, action) => {
@@ -32,9 +26,6 @@ export const slice = createSlice({
     },
     setGuid: (state, action) => {
       state.guid = action.payload
-    },
-    addNewScan: (state, action) => {
-      state.scans = [...state.scans, action.payload]
     },
     setNewValue: (state, action) => {
       const { colKey, rowKey, newValue } = action.payload
@@ -65,14 +56,10 @@ export const slice = createSlice({
     setMrzStateDropZoneClass: (state, action) => {
       state.mrzStateDropZoneClass = action.payload
     },
-    setMrzDropZoneClass: (state, action) => {
-      state.mrzDropZoneClass = action.payload
-    },
   },
 })
 
 export const {
-  addNewScan,
   setScanned,
   setParsed,
   setGuid,
@@ -83,7 +70,6 @@ export const {
   setScanState,
   setNewValue,
   setMrzStateDropZoneClass,
-  setMrzDropZoneClass,
   setTargetScan
 } = slice.actions
 
