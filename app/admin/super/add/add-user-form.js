@@ -80,7 +80,7 @@ const AddUserForm = () => {
         {!saving ? (
           <button
             type="button"
-            className="text-slate-300 bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-slate-300 font-medium rounded-lg text-sm px-3 py-1.5 mt-4 text-center"
+            className="text-slate-300 bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-slate-300 font-medium rounded-md text-sm px-3 py-1.5 mt-4 text-center"
             onClick={() => {
               let newEmailList = [...emailList]
               newEmailList.push(newEmail)
@@ -92,7 +92,7 @@ const AddUserForm = () => {
         ) : (
           <button
             type="button"
-            className="text-slate-200 bg-slate-400 font-medium rounded-lg text-sm px-3 py-1.5 mt-4 text-center"
+            className="text-slate-200 bg-slate-400 font-medium rounded-md text-sm px-3 py-1.5 mt-4 text-center"
             disabled
           >
             Add another email
@@ -109,7 +109,7 @@ const AddUserForm = () => {
         <input
           type="text"
           id="company"
-          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full py-1 px-2"
+          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full py-1 px-2"
           placeholder="Company Co Pte Ltd"
           required
           value={company.name}
@@ -130,7 +130,7 @@ const AddUserForm = () => {
         <input
           type="text"
           id="companyAddress"
-          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full py-1 px-2"
+          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full py-1 px-2"
           placeholder="Company Co Pte Ltd"
           required
           value={company.address}
@@ -146,7 +146,7 @@ const AddUserForm = () => {
 
       <button
         type="button"
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center"
+        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-3 py-1.5 text-center"
         onClick={() => {
           console.log(
             isFormValid(),

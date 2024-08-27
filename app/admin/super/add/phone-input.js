@@ -3,7 +3,7 @@ import isMobilePhone from 'validator/lib/isMobilePhone'
 
 const PhoneInput = ({ company, setCompany }) => {
   const defaultClassStyle =
-    'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full py-1 px-2'
+    'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full py-1 px-2'
   const [valid, setValid] = useState(true)
   const [classStyle, setClassStyle] = useState(defaultClassStyle)
 
@@ -20,7 +20,7 @@ const PhoneInput = ({ company, setCompany }) => {
       setClassStyle(defaultClassStyle)
     } else {
       setClassStyle(
-        'shadow-sm bg-red-50 border border-red-300 text-red-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full py-1 px-2'
+        'shadow-sm bg-red-50 border border-red-300 text-red-900 text-sm rounded-md focus:ring-red-500 focus:border-red-500 block w-full py-1 px-2'
       )
     }
   }, [valid])

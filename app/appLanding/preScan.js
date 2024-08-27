@@ -90,7 +90,7 @@ const PreScan = ({ user }) => {
                 <button
                   disabled
                   type="button"
-                  className="flex justify-center w-full h-60 text-slate-500 bg-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 items-center"
+                  className="flex justify-center w-full h-60 text-slate-500 bg-white focus:ring-4 focus:outline-none font-medium rounded-md text-sm px-5 py-2.5 text-center me-2 items-center"
                 >
                   <svg
                     aria-hidden="true"
@@ -116,7 +116,7 @@ const PreScan = ({ user }) => {
               <>
                 <div
                   className="max-w-xl p-8 px-14 my-auto"
-                  onDragOver={(evt) => dragOverHandler(evt)}
+                  onDragOver={() => dragOverHandler()}
                   onDrop={(evt) => dropHandler(evt)}
                 >
                   <label className={mrzDropZoneClass}>

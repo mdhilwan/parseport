@@ -1,12 +1,11 @@
 'use client'
 
-import { useDispatch, useSelector } from 'react-redux'
-import GenerateVisa from '../generate/visa'
-import Input from './input'
-import StateMrzInput from '@/app/stateMrzInput'
 import { setParsed, setScanState } from '@/app/slice/slice'
+import StateMrzInput from '@/app/stateMrzInput'
+import { useDispatch, useSelector } from 'react-redux'
+import { Row } from '@/app/parsedTable/row'
 
-const tableLabelMap = {
+export const TableLabelMap = {
   issuingState: 'Issuing State',
   firstName: 'First Name',
   lastName: 'Last Name',
@@ -15,31 +14,30 @@ const tableLabelMap = {
   birthDate: 'Date of Birth',
   sex: 'Sex',
   expirationDate: 'Date of Expiry',
-  personalNumber: 'IC Number',
+  personalNumber: 'NRIC Number',
 }
 
-const tableLabelKeys = Object.keys(tableLabelMap)
+export const TableLabelKeys = Object.keys(TableLabelMap)
+export const TableLabelValues = Object.values(TableLabelMap)
 
 const ParsedTable = ({ user }) => {
-  const { scannedData, disconnected } = useSelector(
-    (state) => state.mrzStore
-  )
+  const { scannedData, disconnected } = useSelector((state) => state.mrzStore)
   const visaFeature = false
   const dispatch = useDispatch()
   const filtered = scannedData.map((row) =>
     Object.fromEntries(
-      Object.entries(row).filter((r) => tableLabelKeys.includes(r[0]))
+      Object.entries(row).filter((r) => TableLabelKeys.includes(r[0]))
     )
   )
 
   const tableLabel = filtered[0]
-    ? Object.keys(filtered[0]).map((k) => tableLabelMap[k])
+    ? Object.keys(filtered[0]).map((k) => TableLabelMap[k])
     : []
 
   const baseLabelClassName = 'pe-3 font-bold whitespace-nowrap'
 
   const dpSetParsed = async (obj) => {
-    window.gtag('event', 'new_scan', { 'user_email': user.email })
+    window.gtag('event', 'new_scan', { user_email: user.email })
     dispatch(setParsed(obj))
   }
   const dpSetScanState = (obj) => dispatch(setScanState(obj))
@@ -63,6 +61,7 @@ const ParsedTable = ({ user }) => {
                   </td>
                 )
               })}
+              <td></td>
             </tr>
           </thead>
           <tbody>
@@ -77,38 +76,30 @@ const ParsedTable = ({ user }) => {
               </td>
             </tr>
             {filtered.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {Object.entries(row).map((col, colIndex) => {
-                  return (
-                    <td key={colIndex} className="p-0">
-                      <Input colIndex={col[0]} rowIndex={rowIndex} />
-                    </td>
-                  )
-                })}
-                {visaFeature ? <td><GenerateVisa row={row} /></td> : <></>}
-              </tr>
+              <Row key={rowIndex} rowKey={rowIndex} row={row} visaFeature={visaFeature}/>
             ))}
           </tbody>
         </table>
       ) : (
-        <>
-          <div className="text-slate-500">
-            {disconnected ? (
-              <div className="my-5">
-                <div className="w-full">
-                  <div className="p-6 border border-gray-300 rounded-md">
-                    <StateMrzInput
-                      dpSetParsed={dpSetParsed}
-                      dpSetScanState={dpSetScanState}
-                    />
-                  </div>
+        <div className="text-slate-500">
+          {disconnected ? (
+            <div className="my-5">
+              <div className="w-full">
+                <div className="border border-gray-300 rounded-md">
+                  <StateMrzInput
+                    dpSetParsed={dpSetParsed}
+                    dpSetScanState={dpSetScanState}
+                  />
                 </div>
               </div>
-            ) : (
-              'Use your phone that you have linked this computer with to scan your document'
-            )}
-          </div>
-        </>
+            </div>
+          ) : (
+            <>
+              Use your phone that you have linked this computer with to scan
+              your document
+            </>
+          )}
+        </div>
       )}
     </>
   )

@@ -13,9 +13,11 @@ export const slice = createSlice({
     qrcodeSrc: 'loading.svg',
     scannedData: [],
     showQrCodeModal: false,
+    showImportExcelModal: false,
     scanState: State.IDLE,
     targetScan: 0,
     mrzStateDropZoneClass: defaultMrzStateDropZoneClass,
+    excelImportData: []
   },
   reducers: {
     setScanned: (state, action) => {
@@ -50,11 +52,17 @@ export const slice = createSlice({
     setShowQrCodeModal: (state, action) => {
       state.showQrCodeModal = action.payload
     },
+    setShowImportExcelModal: (state, action) => {
+      state.showImportExcelModal = action.payload
+    },
     setScanState: (state, action) => {
       state.scanState = action.payload
     },
     setMrzStateDropZoneClass: (state, action) => {
       state.mrzStateDropZoneClass = action.payload
+    },
+    setExcelImportData: (state, action) => {
+      state.excelImportData = action.payload
     },
   },
 })
@@ -67,10 +75,12 @@ export const {
   setQrcodeSrc,
   setScannedData,
   setShowQrCodeModal,
+  setShowImportExcelModal,
   setScanState,
   setNewValue,
   setMrzStateDropZoneClass,
-  setTargetScan
+  setTargetScan,
+  setExcelImportData
 } = slice.actions
 
 export default slice.reducer

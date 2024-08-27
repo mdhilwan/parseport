@@ -4,7 +4,7 @@ import { setMrzStateDropZoneClass } from '../slice/slice'
 const LandingZone = ({ children }) => {
   const dispatch = useDispatch()
 
-  const dragOverDocHandler = () => {
+  const dragOverHandler = () => {
     dispatch(
       setMrzStateDropZoneClass(
         'bg-blue-100'
@@ -25,7 +25,7 @@ const LandingZone = ({ children }) => {
   return (
     <div
       className='flex flex-col items-center justify-between px-12 w-full mx-auto'
-      onDragOver={($event) => dragOverDocHandler($event)}
+      onDragOver={() => dragOverHandler()}
       onDragLeave={() => dragEndHandler()}
       onDrop={() => dragEndHandler()}
     >

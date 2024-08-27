@@ -14,7 +14,7 @@ const Unauth = ({ whichAdmin }) => {
     }
   }
   const baseColor =
-    'w-full block mt-5 text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'
+    'w-full block mt-5 text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-md text-sm px-5 py-2.5 text-center'
   const linkClassName =
     whichAdmin === 'super'
       ? baseColor + ' bg-red-600 hover:bg-red-700 '
@@ -29,7 +29,7 @@ const Unauth = ({ whichAdmin }) => {
         >
           Passport to Visa{headText()}
         </h1>
-        <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
+        <div className="w-full bg-white rounded-md shadow md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 sm:p-8">
             <h1 className="text-md font-bold leading-tight tracking-tight text-gray-900 mb-4">
               You are not logged in

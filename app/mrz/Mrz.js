@@ -13,6 +13,7 @@ const Mrz = ({ dpSetScanState, dpSetParsed }) => {
         id="mrz-input"
         name="mmrz-input"
         type="file"
+        accept="image/*"
         className="hidden"
         multiple
         onChange={($event) =>

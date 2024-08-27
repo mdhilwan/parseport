@@ -37,7 +37,7 @@ const EmailInput = ({
 
   return (
     <>
-      <div className="flex rounded-lg shadow-sm mb-4 last-of-type:mb-0">
+      <div className="flex rounded-md shadow-sm mb-4 last-of-type:mb-0">
         <span className="shadow-sm px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-300 bg-gray-50 text-sm text-gray-500">
           {state === 'saving' ? (
             <svg

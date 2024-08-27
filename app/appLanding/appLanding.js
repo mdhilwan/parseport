@@ -21,12 +21,13 @@ import utils from '../utils'
 import LandingZone from './landingZone'
 import PostScan from './postScan'
 import QrCodeModal from '@/app/qrCodeModal'
+import ImportExcelModal from '@/app/importExcelModal'
 
 const socketPort = '4001'
 const socket = io(`:${socketPort}`)
 
 const AppLanding = ({ uuid, session, user }) => {
-  const { parsed, guid, showQrCodeModal, scanState } = useSelector(
+  const { parsed, guid, scanState } = useSelector(
     (state) => state.mrzStore
   )
   const dispatch = useDispatch()
@@ -106,7 +107,8 @@ const AppLanding = ({ uuid, session, user }) => {
       <LandingZone>
         <PostScan user={user} />
       </LandingZone>
-      {showQrCodeModal ? <QrCodeModal /> : <></>}
+      <QrCodeModal />
+      <ImportExcelModal/>
     </>
   )
 }
