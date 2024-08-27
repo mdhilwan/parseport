@@ -10,7 +10,7 @@ const Input = ({ value, colKey, userObject, setUserObject }) => {
   useEffect(() => {
     userObject[colKey] = val
     setUserObject(userObject)
-  }, [val])
+  }, [val, colKey, userObject, setUserObject])
 
   if (typeof value === 'boolean') {
     const color = value ? 'blue' : 'red'
