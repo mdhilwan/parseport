@@ -48,19 +48,13 @@ const ParsedTable = ({ user }) => {
         <table className="table table-auto w-full">
           <thead>
             <tr>
-              {tableLabel.map((label, labelIndex) => {
-                const key = `${label}-${labelIndex}`.replaceAll(/ /g, '')
-                const labelClassName = ['First Name', 'Last Name'].includes(
-                  label
-                )
-                  ? baseLabelClassName + ' w-72'
-                  : baseLabelClassName + ' w-28'
-                return (
-                  <td key={key} className={labelClassName}>
-                    {label}
-                  </td>
-                )
-              })}
+              <td className={baseLabelClassName}>Nationality</td>
+              <td className={`${baseLabelClassName} w-72`}>First Name</td>
+              <td className={`${baseLabelClassName} w-72`}>Last Name</td>
+              <td className={baseLabelClassName}>Passport Number</td>
+              <td className={baseLabelClassName}>Date of Birth</td>
+              <td className={baseLabelClassName}>Date of Expiry</td>
+              <td className={baseLabelClassName}>NRIC Number</td>
               <td></td>
             </tr>
           </thead>
