@@ -9,7 +9,6 @@ const ProgressBar = () => {
     ? ((scanState.success + scanState.error) / scanState.length) * 100
     : 0
 
-  console.log(progressLength)
   const hideOrShowBar = () =>
     progressLength && Math.ceil(progressLength) >= 100 || Math.ceil(progressLength) === 0 ? 'w-0' : 'w-full'
 
