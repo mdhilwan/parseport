@@ -14,10 +14,16 @@ export const slice = createSlice({
     scannedData: [],
     showQrCodeModal: false,
     showImportExcelModal: false,
-    scanState: State.IDLE,
-    targetScan: 0,
+    scanState: {
+      success: 0,
+      scanning: 0,
+      error: 0,
+      length: 0,
+      state: State.IDLE
+    },
     mrzStateDropZoneClass: defaultMrzStateDropZoneClass,
-    excelImportData: []
+    excelImportData: [],
+    excelFile: ''
   },
   reducers: {
     setScanned: (state, action) => {
@@ -40,14 +46,14 @@ export const slice = createSlice({
     setDisconnected: (state, action) => {
       state.disconnected = action.payload
     },
-    setTargetScan: (state, action) => {
-      state.targetScan = action.payload
-    },
     setQrcodeSrc: (state, action) => {
       state.qrcodeSrc = action.payload
     },
     setScannedData: (state, action) => {
       state.scannedData = action.payload
+    },
+    addScannedData: (state, action) => {
+      state.scannedData = [...current(state.scannedData), ...[action.payload]]
     },
     setShowQrCodeModal: (state, action) => {
       state.showQrCodeModal = action.payload
@@ -64,6 +70,9 @@ export const slice = createSlice({
     setExcelImportData: (state, action) => {
       state.excelImportData = action.payload
     },
+    setExcelFile: (state, action) => {
+      state.excelFile = action.payload
+    },
   },
 })
 
@@ -74,13 +83,14 @@ export const {
   setDisconnected,
   setQrcodeSrc,
   setScannedData,
+  addScannedData,
   setShowQrCodeModal,
   setShowImportExcelModal,
   setScanState,
   setNewValue,
   setMrzStateDropZoneClass,
-  setTargetScan,
-  setExcelImportData
+  setExcelImportData,
+  setExcelFile
 } = slice.actions
 
 export default slice.reducer

@@ -5,26 +5,18 @@ const LandingZone = ({ children }) => {
   const dispatch = useDispatch()
 
   const dragOverHandler = () => {
-    dispatch(
-      setMrzStateDropZoneClass(
-        'bg-blue-100'
-      )
-    )
+    dispatch(setMrzStateDropZoneClass('bg-blue-100'))
   }
 
   const dragEndHandler = () => {
     setTimeout(() => {
-        dispatch(
-          setMrzStateDropZoneClass(
-            'bg-white'
-          )
-        )
+      dispatch(setMrzStateDropZoneClass('bg-white'))
     }, 1000)
   }
 
   return (
     <div
-      className='flex flex-col items-center justify-between px-12 w-full mx-auto'
+      className="flex flex-col items-center justify-between px-12 w-full mx-auto"
       onDragOver={() => dragOverHandler()}
       onDragLeave={() => dragEndHandler()}
       onDrop={() => dragEndHandler()}

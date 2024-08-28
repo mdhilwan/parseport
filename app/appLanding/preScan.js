@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../enums/state'
 import Mrz from '../mrz'
 import MrzInputHandler from '../mrz/MrzInutHandler'
-import { setParsed, setScanState, setTargetScan } from '../slice/slice'
+import { setParsed, setScanState } from '../slice/slice'
 
 const PreScan = ({ user }) => {
-  const { qrcodeSrc, guid, scanState, mrzDropZoneClass, targetScan } = useSelector(
+  const { qrcodeSrc, guid, scanState, mrzDropZoneClass } = useSelector(
     (state) => state.mrzStore
   )
   const dispatch = useDispatch()
@@ -15,7 +15,6 @@ const PreScan = ({ user }) => {
   const dropHandler = (evt) => {
     evt.preventDefault()
     evt.stopPropagation()
-    dispatch(setTargetScan(targetScan + evt.dataTransfer.files.length))
     MrzInputHandler({
       dpSetParsed,
       dpSetScanState,
@@ -85,7 +84,7 @@ const PreScan = ({ user }) => {
                 you can still link your phone later on
               </span>
             </h2>
-            {scanState === State.SCANNING ? (
+            {scanState.state === State.SCANNING ? (
               <>
                 <button
                   disabled

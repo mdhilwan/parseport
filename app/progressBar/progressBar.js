@@ -1,13 +1,34 @@
-import { useSelector } from 'react-redux'
+import { setScanState } from '@/app/slice/slice'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 const ProgressBar = () => {
+  const { scanState } = useSelector((state) => state.mrzStore)
+  const dispatch = useDispatch()
+  const progressLength = scanState.length
+    ? ((scanState.success + scanState.error) / scanState.length) * 100
+    : 0
 
-  const { scannedData, targetScan } = useSelector((state) => state.mrzStore)
-  const progressLength = (scannedData.length || targetScan) ? scannedData.length / targetScan * 100 : 0
-  const hideOrShowBar = () => progressLength ?
-    Math.ceil(progressLength) >= 100 ?
-      'w-0' : 'w-full'
-    : ''
+  console.log(progressLength)
+  const hideOrShowBar = () =>
+    progressLength && Math.ceil(progressLength) >= 100 || Math.ceil(progressLength) === 0 ? 'w-0' : 'w-full'
+
+  useEffect(() => {
+    if (Math.ceil(progressLength) >= 100) {
+      setTimeout(
+        () =>
+          dispatch(
+            setScanState({
+              success: 0,
+              error: 0,
+              length: 0,
+              scanning: 0,
+            })
+          ),
+        1000
+      )
+    }
+  }, [progressLength])
 
   return (
     <>

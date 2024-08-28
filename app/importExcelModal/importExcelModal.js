@@ -1,5 +1,5 @@
 import ImportExcelInput from '@/app/ImportExcelInput'
-import { setExcelImportData, setScannedData, setShowImportExcelModal } from '@/app/slice/slice'
+import { setExcelFile, setExcelImportData, setScannedData, setShowImportExcelModal } from '@/app/slice/slice'
 import { useDispatch, useSelector } from 'react-redux'
 
 const ImportExcelModal = () => {
@@ -34,9 +34,9 @@ const ImportExcelModal = () => {
                     target="_blank"
                     href="./sample-exported-data.xlsx"
                   >
-                    match this format sample
+                    match this sample format
                   </a>{' '}
-                  else it will not be able to format them correctly
+                  else it will not be able to format them correctly.
                 </p>
                 <ImportExcelInput />
               </div>
@@ -50,6 +50,7 @@ const ImportExcelModal = () => {
                     dispatch(setScannedData([...scannedData, ...excelImportData.obj]))
                     dispatch(setExcelImportData([]))
                     dispatch(setShowImportExcelModal(false))
+                    dispatch(setExcelFile(''))
                   }}
                 >
                   Load This File
@@ -63,6 +64,7 @@ const ImportExcelModal = () => {
                 onClick={() => {
                   dispatch(setExcelImportData([]))
                   dispatch(setShowImportExcelModal(false))
+                  dispatch(setExcelFile(''))
                 }}
               >
                 Cancel

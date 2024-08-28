@@ -1,7 +1,7 @@
 import {
+  setExcelFile,
   setShowImportExcelModal,
   setShowQrCodeModal,
-  setTargetScan,
 } from '@/app/slice/slice'
 import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../enums/state'
@@ -9,7 +9,7 @@ import Mrz from '../mrz'
 import MrzInputHandler from '../mrz/MrzInutHandler'
 
 const StateMrzInput = ({ dpSetParsed, dpSetScanState }) => {
-  const { scanState, targetScan, mrzStateDropZoneClass, showImportExcelModal } =
+  const { scanState, scannedData, mrzStateDropZoneClass, showImportExcelModal } =
     useSelector((state) => state.mrzStore)
   const dispatch = useDispatch()
 
@@ -17,32 +17,44 @@ const StateMrzInput = ({ dpSetParsed, dpSetScanState }) => {
   const dropHandler = (evt) => {
     evt.preventDefault()
     evt.stopPropagation()
-    dispatch(setTargetScan(targetScan + evt.dataTransfer.files.length))
-    MrzInputHandler({
-      dpSetParsed,
-      dpSetScanState,
-      $event: [...evt.dataTransfer.files],
-    })
+
+    if (
+      Array.from(evt.dataTransfer.files)
+        .map((f) => f.type)
+        .every(
+          (f) =>
+            f.match(/sheet|excel|xls/g)
+        )
+    ) {
+      dispatch(setExcelFile(evt.dataTransfer.files[0]))
+      dispatch(setShowImportExcelModal(true))
+    } else {
+      MrzInputHandler({
+        dpSetParsed,
+        dpSetScanState,
+        $event: [...evt.dataTransfer.files],
+      })
+    }
   }
 
   return (
     <div
-      className={`w-100 flex items-center p-5 rounded-md text-gray-700 ${showImportExcelModal ? '' : mrzStateDropZoneClass}`}
+      className={`w-100 flex items-center ${scannedData.length > 0 ? 'p-5' : 'p-8'} transition-all rounded-md text-gray-700 hover:p-14 ${showImportExcelModal ? '' : mrzStateDropZoneClass}`}
       role="alert"
       onDragOver={(evt) => dragOverHandler(evt)}
       onDrop={(evt) => dropHandler(evt)}
     >
       <div className="max-w-lg w-3/5 mx-auto">
-        {scanState === State.SCANNING ? (
+        {scanState.state === State.SCANNING ? (
           <>
-            <div className="text-sm font-normal">Scanning...</div>
+            <div className="text-xs font-normal">Scanning...</div>
           </>
         ) : (
           <>
-            <div className="text-sm font-normal">
+            <div className="text-sm text-slate-400 font-normal hover:text-black">
               Drag & drop or
               <label className="ms-auto space-x-2">
-                <span className="text-sm font-medium text-blue-600 p-1 hover:bg-blue-100 rounded-md hover:cursor-pointer whitespace-nowrap">
+                <span className="font-medium text-blue-600 p-1 hover:bg-blue-100 rounded-md hover:cursor-pointer whitespace-nowrap">
                   Or browse
                 </span>
                 <Mrz

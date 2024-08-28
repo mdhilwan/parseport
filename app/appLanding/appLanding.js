@@ -9,6 +9,7 @@ import Controls from '../admin/shared/controls'
 import { State } from '../enums/state'
 import { decrypt } from '../mrz/crypt'
 import {
+  addScannedData,
   setDisconnected,
   setGuid,
   setQrcodeSrc,
@@ -40,7 +41,6 @@ const AppLanding = ({ uuid, session, user }) => {
   const connectedToWs = (guid) => (guid ? guid.includes('@') : false)
 
   let connectedAgentId = ''
-  let scannedDataCol = []
 
   useEffect(() => {
     if (!connectedToWs(guid)) {
@@ -58,10 +58,8 @@ const AppLanding = ({ uuid, session, user }) => {
         dispatch(setShowQrCodeModal(false))
       })
 
-      socket.on('parsed', ({ parsed, iv }) => {
-        const decrypted = decrypt(parsed, uuid, iv)
-        scannedDataCol = [...scannedDataCol, JSON.parse(decrypted)]
-        dispatch(setScannedData(scannedDataCol))
+      socket.off('parsed').on('parsed', ({ parsed, iv }) => {
+        dispatch(addScannedData(JSON.parse(decrypt(parsed, uuid, iv))))
       })
 
       socket.on('disconnected', (socketDisconnected) => {
@@ -70,11 +68,7 @@ const AppLanding = ({ uuid, session, user }) => {
           socket.removeAllListeners()
         }
       })
-    }
-  }, [guid, connectedToWs(guid)])
-
-  useEffect(() => {
-    if (connectedToWs(guid)) {
+    } else {
       QRCode.toDataURL(`${window.location.href}link?id=${guid}`)
         .then((urlSrc) => dispatch(setQrcodeSrc(urlSrc)))
         .catch((err) => console.error(err))
@@ -84,7 +78,7 @@ const AppLanding = ({ uuid, session, user }) => {
   useEffect(() => utils.EmitToSocket(parsed, socket, cookies.guid), [parsed])
 
   useEffect(() => {
-    if (scanState === State.SUCCESS) {
+    if (scanState.state === State.SUCCESS) {
       dispatch(setScanned(true))
     }
   }, [scanState])

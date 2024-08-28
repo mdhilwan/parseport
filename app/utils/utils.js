@@ -12,7 +12,7 @@ const utils = {
     return v4().slice(0, 8)
   },
   EmitToSocket(parsed, socket, guid) {
-    if (guid) {
+    if (guid && Object.keys(parsed).length > 0) {
       const [uuid, agent] = guid.split('@@')
       if (parsedIsValid(parsed)) {
         socket.emit(

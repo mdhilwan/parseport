@@ -67,7 +67,7 @@ const ParsedTable = ({ user }) => {
           <tbody>
             <tr>
               <td colSpan="9">
-                <div className="py-1 border border-gray-300 rounded-md">
+                <div>
                   <StateMrzInput
                     dpSetParsed={dpSetParsed}
                     dpSetScanState={dpSetScanState}
