@@ -5,7 +5,7 @@
             "script": "npm",
             "args" : "run prod:app",
             "exec_mode" : "cluster",
-            "instances" : 2
+            "instances" : 1
         },
         {
             "name": "parseport:api",
