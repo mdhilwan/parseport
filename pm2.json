@@ -1,16 +1,9 @@
 {
     "apps": [
         {
-            "name": "parseport:app",
+            "name": "parseport",
             "script": "npm",
-            "args" : "run prod:app",
-            "exec_mode" : "cluster",
-            "instances" : 1
-        },
-        {
-            "name": "parseport:api",
-            "script": "npm",
-            "args" : "run prod:api"
+            "args" : "run prod"
         }
     ]
 }
