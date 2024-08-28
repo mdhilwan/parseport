@@ -13,6 +13,7 @@
     "dev:api": "NODE_ENV=local npx -y nodemon --ignore app server/api.js",
     "prod:app": "next build && next start",
     "prod:api": "NODE_ENV=production npx -y nodemon server/api.js",
+    "pm2": "pm2",
     "live": "pm2 start pm2.json",
     "lint": "next lint",
     "prepare": "husky"
