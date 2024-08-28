@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { setMrzStateDropZoneClass } from '../slice/slice'
+import { revertMrzStateDropZoneClass, setMrzStateDropZoneClass } from '../slice/slice'
 
 const LandingZone = ({ children }) => {
   const dispatch = useDispatch()
@@ -10,7 +10,7 @@ const LandingZone = ({ children }) => {
 
   const dragEndHandler = () => {
     setTimeout(() => {
-      dispatch(setMrzStateDropZoneClass('bg-white'))
+      dispatch(revertMrzStateDropZoneClass())
     }, 1000)
   }
 

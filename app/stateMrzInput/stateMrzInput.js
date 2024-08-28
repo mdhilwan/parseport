@@ -9,8 +9,12 @@ import Mrz from '../mrz'
 import MrzInputHandler from '../mrz/MrzInutHandler'
 
 const StateMrzInput = ({ dpSetParsed, dpSetScanState }) => {
-  const { scanState, scannedData, mrzStateDropZoneClass, showImportExcelModal } =
-    useSelector((state) => state.mrzStore)
+  const {
+    scanState,
+    scannedData,
+    mrzStateDropZoneClass,
+    showImportExcelModal,
+  } = useSelector((state) => state.mrzStore)
   const dispatch = useDispatch()
 
   const dragOverHandler = (ev) => ev.preventDefault()
@@ -21,10 +25,7 @@ const StateMrzInput = ({ dpSetParsed, dpSetScanState }) => {
     if (
       Array.from(evt.dataTransfer.files)
         .map((f) => f.type)
-        .every(
-          (f) =>
-            f.match(/sheet|excel|xls/g)
-        )
+        .every((f) => f.match(/sheet|excel|xls/g))
     ) {
       dispatch(setExcelFile(evt.dataTransfer.files[0]))
       dispatch(setShowImportExcelModal(true))
@@ -39,7 +40,7 @@ const StateMrzInput = ({ dpSetParsed, dpSetScanState }) => {
 
   return (
     <div
-      className={`w-100 flex items-center ${scannedData.length > 0 ? 'p-5' : 'p-8'} transition-all rounded-md text-gray-700 hover:p-14 ${showImportExcelModal ? '' : mrzStateDropZoneClass}`}
+      className={`w-100 flex items-center ${scannedData.length > 0 ? 'p-5' : 'p-8'} transition-all delay-500 rounded-md text-gray-700 hover:p-14 ${showImportExcelModal ? '' : mrzStateDropZoneClass}`}
       role="alert"
       onDragOver={(evt) => dragOverHandler(evt)}
       onDrop={(evt) => dropHandler(evt)}

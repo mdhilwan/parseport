@@ -1,9 +1,9 @@
 'use client'
 
+import { Row } from '@/app/parsedTable/row'
 import { setParsed, setScanState } from '@/app/slice/slice'
 import StateMrzInput from '@/app/stateMrzInput'
 import { useDispatch, useSelector } from 'react-redux'
-import { Row } from '@/app/parsedTable/row'
 
 export const TableLabelMap = {
   issuingState: 'Issuing State',
@@ -37,7 +37,7 @@ const ParsedTable = ({ user }) => {
   const baseLabelClassName = 'pe-3 font-bold whitespace-nowrap'
 
   const dpSetParsed = async (obj) => {
-    window.gtag('event', 'new_scan', { user_email: user.email })
+    window.gtag('event', 'new_scan', { email: user.email })
     dispatch(setParsed(obj))
   }
   const dpSetScanState = (obj) => dispatch(setScanState(obj))
@@ -76,7 +76,12 @@ const ParsedTable = ({ user }) => {
               </td>
             </tr>
             {filtered.map((row, rowIndex) => (
-              <Row key={rowIndex} rowKey={rowIndex} row={row} visaFeature={visaFeature}/>
+              <Row
+                key={rowIndex}
+                rowKey={rowIndex}
+                row={row}
+                visaFeature={visaFeature}
+              />
             ))}
           </tbody>
         </table>

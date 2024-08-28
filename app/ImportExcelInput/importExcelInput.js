@@ -3,6 +3,7 @@ import { ImportExcelPreview } from '@/app/ImportExcelInput/importExcelPreview'
 import { State } from '@/app/enums/state'
 import { TableLabelKeys, TableLabelValues } from '@/app/parsedTable/parsedTable'
 import {
+  revertMrzStateDropZoneClass,
   setExcelFile,
   setExcelImportData,
   setMrzStateDropZoneClass,
@@ -94,7 +95,7 @@ const ImportExcelInput = () => {
 
   const dragEndHandler = () => {
     setTimeout(() => {
-      dispatch(setMrzStateDropZoneClass('bg-white'))
+      dispatch(revertMrzStateDropZoneClass())
     }, 1000)
   }
 

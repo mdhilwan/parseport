@@ -1,5 +1,7 @@
 'use client'
 
+import ImportExcelModal from '@/app/importExcelModal'
+import QrCodeModal from '@/app/qrCodeModal'
 import QRCode from 'qrcode'
 import { useEffect } from 'react'
 import { useCookies } from 'react-cookie'
@@ -10,6 +12,7 @@ import { State } from '../enums/state'
 import { decrypt } from '../mrz/crypt'
 import {
   addScannedData,
+  revertMrzStateDropZoneClass,
   setDisconnected,
   setGuid,
   setQrcodeSrc,
@@ -20,16 +23,12 @@ import store from '../store'
 import utils from '../utils'
 import LandingZone from './landingZone'
 import PostScan from './postScan'
-import QrCodeModal from '@/app/qrCodeModal'
-import ImportExcelModal from '@/app/importExcelModal'
 
 const socketPort = '4001'
 const socket = io(`:${socketPort}`)
 
 const AppLanding = ({ uuid, session, user }) => {
-  const { parsed, guid, scanState } = useSelector(
-    (state) => state.mrzStore
-  )
+  const { parsed, guid, scanState } = useSelector((state) => state.mrzStore)
   const dispatch = useDispatch()
 
   if (guid === '') {
@@ -59,6 +58,7 @@ const AppLanding = ({ uuid, session, user }) => {
 
       socket.off('parsed').on('parsed', ({ parsed, iv }) => {
         dispatch(addScannedData(JSON.parse(decrypt(parsed, uuid, iv))))
+        dispatch(revertMrzStateDropZoneClass())
       })
 
       socket.on('disconnected', (socketDisconnected) => {
@@ -83,6 +83,7 @@ const AppLanding = ({ uuid, session, user }) => {
   }, [scanState])
 
   useEffect(() => {
+    window.gtag('set', 'user_data', { email: user.email })
     window.addEventListener('beforeunload', alertUser)
     return () => {
       window.removeEventListener('beforeunload', alertUser)
@@ -101,7 +102,7 @@ const AppLanding = ({ uuid, session, user }) => {
         <PostScan user={user} />
       </LandingZone>
       <QrCodeModal />
-      <ImportExcelModal/>
+      <ImportExcelModal />
     </>
   )
 }
