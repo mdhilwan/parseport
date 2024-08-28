@@ -14,7 +14,6 @@ import {
   setGuid,
   setQrcodeSrc,
   setScanned,
-  setScannedData,
   setShowQrCodeModal,
 } from '../slice/slice'
 import store from '../store'
