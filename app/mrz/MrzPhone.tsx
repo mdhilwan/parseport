@@ -1,17 +1,16 @@
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
-import { Socket } from 'socket.io'
 import { State } from '../enums/state'
 import utils from '../utils'
 import Mrz from './Mrz'
 
-const MrzPhone = ({ socket }: { socket: Socket }) => {
+type MrzPhoneType = { socket: any }
+
+const MrzPhone = ({ socket }: MrzPhoneType) => {
   const [cookies] = useCookies(['guid'])
   const [scanState, setScanState] = useState()
-  const [parsed, setParsed] = useState({
-    message: undefined,
-  })
+  const [parsed, setParsed] = useState<any>({})
 
   const truncateString = (string: string) => {
     if (string.length > 10) {
@@ -21,7 +20,7 @@ const MrzPhone = ({ socket }: { socket: Socket }) => {
   }
 
   const getPersonName = (data: { firstName?: any; lastName?: any }) => {
-    let name = ''
+    let name
     if (data.firstName && data.lastName) {
       name = `${data.firstName} ${data.lastName}`
     } else if (data.firstName && !data.lastName) {
