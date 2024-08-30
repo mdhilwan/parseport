@@ -1,6 +1,6 @@
 import { ControlSessionType } from '@/app/admin/shared/controls/controls'
 import Login from '@/app/admin/shared/login'
-import { WhichAdmin } from '@/app/admin/shared/login/login'
+import { WhichAdmin } from '@/app/enums/whichAdmin'
 import { getServerAuthSession } from '@/app/server/auth'
 import '@/styles/global.css'
 

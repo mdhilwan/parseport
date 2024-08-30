@@ -1,6 +1,6 @@
 'use client'
 
-import { WhichAdmin } from '@/app/admin/shared/login/login'
+import { WhichAdmin } from '@/app/enums/whichAdmin'
 import { GetType } from '@/app/server/allowed'
 import { signOut } from 'next-auth/react'
 import Image from 'next/image'

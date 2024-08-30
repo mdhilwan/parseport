@@ -1,4 +1,4 @@
-import { WhichAdmin } from '@/app/admin/shared/login/login'
+import { WhichAdmin } from '@/app/enums/whichAdmin'
 import Login from '../login'
 
 type UnauthType = {

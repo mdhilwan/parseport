@@ -1,13 +1,8 @@
 'use client'
 
+import { WhichAdmin } from '@/app/enums/whichAdmin'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-
-export enum WhichAdmin {
-  SUPER = 'super',
-  ADMIN = 'admin',
-  NONE = '',
-}
 
 type LoginType = {
   whichAdmin: WhichAdmin

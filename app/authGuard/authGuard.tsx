@@ -1,5 +1,5 @@
 import { ControlSessionType } from '@/app/admin/shared/controls/controls'
-import { WhichAdmin } from '@/app/admin/shared/login/login'
+import { WhichAdmin } from '@/app/enums/whichAdmin'
 import { getServerAuthSession } from '@/app/server/auth'
 import { ReactElement } from 'react'
 import Unauth from '../admin/shared/unauth'

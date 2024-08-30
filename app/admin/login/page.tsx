@@ -1,5 +1,4 @@
 import Login from '@/app/admin/shared/login'
-import { WhichAdmin } from '@/app/admin/shared/login/login'
 import { getServerAuthSession } from '@/app/server/auth'
 import '@/styles/global.css'
 

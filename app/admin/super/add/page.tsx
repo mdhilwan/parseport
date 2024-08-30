@@ -1,7 +1,7 @@
 import Controls from '@/app/admin/shared/controls'
 import { ControlSessionType } from '@/app/admin/shared/controls/controls'
-import { WhichAdmin } from '@/app/admin/shared/login/login'
 import AuthGuard from '@/app/authGuard'
+import { WhichAdmin } from '@/app/enums/whichAdmin'
 import { getServerAuthSession } from '@/app/server/auth'
 import '@/styles/global.css'
 import AddUserForm from './add-user-form'

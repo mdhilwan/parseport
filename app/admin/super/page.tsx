@@ -1,11 +1,12 @@
-import { ControlSessionType } from '@/app/admin/shared/controls/controls'
-import { WhichAdmin } from '@/app/admin/shared/login/login'
+import Controls, {
+  ControlSessionType,
+} from '@/app/admin/shared/controls/controls'
 import { HttpActions } from '@/app/api/httpActions'
 import AuthGuard from '@/app/authGuard'
+import { WhichAdmin } from '@/app/enums/whichAdmin'
 import { getServerAuthSession } from '@/app/server/auth'
 import utils from '@/app/utils'
 import '@/styles/global.css'
-import Controls from '../shared/controls'
 import Row from './row'
 
 const keyToLabelMap = {
