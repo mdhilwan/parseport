@@ -24,6 +24,28 @@ const doFetchPost = (route, body) => {
   })
 }
 
+let scanCount = 0
+let execDoScan
+const completeDoScan = async ({ userEmail, company }) => {
+  console.log('completeDoScan:::', scanCount)
+  const res = await doFetchPost(USER_DO_SCAN, {
+    data: {
+      userEmail,
+      company,
+      scanCount,
+    },
+  })
+  // console.log(USER_DO_SCAN, {
+  //   data: {
+  //     userEmail,
+  //     company,
+  //     scanCount,
+  //   },
+  // })
+  scanCount = 0
+  return { res: await res.json(), email: userEmail }
+}
+
 export const HttpActions = {
   async GetUserByEmail(userEmail) {
     const res = await doFetchPost(GET_USER_BY_EMAIL, {
@@ -76,13 +98,14 @@ export const HttpActions = {
     return { res: await res.json(), email: userEmail }
   },
   async DoScan({ userEmail, company }) {
-    const res = await doFetchPost(USER_DO_SCAN, {
-      data: {
+    scanCount++
+    clearTimeout(execDoScan)
+    execDoScan = setTimeout(() => {
+      return completeDoScan({
         userEmail,
         company,
-      },
-    })
-    return { res: await res.json(), email: userEmail }
+      })
+    }, 5000)
   },
   async DoPdf({ userEmail, company }) {
     const res = await doFetchPost(USER_DO_PDF, {

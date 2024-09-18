@@ -1,6 +1,7 @@
 'use client'
 
 import { UserType } from '@/app/admin/shared/controls/controls'
+import { HttpActions } from '@/app/api/httpActions'
 import { Row } from '@/app/parsedTable/row'
 import { setParsed, setScanState } from '@/app/slice/slice'
 import StateMrzInput from '@/app/stateMrzInput'
@@ -41,7 +42,10 @@ const ParsedTable = (props: ParsedTableType) => {
   const baseLabelClassName = 'pe-3 font-bold whitespace-nowrap'
 
   const dpSetParsed = async (obj: any) => {
-    window.gtag('event', 'new_scan', { email: user.email })
+    await HttpActions.DoScan({
+      userEmail: user.email,
+      company: user.res?.result?.company,
+    })
     dispatch(setParsed(obj))
   }
   const dpSetScanState = (obj: any) => dispatch(setScanState(obj))
