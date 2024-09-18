@@ -1,4 +1,5 @@
 import { UserType } from '@/app/admin/shared/controls/controls'
+import { HttpActions } from '@/app/api/httpActions'
 import { useAppDispatch, useAppSelector } from '@/app/store'
 import Image from 'next/image'
 import React from 'react'
@@ -26,7 +27,10 @@ const PreScan = ({ user }: { user: UserType }) => {
   }
 
   const dpSetParsed = async (obj: any) => {
-    window.gtag('event', 'new_scan', { email: user.email })
+    await HttpActions.DoScan({
+      userEmail: user.email,
+      company: user.res?.result?.company,
+    })
     dispatch(setParsed(obj))
   }
   const dpSetScanState = (obj: any) => dispatch(setScanState(obj))

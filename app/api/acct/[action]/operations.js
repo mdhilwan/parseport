@@ -122,13 +122,17 @@ export const doLogout = async (request) => {
   }
 }
 
+const arrayUniqueByKey = (arrayOfObj, key) => [
+  ...new Map(arrayOfObj.map((item) => [item[key], item])).values(),
+]
+
 /**
  * user scan passport
  * Store scan date-time stamp, userEmail, company who did the scan
  * */
 export const doScan = async (request) => {
   const {
-    data: { userEmail, company },
+    data: { userEmail, company, scanCount },
   } = await request.json()
   if (!userEmail) {
     return doReturn500(`userEmail: missing`)
@@ -138,8 +142,14 @@ export const doScan = async (request) => {
     return doReturn500(`userEmail: ${userEmail} does not exist`)
   }
   try {
-    const result =
-      await sql`INSERT INTO scans ( scanId, userEmail, company, dateTimeStamp ) VALUES (${v4()}, ${userEmail}, ${company}, ${getDateTimeStamp()});`
+    const allPromise = [...Array(scanCount)].map(
+      () =>
+        sql`INSERT INTO scans ( scanId, userEmail, company, dateTimeStamp ) VALUES (${v4()}, ${userEmail}, ${company}, ${getDateTimeStamp()});`
+    )
+
+    const results = await Promise.all(allPromise)
+    const result = arrayUniqueByKey(results, 'command')[0]
+    result.rowCount = scanCount
     return doReturn200(result)
   } catch (error) {
     return doReturn500(error)

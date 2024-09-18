@@ -10,6 +10,11 @@ export type UserType = {
   email: string
   name?: string
   image?: string
+  res?: {
+    result?: {
+      company: string
+    }
+  }
 }
 
 export type ControlSessionType = {
