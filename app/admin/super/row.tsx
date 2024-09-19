@@ -6,10 +6,33 @@ import { HttpActions } from '@/app/api/httpActions'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+type ClearButtonType = {
+  user: any
+}
+
 type DeActivateButtonType = {
   user: any
   currUser: string
   setUser: Function
+}
+
+const baseButtonClass =
+  'text-slate-700 bg-slate-100 hover:bg-red-800 hover:text-slate-50 hover:border-red-900 font-light text-xs px-1.5 py-0.5 border border-slate-200'
+
+const ClearButton = (props: ClearButtonType) => {
+  const { user } = props
+
+  return (
+    <button
+      type="button"
+      className={`${baseButtonClass} rounded`}
+      onClick={() => {
+        HttpActions.ClearScanCount(user.useremail).then(() => location.reload())
+      }}
+    >
+      Clear
+    </button>
+  )
 }
 
 const DeActivateButton = (props: DeActivateButtonType) => {
@@ -23,7 +46,7 @@ const DeActivateButton = (props: DeActivateButtonType) => {
   return (
     <button
       type="button"
-      className="text-slate-700 bg-slate-100 hover:bg-red-800 hover:text-slate-50 hover:border-red-900 font-light rounded-e text-xs px-1.5 py-0.5 border border-slate-200"
+      className={`${baseButtonClass} rounded-e`}
       onClick={async () => {
         const res = usr.active
           ? await HttpActions.DeactivateUser(usr.useremail)
@@ -56,7 +79,7 @@ const DeleteButton = (props: DeleteButtonType) => {
   return (
     <button
       type="button"
-      className="text-slate-700 bg-slate-100 hover:bg-red-800 hover:text-slate-50 hover:border-red-900 font-light rounded-s text-xs px-1.5 py-0.5 border border-slate-200"
+      className={`${baseButtonClass} rounded-s`}
       onClick={async () => {
         const res = await HttpActions.DeleteUser(user.useremail)
         if (res) {
@@ -124,7 +147,10 @@ const Row = (props: RowType) => {
           setUserObject={setUser}
         />
       </td>
-      <td className="text-center">{user.scancount}</td>
+      <td>
+        <span className="px-3">{user.scancount}</span>
+        {user.scancount > 0 ? <ClearButton user={user} /> : <></>}
+      </td>
       <td>
         <Input
           value={user.active}

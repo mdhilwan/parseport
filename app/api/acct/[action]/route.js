@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth/next'
 import { NextResponse } from 'next/server'
 import {
   activateUser,
+  clearScanCount,
   deactivateUser,
   deleteUser,
   doAdd,
@@ -38,6 +39,7 @@ export const GET_PDFS_HISTORY = 'get-pdfs-history'
 export const DEACTIVATE_USER = 'deactivate-user'
 export const ACTIVATE_USER = 'activate-user'
 export const DELETE_USER = 'delete-user'
+export const CLEAR_SCAN_COUNT = 'clear-scan-count'
 export const GENERATE_VISA = 'generate-visa'
 
 // UNUSED
@@ -79,6 +81,8 @@ export async function POST(request, { params: { action } }) {
       return deactivateUser(request)
     case DELETE_USER:
       return deleteUser(request)
+    case CLEAR_SCAN_COUNT:
+      return clearScanCount(request)
     case GENERATE_VISA:
       return generateVisa(request)
     case USER_DO_EXCEL:

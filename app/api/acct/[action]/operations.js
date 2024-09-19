@@ -82,6 +82,20 @@ export const doAdd = async (request) => {
   }
 }
 
+const validateUser = async (userEmail) => {
+  if (!userEmail) {
+    return { inValid: true, resp: doReturn500(`userEmail: missing`) }
+  }
+  const exist = await isEmailExist(userEmail)
+  if (!exist) {
+    return {
+      inValid: true,
+      resp: doReturn500(`userEmail: ${userEmail} does not exist`),
+    }
+  }
+  return { inValid: false }
+}
+
 export const doLogin = async (request) => {
   const {
     data: { userEmail },
@@ -255,8 +269,6 @@ export const getAllScansByUser = async (request) => {
   try {
     const { rows } =
       await sql`SELECT * FROM scans WHERE useremail = ${userEmail};`
-
-    console.log(rows)
     return doReturn200(rows)
   } catch (error) {
     return doReturn500(error)
@@ -280,6 +292,26 @@ export const deactivateUser = async (request) => {
   try {
     const { rows } =
       await sql`UPDATE clientuser SET active = false WHERE useremail = ${userEmail};`
+    return doReturn200(rows)
+  } catch (error) {
+    return doReturn500(error)
+  }
+}
+
+/**
+ * Clear scan count of user
+ */
+export const clearScanCount = async (request) => {
+  const {
+    data: { userEmail },
+  } = await request.json()
+  const { inValid, resp } = await validateUser(userEmail)
+  if (inValid) {
+    return resp
+  }
+  try {
+    const { rows } =
+      await sql`DELETE FROM scans WHERE useremail = ${userEmail};`
     return doReturn200(rows)
   } catch (error) {
     return doReturn500(error)
