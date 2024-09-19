@@ -4,6 +4,7 @@ import {
   DEACTIVATE_USER,
   DELETE_USER,
   GET_ALL_USER,
+  GET_SCANS_BY_USER,
   GET_USER_BY_EMAIL,
   USER_DO_EXCEL,
   USER_DO_PDF,
@@ -26,8 +27,8 @@ const doFetchPost = (route, body) => {
 
 let scanCount = 0
 let execDoScan
+
 const completeDoScan = async ({ userEmail, company }) => {
-  console.log('completeDoScan:::', scanCount)
   const res = await doFetchPost(USER_DO_SCAN, {
     data: {
       userEmail,
@@ -35,13 +36,6 @@ const completeDoScan = async ({ userEmail, company }) => {
       scanCount,
     },
   })
-  // console.log(USER_DO_SCAN, {
-  //   data: {
-  //     userEmail,
-  //     company,
-  //     scanCount,
-  //   },
-  // })
   scanCount = 0
   return { res: await res.json(), email: userEmail }
 }
@@ -64,7 +58,33 @@ export const HttpActions = {
   },
   async GetAllUsers() {
     const res = await doFetchPost(GET_ALL_USER)
-    return { res: await res.json() }
+    const resObj = await res.json()
+    const filtered = resObj.result.map((r) => ({
+      company: r.company,
+      companyaddress: r.companyaddress,
+      companynumber: r.companynumber,
+      useremail: r.useremail,
+      active: true,
+      scancount: 0,
+      downloadcount: 0,
+    }))
+
+    await Promise.all(
+      filtered.map((f) =>
+        doFetchPost(GET_SCANS_BY_USER, {
+          data: { userEmail: f.useremail },
+        })
+      )
+    ).then(async (res) =>
+      Promise.all(
+        res.map(async (data, index) => {
+          const jsonData = await data.json()
+          filtered[index].scancount = jsonData.result.length
+        })
+      )
+    )
+
+    return { res: { result: filtered } }
   },
   async DeactivateUser(userEmail) {
     const res = await doFetchPost(DEACTIVATE_USER, {

@@ -13,6 +13,7 @@ import {
   doScan,
   generateVisa,
   getAllCompanies,
+  getAllScansByUser,
   getAllUser,
   getPdfsHistory,
   getScansHistory,
@@ -32,6 +33,7 @@ export const GET_ALL_USER = 'get-all-users'
 export const GET_USER_BY_EMAIL = 'get-user-by-email'
 export const GET_ALL_COMPANIES = 'get-all-companies'
 export const GET_SCANS_HISTORY = 'get-scans-history'
+export const GET_SCANS_BY_USER = 'get-scans-by-user'
 export const GET_PDFS_HISTORY = 'get-pdfs-history'
 export const DEACTIVATE_USER = 'deactivate-user'
 export const ACTIVATE_USER = 'activate-user'
@@ -67,6 +69,8 @@ export async function POST(request, { params: { action } }) {
       return getAllCompanies()
     case GET_SCANS_HISTORY:
       return getScansHistory()
+    case GET_SCANS_BY_USER:
+      return getAllScansByUser(request)
     case GET_PDFS_HISTORY:
       return getPdfsHistory()
     case ACTIVATE_USER:

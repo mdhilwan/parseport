@@ -242,6 +242,28 @@ export const getAllUser = async () => {
 }
 
 /**
+ * get all scans by useremail
+ * extract scans list from table by useremail
+ */
+export const getAllScansByUser = async (request) => {
+  const {
+    data: { userEmail },
+  } = await request.json()
+  if (!userEmail) {
+    return doReturn500(`userEmail: missing`)
+  }
+  try {
+    const { rows } =
+      await sql`SELECT * FROM scans WHERE useremail = ${userEmail};`
+
+    console.log(rows)
+    return doReturn200(rows)
+  } catch (error) {
+    return doReturn500(error)
+  }
+}
+
+/**
  * deactivate a user
  */
 export const deactivateUser = async (request) => {
@@ -292,8 +314,6 @@ export const generateVisa = async (request) => {
   const authSession = await getServerAuthSession()
   const tokenForApi = `${btoa(JSON.stringify(authSession))}`
   const jwtForApi = jwt.sign(tokenForApi, process.env.NEXTAUTH_SECRET)
-
-  console.log(data)
 
   return await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/generate/${data.documentNumber}`,
