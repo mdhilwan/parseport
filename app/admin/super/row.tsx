@@ -3,7 +3,6 @@
 import { ControlSessionType } from '@/app/admin/shared/controls/controls'
 import Input from '@/app/admin/shared/input'
 import { HttpActions } from '@/app/api/httpActions'
-import utils from '@/app/utils'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -93,38 +92,47 @@ const Row = (props: RowType) => {
           setUser={setUser}
         />
       </td>
-      {Object.entries(user).map(([colKey, value], colIndex) => {
-        const thisKey = utils.Rand8digit()
-        if (colIndex === 0) {
-          return ''
-        } else if (colIndex === 1) {
-          return (
-            <th
-              key={thisKey}
-              scope="row"
-              className="font-medium text-gray-900 whitespace-nowrap"
-            >
-              <Input
-                value={value as any}
-                colKey={colKey}
-                userObject={userObject}
-                setUserObject={setUser}
-              />
-            </th>
-          )
-        } else {
-          return (
-            <td key={thisKey} className="text-center">
-              <Input
-                value={value as any}
-                colKey={colKey}
-                userObject={userObject}
-                setUserObject={setUser}
-              />
-            </td>
-          )
-        }
-      })}
+      <td className="text-center">
+        <Input
+          value={user.useremail}
+          colKey={'useremail'}
+          userObject={userObject}
+          setUserObject={setUser}
+        />
+      </td>
+      <td className="text-center">
+        <Input
+          value={user.company}
+          colKey={'company'}
+          userObject={userObject}
+          setUserObject={setUser}
+        />
+      </td>
+      <td className="text-center">
+        <Input
+          value={user.companynumber}
+          colKey={'companynumber'}
+          userObject={userObject}
+          setUserObject={setUser}
+        />
+      </td>
+      <td className="text-center">
+        <Input
+          value={user.companyaddress}
+          colKey={'companyaddress'}
+          userObject={userObject}
+          setUserObject={setUser}
+        />
+      </td>
+      <td className="text-center">{user.scancount}</td>
+      <td>
+        <Input
+          value={user.active}
+          colKey={'active'}
+          userObject={userObject}
+          setUserObject={setUser}
+        />
+      </td>
     </tr>
   )
 }

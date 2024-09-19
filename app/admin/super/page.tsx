@@ -35,11 +35,24 @@ const Super = async () => {
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
             <tr>
               <th></th>
-              {Object.values(keyToLabelMap).map((label) => (
-                <th scope="col" key={utils.Rand8digit()} className="px-2 py-1">
-                  {label}
-                </th>
-              ))}
+              <th scope="col" key={utils.Rand8digit()} className="px-2 py-1">
+                Email Address
+              </th>
+              <th scope="col" key={utils.Rand8digit()} className="px-2 py-1">
+                Company Name
+              </th>
+              <th scope="col" key={utils.Rand8digit()} className="px-2 py-1">
+                Company Number
+              </th>
+              <th scope="col" key={utils.Rand8digit()} className="px-2 py-1">
+                Company Address
+              </th>
+              <th scope="col" key={utils.Rand8digit()} className="px-2 py-1">
+                Total Scans
+              </th>
+              <th scope="col" key={utils.Rand8digit()} className="px-2 py-1">
+                Active
+              </th>
             </tr>
           </thead>
           <tbody>
