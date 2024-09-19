@@ -1,6 +1,7 @@
 import {
   ACTIVATE_USER,
   ADD_NEW_USER,
+  CLEAR_SCAN_COUNT,
   DEACTIVATE_USER,
   DELETE_USER,
   GET_ALL_USER,
@@ -94,6 +95,12 @@ export const HttpActions = {
   },
   async ActivateUser(userEmail) {
     const res = await doFetchPost(ACTIVATE_USER, {
+      data: { userEmail: userEmail },
+    })
+    return { res: await res.json(), email: userEmail }
+  },
+  async ClearScanCount(userEmail) {
+    const res = await doFetchPost(CLEAR_SCAN_COUNT, {
       data: { userEmail: userEmail },
     })
     return { res: await res.json(), email: userEmail }
