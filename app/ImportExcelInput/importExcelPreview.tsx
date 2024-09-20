@@ -1,7 +1,10 @@
+import { maskData } from '@/app/parsedTable/input'
 import { useAppSelector } from '@/app/store'
 
 const ImportExcelPreview = () => {
-  const { excelImportData } = useAppSelector((state) => state.mrzStore)
+  const { excelImportData, maskPassportDetails } = useAppSelector(
+    (state) => state.mrzStore
+  )
 
   return (
     <>
@@ -34,7 +37,7 @@ const ImportExcelPreview = () => {
                             key={colIndex}
                             className="px-2 py-1 border border-slate-300"
                           >
-                            {col}
+                            {!maskPassportDetails ? col : maskData(col)}
                           </td>
                         )
                       })}
