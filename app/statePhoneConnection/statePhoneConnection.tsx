@@ -1,18 +1,22 @@
+import { setShowQrCodeModal } from '@/app/slice/slice'
 import { useAppDispatch, useAppSelector } from '@/app/store'
-import { setShowQrCodeModal } from '../slice/slice'
 
 const StatePhoneConnection = () => {
   const { disconnected } = useAppSelector((state) => state.mrzStore)
   const dispatch = useAppDispatch()
 
+  const baseClass =
+    'me-4 border focus:outline-none font-medium rounded-md text-xs px-2 py-1.5 text-center inline-flex items-center focus:ring-gray-600'
   return (
-    <button className="me-4 border focus:outline-none font-medium rounded-md text-xs px-2 py-1 text-center inline-flex items-center focus:ring-gray-600 bg-gray-800 border-gray-700 text-white hover:bg-gray-700">
+    <div
+      className={`${baseClass} ${disconnected ? 'bg-gray-800 border-gray-700 text-white hover:bg-gray-700' : 'bg-lime-100 border-lime-700 text-lime-800'}`}
+    >
       {disconnected ? (
         <>
           <div className="text-sm font-normal">Phone not connected</div>
           <div className="flex items-center ">
             <a
-              className="font-medium text-blue-600 p-1 hover:bg-blue-100 rounded-md"
+              className="font-medium text-blue-600 px-1 ms-2 hover:bg-blue-100 rounded-md"
               href="#"
               onClick={() => dispatch(setShowQrCodeModal(true))}
             >
@@ -21,14 +25,9 @@ const StatePhoneConnection = () => {
           </div>
         </>
       ) : (
-        <div
-          className="flex items-center w-full max-w-xs p-4 text-lime-800 bg-lime-50 rounded-md shadow"
-          role="alert"
-        >
-          <div className="text-sm font-normal">Phone connected.</div>
-        </div>
+        <div className="text-sm font-normal">Phone connected.</div>
       )}
-    </button>
+    </div>
   )
 }
 
