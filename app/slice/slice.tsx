@@ -21,6 +21,7 @@ interface IinitialState {
   showQrCodeModal: boolean
   showImportExcelModal: boolean
   highlightExpiredPassports: boolean
+  maskPassportDetails: boolean
   scanState: IScanState
   mrzStateDropZoneClass: string
   excelImportData: {
@@ -40,6 +41,7 @@ const initialState: IinitialState = {
   showQrCodeModal: false,
   showImportExcelModal: false,
   highlightExpiredPassports: false,
+  maskPassportDetails: false,
   scanState: {
     success: 0,
     scanning: 0,
@@ -106,6 +108,9 @@ export const slice = createSlice({
     setShowQrCodeModal: (state, action) => {
       state.showQrCodeModal = action.payload
     },
+    toggleMaskPassportDetails: (state) => {
+      state.maskPassportDetails = !state.maskPassportDetails
+    },
     toggleHighlightExpiredPassports: (state) => {
       state.highlightExpiredPassports = !state.highlightExpiredPassports
     },
@@ -125,6 +130,7 @@ export const {
   setScanState,
   setNewValue,
   setMrzStateDropZoneClass,
+  toggleMaskPassportDetails,
   toggleHighlightExpiredPassports,
   revertMrzStateDropZoneClass,
   setExcelImportData,
