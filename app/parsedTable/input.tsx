@@ -6,7 +6,8 @@ type InputType = {
   rowIndex: number
 }
 
-const maskData = (data: string) => data.replace(/\S(?=\S{2})/g, '*')
+export const maskData = (data: string) =>
+  data ? data.replace(/\S(?=\S{2})/g, '*') : ''
 
 const Input = (props: InputType) => {
   const { colIndex, rowIndex } = props
