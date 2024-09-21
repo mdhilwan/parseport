@@ -13,7 +13,7 @@ const LoginAdmin = async () => {
           href="#"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 "
         >
-          ParsePort
+          Passport to Visa
         </a>
         <Login whichAdmin={WhichAdmin.ADMIN} session={authSession} />
       </div>

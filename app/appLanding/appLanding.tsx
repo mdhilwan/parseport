@@ -75,7 +75,6 @@ const AppLanding = (props: AppLandingType) => {
       socket.on('disconnected', (socketDisconnected) => {
         if (socketDisconnected === connectedAgentId) {
           dispatch(setDisconnected(true))
-          socket.removeAllListeners()
         }
       })
     } else {
