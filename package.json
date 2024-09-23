@@ -18,7 +18,8 @@
     "live": "npm i && pm2 start pm2.json",
     "lint": "next lint",
     "prepare": "husky",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@next/third-parties": "^14.2.5",
