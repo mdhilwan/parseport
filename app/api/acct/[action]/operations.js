@@ -155,7 +155,12 @@ export const doScan = async (request) => {
   if (!exist) {
     return doReturn500(`userEmail: ${userEmail} does not exist`)
   }
+
+  const [user] = await doGetByEmail(userEmail)
+  const newScanCount = scanCount + user.scancount
+
   try {
+    await sql`UPDATE clientuser SET scancount = ${newScanCount} WHERE userEmail = ${userEmail}`
     const allPromise = [...Array(scanCount)].map(
       () =>
         sql`INSERT INTO scans ( scanId, userEmail, company, dateTimeStamp ) VALUES (${v4()}, ${userEmail}, ${company}, ${getDateTimeStamp()});`
@@ -310,6 +315,7 @@ export const clearScanCount = async (request) => {
     return resp
   }
   try {
+    await sql`UPDATE clientuser SET scancount = 0 WHERE useremail = ${userEmail}`
     const { rows } =
       await sql`DELETE FROM scans WHERE useremail = ${userEmail};`
     return doReturn200(rows)

@@ -5,7 +5,6 @@ import {
   DEACTIVATE_USER,
   DELETE_USER,
   GET_ALL_USER,
-  GET_SCANS_BY_USER,
   GET_USER_BY_EMAIL,
   USER_DO_EXCEL,
   USER_DO_PDF,
@@ -66,24 +65,9 @@ export const HttpActions = {
       companynumber: r.companynumber,
       useremail: r.useremail,
       active: true,
-      scancount: 0,
+      scancount: r.scancount,
       downloadcount: 0,
     }))
-
-    await Promise.all(
-      filtered.map((f) =>
-        doFetchPost(GET_SCANS_BY_USER, {
-          data: { userEmail: f.useremail },
-        })
-      )
-    ).then(async (res) =>
-      Promise.all(
-        res.map(async (data, index) => {
-          const jsonData = await data.json()
-          filtered[index].scancount = jsonData.result.length
-        })
-      )
-    )
 
     return { res: { result: filtered } }
   },
