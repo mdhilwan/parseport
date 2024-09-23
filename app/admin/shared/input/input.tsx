@@ -25,6 +25,7 @@ const Input = (props: InputType) => {
     const text = value ? 'Active' : 'Inactive'
     return (
       <span
+        data-testid="Input"
         className={`bg-${color}-600 text-white text-xs font-medium px-2.5 py-0.5 rounded-full`}
       >
         {text}
@@ -33,6 +34,7 @@ const Input = (props: InputType) => {
   } else {
     return (
       <input
+        data-testid="Input"
         type="text"
         aria-label="input"
         disabled

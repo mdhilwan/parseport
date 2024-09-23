@@ -41,7 +41,10 @@ const Controls = (props: ControlsType) => {
       : `${process.env.NEXT_PUBLIC_BASE_URL}/admin/login`
 
   return (
-    <div className="sticky top-0 bg-slate-300 py-2 flex ps-4">
+    <div
+      data-testid="Controls"
+      className="sticky top-0 bg-slate-300 py-2 flex ps-4"
+    >
       <Image
         src={image as string}
         width="24"
