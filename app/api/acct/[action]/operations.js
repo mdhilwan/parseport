@@ -214,7 +214,12 @@ export const doExcel = async (request) => {
   if (!exist) {
     return doReturn500(`userEmail: ${userEmail} does not exist`)
   }
+
+  const [user] = await doGetByEmail(userEmail)
+  const newDownloadCount = user.downloadcount + 1
+
   try {
+    await sql`UPDATE clientuser SET downloadcount = ${newDownloadCount} WHERE userEmail = ${userEmail}`
     const result =
       await sql`INSERT INTO downloads ( downloadId, userEmail, company, dateTimeStamp ) VALUES (${v4()}, ${userEmail}, ${company}, ${getDateTimeStamp()});`
     return doReturn200(result)

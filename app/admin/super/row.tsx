@@ -151,6 +151,7 @@ const Row = (props: RowType) => {
         <span className="px-3">{user.scancount}</span>
         {user.scancount > 0 ? <ClearButton user={user} /> : <></>}
       </td>
+      <td>{user.downloadcount}</td>
       <td>
         <Input
           value={user.active}
