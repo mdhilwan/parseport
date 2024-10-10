@@ -35,7 +35,11 @@ const Admin = async () => {
     sessionid,
     issuedatetime,
     invaliddatetime,
+    scancount,
+    downloadcount,
   } = result
+
+  console.log(result)
 
   if (!company || !companyaddress || !companynumber || !useremail) {
     return <></>
@@ -75,15 +79,11 @@ const Admin = async () => {
             </tr>
             <tr>
               <th className="px-4 py-2 border">Total Scans</th>
-              <td className="px-4 py-2 border"></td>
+              <td className="px-4 py-2 border">{scancount}</td>
             </tr>
             <tr>
-              <th className="px-4 py-2 border">Total PDFs</th>
-              <td className="px-4 py-2 border"></td>
-            </tr>
-            <tr>
-              <th className="px-4 py-2 border">Billed</th>
-              <td className="px-4 py-2 border"></td>
+              <th className="px-4 py-2 border">Total Downloads</th>
+              <td className="px-4 py-2 border">{downloadcount}</td>
             </tr>
           </tbody>
         </table>

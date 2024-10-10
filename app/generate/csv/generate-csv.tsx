@@ -1,4 +1,5 @@
 import { UserType } from '@/app/admin/shared/controls/controls'
+import { HttpActions } from '@/app/api/httpActions'
 import { useAppSelector } from '@/app/store'
 import { saveAs } from 'file-saver'
 import * as XLXS from 'xlsx'
@@ -87,6 +88,10 @@ const doGenerateCsv = async (scannedData: any, user: UserType) => {
   })
   const blob = new Blob([excelBuffer], {
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8',
+  })
+  await HttpActions.DoExcel({
+    userEmail: user.email,
+    company: user.res?.result?.company,
   })
   saveAs(blob, 'exported-data.xlsx')
 }

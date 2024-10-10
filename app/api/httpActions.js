@@ -66,7 +66,7 @@ export const HttpActions = {
       useremail: r.useremail,
       active: true,
       scancount: r.scancount,
-      downloadcount: 0,
+      downloadcount: r.downloadcount,
     }))
 
     return { res: { result: filtered } }

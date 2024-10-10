@@ -51,6 +51,9 @@ const Super = async () => {
                 Total Scans
               </th>
               <th scope="col" key={utils.Rand8digit()} className="px-2 py-1">
+                Total Excel Downloads
+              </th>
+              <th scope="col" key={utils.Rand8digit()} className="px-2 py-1">
                 Active
               </th>
             </tr>

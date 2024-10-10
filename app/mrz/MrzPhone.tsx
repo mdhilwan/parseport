@@ -9,7 +9,7 @@ type MrzPhoneType = { socket: any }
 
 const MrzPhone = ({ socket }: MrzPhoneType) => {
   const [cookies] = useCookies(['guid'])
-  const [scanState, setScanState] = useState()
+  const [scanState, setScanState] = useState<any>()
   const [parsed, setParsed] = useState<any>({})
 
   const truncateString = (string: string) => {
@@ -19,14 +19,19 @@ const MrzPhone = ({ socket }: MrzPhoneType) => {
     return string
   }
 
-  const getPersonName = (data: { firstName?: any; lastName?: any }) => {
+  const getPersonName = (data: {
+    data: { firstName: string; lastName: string }
+  }) => {
+    const {
+      data: { firstName, lastName },
+    } = data
     let name
-    if (data.firstName && data.lastName) {
-      name = `${data.firstName} ${data.lastName}`
-    } else if (data.firstName && !data.lastName) {
-      name = `${data.firstName}`
-    } else if (!data.firstName && data.lastName) {
-      name = `${data.lastName}`
+    if (firstName && lastName) {
+      name = `${firstName} ${lastName}`
+    } else if (firstName && !lastName) {
+      name = `${firstName}`
+    } else if (!firstName && lastName) {
+      name = `${lastName}`
     } else {
       name = ''
     }
@@ -61,16 +66,22 @@ const MrzPhone = ({ socket }: MrzPhoneType) => {
               />
             </svg>
             <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              {scanState === State.SUCCESS ? (
+              {scanState?.state === State.SUCCESS ? (
                 <>
-                  <span>Sent {getPersonName(parsed)} to agent</span>
+                  <span>
+                    Sent {getPersonName(parsed)}{' '}
+                    {scanState.length > 1
+                      ? 'and ' + (scanState.length - 1) + ' others'
+                      : ''}{' '}
+                    to agent
+                  </span>
                   <br />
                   <span className="font-semibold">
                     Click and choose another file
                   </span>{' '}
                   or take another photo
                 </>
-              ) : scanState === State.ERROR ? (
+              ) : scanState?.state === State.ERROR ? (
                 <>
                   <span>
                     There seems to be an error scanning. {parsed.message}
@@ -78,7 +89,7 @@ const MrzPhone = ({ socket }: MrzPhoneType) => {
                   <span className="font-semibold">Click and choose a file</span>{' '}
                   or take a photo
                 </>
-              ) : scanState === State.SCANNING ? (
+              ) : scanState?.state === State.SCANNING ? (
                 <span className="font-semibold">Scanning...</span>
               ) : (
                 <>
