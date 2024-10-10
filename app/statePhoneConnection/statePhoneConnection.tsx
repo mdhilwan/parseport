@@ -16,8 +16,7 @@ const StatePhoneConnection = () => {
           <div className="text-sm font-normal">Phone not connected</div>
           <div className="flex items-center ">
             <a
-              className="font-medium text-blue-600 px-1 ms-2 hover:bg-blue-100 rounded-md"
-              href="#"
+              className="font-medium text-blue-600 px-1 ms-2 hover:bg-blue-100 rounded-md hover:cursor-pointer"
               onClick={() => dispatch(setShowQrCodeModal(true))}
             >
               Connect
