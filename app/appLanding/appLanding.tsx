@@ -78,7 +78,8 @@ const AppLanding = (props: AppLandingType) => {
         }
       })
     } else {
-      QRCode.toDataURL(`${window.location.href}link?id=${guid}`)
+      const linkGuidUrl = `${window.location.href}link?id=${guid}`
+      QRCode.toDataURL(linkGuidUrl)
         .then((urlSrc) => dispatch(setQrcodeSrc(urlSrc)))
         .catch((err) => console.error(err))
     }
