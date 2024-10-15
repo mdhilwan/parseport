@@ -9,17 +9,6 @@ import utils from '@/app/utils'
 import '@/styles/global.css'
 import Row from './row'
 
-const keyToLabelMap = {
-  company: 'Company Name',
-  companyAddress: 'Company Address',
-  companyNumber: 'Number',
-  emailAddress: 'Email Address',
-  scanCount: 'Total Scans',
-  pdfCount: 'Total PDFs',
-  billed: 'Billed',
-  active: 'Active',
-}
-
 const Super = async () => {
   const authSession =
     (await getServerAuthSession()) as unknown as ControlSessionType
@@ -48,25 +37,38 @@ const Super = async () => {
                 Company Address
               </th>
               <th scope="col" key={utils.Rand8digit()} className="px-2 py-1">
-                Total Scans
+                Scans
               </th>
               <th scope="col" key={utils.Rand8digit()} className="px-2 py-1">
-                Total Excel Downloads
+                Excel
               </th>
-              <th scope="col" key={utils.Rand8digit()} className="px-2 py-1">
+              <th
+                scope="col"
+                key={utils.Rand8digit()}
+                className="px-2 py-1 text-center"
+              >
+                Demo
+              </th>
+              <th
+                scope="col"
+                key={utils.Rand8digit()}
+                className="px-2 py-1 text-center"
+              >
                 Active
               </th>
             </tr>
           </thead>
           <tbody>
-            {result.map((userObject: any, userIndex: any) => (
-              <Row
-                key={utils.Rand8digit()}
-                session={authSession}
-                userIndex={userIndex}
-                userObject={userObject}
-              />
-            ))}
+            {result
+              .sort((a: any, b: any) => a.company.localeCompare(b.company))
+              .map((userObject: any, userIndex: any) => (
+                <Row
+                  key={utils.Rand8digit()}
+                  session={authSession}
+                  userIndex={userIndex}
+                  userObject={userObject}
+                />
+              ))}
           </tbody>
         </table>
       </div>
