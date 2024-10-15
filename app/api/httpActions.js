@@ -6,6 +6,8 @@ import {
   DELETE_USER,
   GET_ALL_USER,
   GET_USER_BY_EMAIL,
+  SET_DEMO_USER,
+  UNSET_DEMO_USER,
   USER_DO_EXCEL,
   USER_DO_PDF,
   USER_DO_SCAN,
@@ -66,6 +68,7 @@ export const HttpActions = {
       useremail: r.useremail,
       active: true,
       scancount: r.scancount,
+      demo: r.demo,
       downloadcount: r.downloadcount,
     }))
 
@@ -95,8 +98,20 @@ export const HttpActions = {
     })
     return { res: await res.json(), email: userEmail }
   },
+  async SetDemo(userEmail) {
+    const res = await doFetchPost(SET_DEMO_USER, {
+      data: { userEmail: userEmail },
+    })
+    return { res: await res.json(), email: userEmail }
+  },
+  async UnsetDemo(userEmail) {
+    const res = await doFetchPost(UNSET_DEMO_USER, {
+      data: { userEmail: userEmail },
+    })
+    return { res: await res.json(), email: userEmail }
+  },
   async AddNewUser({
-    data: { company, companyAddress, companyNumber, userEmail },
+    data: { company, companyAddress, companyNumber, userEmail, demo },
   }) {
     const res = await doFetchPost(ADD_NEW_USER, {
       data: {
@@ -104,6 +119,7 @@ export const HttpActions = {
         companyAddress: companyAddress,
         companyNumber: companyNumber,
         userEmail: userEmail,
+        demo: demo,
       },
     })
     return { res: await res.json(), email: userEmail }

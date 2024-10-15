@@ -64,6 +64,7 @@ export const doAdd = async (request) => {
       sessionId = '',
       issueDateTime = '',
       invalidDateTime = '',
+      demo,
     },
   } = await request.json()
   if (!userEmail) {
@@ -75,7 +76,7 @@ export const doAdd = async (request) => {
   }
   try {
     const result =
-      await sql`INSERT INTO clientuser ( userId, company, companyAddress, companyNumber, userEmail, sessionId, issueDateTime, invalidDateTime, active ) VALUES (${v4()}, ${company}, ${companyAddress}, ${companyNumber}, ${userEmail}, ${sessionId}, ${issueDateTime}, ${invalidDateTime}, true);`
+      await sql`INSERT INTO clientuser ( userId, company, companyAddress, companyNumber, userEmail, sessionId, issueDateTime, invalidDateTime, demo, active ) VALUES (${v4()}, ${company}, ${companyAddress}, ${companyNumber}, ${userEmail}, ${sessionId}, ${issueDateTime}, ${invalidDateTime}, ${demo}, true);`
     return doReturn200(result)
   } catch (error) {
     return doReturn500(error)
@@ -388,6 +389,46 @@ export const activateUser = async (request) => {
   try {
     const { rows } =
       await sql`UPDATE clientuser SET active = true WHERE useremail = ${userEmail};`
+    return doReturn200(rows)
+  } catch (error) {
+    return doReturn500(error)
+  }
+}
+
+/**
+ * set user to demo user
+ */
+export const unsetDemoUser = async (request) => {
+  const {
+    data: { userEmail },
+  } = await request.json()
+  const { inValid, resp } = await validateUser(userEmail)
+  if (inValid) {
+    return resp
+  }
+  try {
+    const { rows } =
+      await sql`UPDATE clientuser SET demo = false WHERE useremail = ${userEmail}`
+    return doReturn200(rows)
+  } catch (error) {
+    return doReturn500(error)
+  }
+}
+
+/**
+ * set user to not demo user
+ */
+export const setDemoUser = async (request) => {
+  const {
+    data: { userEmail },
+  } = await request.json()
+  const { inValid, resp } = await validateUser(userEmail)
+  if (inValid) {
+    return resp
+  }
+  try {
+    const { rows } =
+      await sql`UPDATE clientuser SET demo = true WHERE useremail = ${userEmail}`
     return doReturn200(rows)
   } catch (error) {
     return doReturn500(error)

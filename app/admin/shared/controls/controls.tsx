@@ -10,9 +10,10 @@ export type UserType = {
   email: string
   name?: string
   image?: string
-  res?: {
-    result?: {
+  res: {
+    result: {
       company: string
+      demo: boolean
     }
   }
 }

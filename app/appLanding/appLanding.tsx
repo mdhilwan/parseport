@@ -22,6 +22,7 @@ import {
   setQrcodeSrc,
   setScanned,
   setShowQrCodeModal,
+  setUserIsDemo,
 } from '../slice/slice'
 import store, { useAppDispatch, useAppSelector } from '../store'
 import utils from '../utils'
@@ -39,8 +40,15 @@ type AppLandingType = {
 
 const AppLanding = (props: AppLandingType) => {
   const { uuid, session, user } = props
-  const { parsed, guid, scanState } = useAppSelector((state) => state.mrzStore)
+  const { parsed, guid, scanState, userIsDemo } = useAppSelector(
+    (state) => state.mrzStore
+  )
   const dispatch = useAppDispatch()
+
+  if (!userIsDemo && user?.res?.result?.demo) {
+    console.log('dispatch!')
+    dispatch(setUserIsDemo())
+  }
 
   if (guid === '') {
     dispatch(setGuid(uuid))

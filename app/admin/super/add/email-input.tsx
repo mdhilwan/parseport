@@ -41,8 +41,12 @@ const EmailInput = (props: EmailInputType) => {
   }, [])
 
   const validateEmail = (value: string) => {
-    if (!isEmail(value)) {
-      setValid(false)
+    if (value) {
+      if (!isEmail(value)) {
+        setValid(false)
+      } else {
+        setValid(true)
+      }
     } else {
       setValid(true)
     }

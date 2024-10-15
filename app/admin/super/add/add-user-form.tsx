@@ -1,5 +1,6 @@
 'use client'
 
+import { Input } from '@/app/admin/super/add/input'
 import { HttpActions } from '@/app/api/httpActions'
 import utils from '@/app/utils'
 import { useEffect, useState } from 'react'
@@ -19,6 +20,7 @@ const AddUserForm = () => {
     name: '',
     address: '',
     number: '',
+    demo: 'true',
   })
 
   const allEmailValid = () =>
@@ -41,6 +43,7 @@ const AddUserForm = () => {
       const emailAddressList = emailList.map((e) => e.address)
       const newAcctList = emailAddressList.map((e) => ({
         userEmail: e,
+        demo: company.demo,
         company: company.name,
         companyAddress: company.address,
         companyNumber: company.number,
@@ -63,7 +66,7 @@ const AddUserForm = () => {
 
   return (
     <form className="max-w-sm mx-auto">
-      <div className="mb-5">
+      <div className="my-5">
         <label
           htmlFor="email"
           className="block mb-2 text-xs font-medium text-gray-900 uppercase"
@@ -101,61 +104,53 @@ const AddUserForm = () => {
           </button>
         )}
       </div>
-      <div className="mb-5">
-        <label
-          htmlFor="company"
-          className="block mb-2 text-xs font-medium text-gray-900 uppercase"
-        >
-          Company Name
-        </label>
-        <input
-          type="text"
-          id="company"
-          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full py-1 px-2"
-          placeholder="Company Co Pte Ltd"
-          required
-          value={company.name}
-          onChange={(e) => {
-            let newCompany = { ...company }
-            newCompany.name = e.target.value
-            setCompany(newCompany)
-          }}
-        />
-      </div>
-      <div className="mb-5">
-        <label
-          htmlFor="companyAddress"
-          className="block mb-2 text-xs font-medium text-gray-900 uppercase"
-        >
-          Company Address
-        </label>
-        <input
-          type="text"
-          id="companyAddress"
-          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full py-1 px-2"
-          placeholder="Company Co Pte Ltd"
-          required
-          value={company.address}
-          onChange={(e) => {
-            let newCompany = { ...company }
-            newCompany.address = e.target.value
-            setCompany(newCompany)
-          }}
-        />
-      </div>
+
+      <Input
+        id="company"
+        label="Company Name"
+        placeholder="Company Co Pte Ltd"
+        required
+        value={company.name}
+        onChange={(e: any) => {
+          let newCompany = { ...company }
+          newCompany.name = e.target.value
+          setCompany(newCompany)
+        }}
+      />
+
+      <Input
+        id="companyAddress"
+        label="Company Address"
+        placeholder="123 Maryland Ave, Singapore"
+        required
+        value={company.address}
+        onChange={(e: any) => {
+          let newCompany = { ...company }
+          newCompany.address = e.target.value
+          setCompany(newCompany)
+        }}
+      />
 
       <PhoneInput company={company} setCompany={setCompany} />
+
+      <Input
+        type="select"
+        option={['Demo', 'Full']}
+        id="accountType"
+        label="Account Type"
+        placeholder=""
+        onChange={(e: any) => {
+          let newCompany = { ...company }
+          newCompany.demo = e.target.value
+          console.log(newCompany)
+          setCompany(newCompany)
+        }}
+      />
 
       <button
         type="button"
         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-3 py-1.5 text-center"
         onClick={() => {
-          console.log(
-            isFormValid(),
-            allEmailValid(),
-            companyDetailValid(),
-            !saving
-          )
           if (isFormValid() && !saving) {
             const newEmailList = [...emailList]
             newEmailList.forEach((e) => (e.state = 'saving'))

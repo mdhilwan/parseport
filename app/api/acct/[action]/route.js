@@ -19,6 +19,8 @@ import {
   getPdfsHistory,
   getScansHistory,
   getUser,
+  setDemoUser,
+  unsetDemoUser,
 } from './operations'
 
 /**
@@ -38,6 +40,8 @@ export const GET_SCANS_BY_USER = 'get-scans-by-user'
 export const GET_PDFS_HISTORY = 'get-pdfs-history'
 export const DEACTIVATE_USER = 'deactivate-user'
 export const ACTIVATE_USER = 'activate-user'
+export const SET_DEMO_USER = 'set-demo-user'
+export const UNSET_DEMO_USER = 'unset-demo-user'
 export const DELETE_USER = 'delete-user'
 export const CLEAR_SCAN_COUNT = 'clear-scan-count'
 export const GENERATE_VISA = 'generate-visa'
@@ -79,6 +83,10 @@ export async function POST(request, { params: { action } }) {
       return activateUser(request)
     case DEACTIVATE_USER:
       return deactivateUser(request)
+    case SET_DEMO_USER:
+      return setDemoUser(request)
+    case UNSET_DEMO_USER:
+      return unsetDemoUser(request)
     case DELETE_USER:
       return deleteUser(request)
     case CLEAR_SCAN_COUNT:
