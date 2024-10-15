@@ -103,6 +103,5 @@ export async function POST(request, { params: { action } }) {
     //     return doNewPdfsTable();
     default:
       return NextResponse.json({ action: `Action not supported "${action}"` })
-      break
   }
 }
