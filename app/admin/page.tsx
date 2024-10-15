@@ -39,8 +39,6 @@ const Admin = async () => {
     downloadcount,
   } = result
 
-  console.log(result)
-
   if (!company || !companyaddress || !companynumber || !useremail) {
     return <></>
   }
