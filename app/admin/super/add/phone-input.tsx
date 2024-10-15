@@ -1,3 +1,4 @@
+import { Input } from '@/app/admin/super/add/input'
 import { useEffect, useState } from 'react'
 import isMobilePhone from 'validator/lib/isMobilePhone'
 
@@ -34,33 +35,24 @@ const PhoneInput = (props: PhoneInputType) => {
   }, [valid])
 
   return (
-    <>
-      <div className="mb-5">
-        <label
-          htmlFor="companyNumber"
-          className="block mb-2 text-xs font-medium text-gray-900 uppercase"
-        >
-          Number
-        </label>
-        <input
-          type="tel"
-          id="companyNumber"
-          className={classStyle}
-          placeholder="Company Co Pte Ltd"
-          required
-          value={company.number}
-          onFocus={(e) => {
-            validatePhone(e.target.value)
-          }}
-          onChange={(e) => {
-            validatePhone(e.target.value)
-            let newCompany = { ...company }
-            newCompany.number = e.target.value
-            setCompany(newCompany)
-          }}
-        />
-      </div>
-    </>
+    <Input
+      label="Number"
+      type="tel"
+      id="companyNumber"
+      className={classStyle}
+      placeholder="9123 4321"
+      required
+      value={company.number}
+      onFocus={(e: any) => {
+        validatePhone(e.target.value)
+      }}
+      onChange={(e: any) => {
+        validatePhone(e.target.value)
+        let newCompany = { ...company }
+        newCompany.number = e.target.value
+        setCompany(newCompany)
+      }}
+    />
   )
 }
 

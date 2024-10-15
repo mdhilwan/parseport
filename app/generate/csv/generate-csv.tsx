@@ -1,5 +1,6 @@
 import { UserType } from '@/app/admin/shared/controls/controls'
 import { HttpActions } from '@/app/api/httpActions'
+import { maskData } from '@/app/parsedTable/input'
 import { useAppSelector } from '@/app/store'
 import { saveAs } from 'file-saver'
 import * as XLXS from 'xlsx'
@@ -23,10 +24,28 @@ type RenameKeyType = {
   personalNumber?: any
 }
 
-const doGenerateCsv = async (scannedData: any, user: UserType) => {
+const doGenerateCsv = async (
+  scannedData: any,
+  user: UserType,
+  userIsDemo: boolean
+) => {
   const formatDate = (dat: { birthDate: string; expirationDate: string }) => {
     dat.birthDate = dat.birthDate.split('-').reverse().join('-')
     dat.expirationDate = dat.expirationDate.split('-').reverse().join('-')
+    return dat
+  }
+  const maskDataIfDemo = (dat: any) => {
+    if (userIsDemo) {
+      dat.birthDate = maskData(dat.birthDate)
+      dat.expirationDate = maskData(dat.expirationDate)
+      dat.documentNumber = maskData(dat.documentNumber)
+      dat.firstName = maskData(dat.firstName)
+      dat.lastName = maskData(dat.lastName)
+      dat.issuingState = maskData(dat.issuingState)
+      dat.personalNumber = maskData(dat.personalNumber)
+      dat.nationality = maskData(dat.nationality)
+      dat.sex = maskData(dat.sex)
+    }
     return dat
   }
   const renameKey = (dat: RenameKeyType) => {
@@ -74,7 +93,7 @@ const doGenerateCsv = async (scannedData: any, user: UserType) => {
   }
   const cleanedData = JSON.parse(JSON.stringify(scannedData)).map(
     (dat: { birthDate: string; expirationDate: string }) =>
-      renameKey(formatDate(dat))
+      renameKey(formatDate(maskDataIfDemo(dat)))
   )
 
   window.gtag('event', 'generate_excel', { email: user.email })
@@ -97,13 +116,13 @@ const doGenerateCsv = async (scannedData: any, user: UserType) => {
 }
 
 const GenerateCsv = ({ user }: { user: UserType }) => {
-  const { scannedData } = useAppSelector((state) => state.mrzStore)
+  const { scannedData, userIsDemo } = useAppSelector((state) => state.mrzStore)
 
   return scannedData.length > 0 ? (
     <button
       type="button"
       className="border focus:outline-none font-medium rounded-md text-xs px-2 py-1 text-center inline-flex items-center focus:ring-gray-600 bg-gray-800 border-gray-700 text-white hover:bg-gray-700"
-      onClick={() => doGenerateCsv(scannedData, user)}
+      onClick={() => doGenerateCsv(scannedData, user, userIsDemo)}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

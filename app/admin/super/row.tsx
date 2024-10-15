@@ -46,7 +46,7 @@ const DeActivateButton = (props: DeActivateButtonType) => {
   return (
     <button
       type="button"
-      className={`${baseButtonClass} rounded-e`}
+      className={`${baseButtonClass} border-s-0 border-e-0`}
       onClick={async () => {
         const res = usr.active
           ? await HttpActions.DeactivateUser(usr.useremail)
@@ -92,6 +92,34 @@ const DeleteButton = (props: DeleteButtonType) => {
   )
 }
 
+const ToggleTypeButton = (props: any) => {
+  const { user, currUser } = props
+  const [loading, setLoading] = useState<boolean>(false)
+  const router = useRouter()
+
+  if (currUser === user.useremail) {
+    return <></>
+  }
+
+  return (
+    <button
+      type="button"
+      className={`${baseButtonClass} rounded-e`}
+      onClick={async () => {
+        setLoading(true)
+        const res = user.demo
+          ? await HttpActions.UnsetDemo(user.useremail)
+          : await HttpActions.SetDemo(user.useremail)
+        if (res) {
+          router.refresh()
+        }
+      }}
+    >
+      {!loading ? <>{user.demo ? <>Unset Demo</> : <>Set Demo</>}</> : <>...</>}
+    </button>
+  )
+}
+
 type RowType = {
   userIndex: number
   userObject: any
@@ -114,6 +142,7 @@ const Row = (props: RowType) => {
           currUser={email}
           setUser={setUser}
         />
+        <ToggleTypeButton user={userObject} currUser={email} />
       </td>
       <td className="text-center">
         <Input
@@ -152,7 +181,15 @@ const Row = (props: RowType) => {
         {user.scancount > 0 ? <ClearButton user={user} /> : <></>}
       </td>
       <td>{user.downloadcount}</td>
-      <td>
+      <td className="text-center">
+        <Input
+          value={user.demo}
+          colKey={'demo'}
+          userObject={userObject}
+          setUserObject={setUser}
+        />
+      </td>
+      <td className="text-center">
         <Input
           value={user.active}
           colKey={'active'}

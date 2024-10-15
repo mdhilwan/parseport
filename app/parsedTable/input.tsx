@@ -11,8 +11,12 @@ export const maskData = (data: string) =>
 
 const Input = (props: InputType) => {
   const { colIndex, rowIndex } = props
-  const { scannedData, highlightExpiredPassports, maskPassportDetails } =
-    useAppSelector((state) => state.mrzStore)
+  const {
+    scannedData,
+    highlightExpiredPassports,
+    maskPassportDetails,
+    userIsDemo,
+  } = useAppSelector((state) => state.mrzStore)
   const dispatch = useAppDispatch()
 
   // @ts-ignore
@@ -28,7 +32,7 @@ const Input = (props: InputType) => {
       ? new Date() > new Date(data)
       : false
 
-  return maskPassportDetails ? (
+  return maskPassportDetails || userIsDemo ? (
     <span className={baseClassName}>{maskData(data)}</span>
   ) : (
     <input

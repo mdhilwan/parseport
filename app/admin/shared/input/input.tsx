@@ -21,15 +21,7 @@ const Input = (props: InputType) => {
   }, [val, colKey, userObject, setUserObject])
 
   if (typeof value === 'boolean') {
-    const color = value ? 'blue' : 'red'
-    const text = value ? 'Active' : 'Inactive'
-    return (
-      <span
-        className={`bg-${color}-600 text-white text-xs font-medium px-2.5 py-0.5 rounded-full`}
-      >
-        {text}
-      </span>
-    )
+    return value ? '✅' : ''
   } else {
     return (
       <input
