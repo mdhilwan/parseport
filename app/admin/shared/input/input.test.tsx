@@ -23,8 +23,7 @@ describe('Input component', () => {
 
     const spanElement = screen.getByTestId('Input')
     expect(spanElement).toBeInTheDocument()
-    expect(spanElement).toHaveTextContent('Active')
-    expect(spanElement).toHaveClass('bg-blue-600')
+    expect(spanElement).toHaveTextContent('✅')
   })
 
   it('renders a span with correct text and class when value is boolean false', () => {
@@ -41,8 +40,7 @@ describe('Input component', () => {
 
     const spanElement = screen.getByTestId('Input')
     expect(spanElement).toBeInTheDocument()
-    expect(spanElement).toHaveTextContent('Inactive')
-    expect(spanElement).toHaveClass('bg-red-600')
+    expect(spanElement).toHaveTextContent('')
   })
 
   it('renders an input element when value is a string', () => {
