@@ -46,7 +46,6 @@ const AppLanding = (props: AppLandingType) => {
   const dispatch = useAppDispatch()
 
   if (!userIsDemo && user?.res?.result?.demo) {
-    console.log('dispatch!')
     dispatch(setUserIsDemo())
   }
 
