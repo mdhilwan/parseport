@@ -142,7 +142,6 @@ const AddUserForm = () => {
         onChange={(e: any) => {
           let newCompany = { ...company }
           newCompany.demo = e.target.value
-          console.log(newCompany)
           setCompany(newCompany)
         }}
       />
