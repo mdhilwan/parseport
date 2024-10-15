@@ -9,17 +9,6 @@ import utils from '@/app/utils'
 import '@/styles/global.css'
 import Row from './row'
 
-const keyToLabelMap = {
-  company: 'Company Name',
-  companyAddress: 'Company Address',
-  companyNumber: 'Number',
-  emailAddress: 'Email Address',
-  scanCount: 'Total Scans',
-  pdfCount: 'Total PDFs',
-  billed: 'Billed',
-  active: 'Active',
-}
-
 const Super = async () => {
   const authSession =
     (await getServerAuthSession()) as unknown as ControlSessionType
