@@ -35,7 +35,8 @@ const AuthGuard = async (props: AuthGuardType) => {
           className="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 w-1/2 mx-auto mt-8"
           role="alert"
         >
-          <span className="font-medium">Error!</span> 401
+          <span className="font-bold">ERROR:</span> You do not have
+          authorization to view this page
         </div>
       )
     }
