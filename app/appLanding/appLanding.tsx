@@ -4,6 +4,7 @@ import {
   ControlSessionType,
   UserType,
 } from '@/app/admin/shared/controls/controls'
+import DocumentTitle from '@/app/documentTitle'
 import ImportExcelModal from '@/app/importExcelModal'
 import QrCodeModal from '@/app/qrCodeModal'
 import QRCode from 'qrcode'
@@ -119,6 +120,7 @@ const AppLanding = (props: AppLandingType) => {
   return (
     <>
       <Controls session={session} />
+      <DocumentTitle />
       <LandingZone>
         <PostScan user={user} />
       </LandingZone>
