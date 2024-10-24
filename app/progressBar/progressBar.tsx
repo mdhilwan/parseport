@@ -35,7 +35,7 @@ const ProgressBar = () => {
   return (
     <>
       <div
-        className={`bg-gray-200 rounded-full h-1 dark:bg-gray-100 my-5 ${hideOrShowBar()} delay-700`}
+        className={`bg-gray-200 rounded-full h-1 my-5 ${hideOrShowBar()} delay-700`}
       >
         <div
           className="bg-blue-600 h-1 rounded-full transition-all"

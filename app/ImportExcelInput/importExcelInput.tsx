@@ -34,12 +34,10 @@ const ImportExcelInput = () => {
   const { mrzStateDropZoneClass, excelFile } = useAppSelector(
     (state) => state.mrzStore
   )
-  console.log(':::ImportExcelInput:::', excelFile)
   const [excelError, setExcelError] = useState<State | null>(null)
   const dispatch = useAppDispatch()
 
   const doHandleFileRead = (file: any) => {
-    console.log(':::doHandleFileRead:::', file)
     const reader = new FileReader()
 
     reader.onload = (event: ProgressEvent<any>) => {
@@ -97,7 +95,6 @@ const ImportExcelInput = () => {
   }
 
   if (excelFile) {
-    console.log('if (excelFile) {', excelFile)
     doHandleFileRead(excelFile)
   }
 
