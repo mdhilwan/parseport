@@ -32,6 +32,10 @@ const ProgressBar = () => {
     }
   }, [progressLength])
 
+  if (!progressLength) {
+    return <></>
+  }
+
   return (
     <>
       <div

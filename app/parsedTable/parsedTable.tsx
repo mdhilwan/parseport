@@ -53,7 +53,7 @@ const ParsedTable = (props: ParsedTableType) => {
   return (
     <>
       {scannedData.length > 0 ? (
-        <table className="table table-auto w-full">
+        <table className="table table-auto w-full mt-2">
           <thead>
             <tr>
               <td className={baseLabelClassName}>Issuing State</td>
