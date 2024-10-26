@@ -1,24 +1,35 @@
+import { setExcelFileName } from '@/app/slice/slice'
 import { useAppSelector } from '@/app/store'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent } from 'react'
+import { useDispatch } from 'react-redux'
 
-const DocumentTitle = () => {
-  const { scannedData } = useAppSelector((state) => state.mrzStore)
+type DocumentTitleType = {
+  focus?: boolean
+  extraClassName?: string
+}
 
-  const [documentTitle, setDocumentTitle] = useState<string>('untitled')
+const DocumentTitle = (opt: DocumentTitleType) => {
+  const { focus = false, extraClassName = '' } = opt
+  const { scannedData, excelFileName } = useAppSelector(
+    (state) => state.mrzStore
+  )
+
+  const dispatch = useDispatch()
 
   if (scannedData.length === 0) {
     return <></>
   }
 
   return (
-    <div className="mt-2 px-10">
+    <div className="mt-2 pt-2 px-10">
       <input
         type="text"
-        value={documentTitle}
-        onChange={(evt: ChangeEvent<HTMLInputElement>) =>
-          setDocumentTitle(evt.target.value)
-        }
-        className="px-2 py-1 text-xs text-gray-400 border-white hover:border-gray-700 focus:border-gray-700 hover:cursor-pointer"
+        autoFocus={focus}
+        value={excelFileName}
+        onChange={(evt: ChangeEvent<HTMLInputElement>) => {
+          dispatch(setExcelFileName(evt.target.value))
+        }}
+        className={`w-full px-2 py-1 text-xs text-gray-400 hover:border-gray-700 focus:border-gray-700 focus:text-gray-700 hover:cursor-pointer ${extraClassName}`}
       />
     </div>
   )

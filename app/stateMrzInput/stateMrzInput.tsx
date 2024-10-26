@@ -47,7 +47,7 @@ const StateMrzInput = (props: StateMrzInputType) => {
 
   return (
     <div
-      className={`w-100 flex items-center ${scannedData.length > 0 ? 'p-5' : 'p-8'} transition-all delay-500 rounded-md text-gray-700 hover:p-14 ${showImportExcelModal ? '' : mrzStateDropZoneClass}`}
+      className={`w-100 flex items-center ${scannedData.length > 0 ? 'p-5' : 'p-8'} transition-all delay-100 rounded-md text-gray-700 hover:p-14 ${showImportExcelModal ? '' : mrzStateDropZoneClass}`}
       role="alert"
       onDragOver={(evt) => dragOverHandler(evt)}
       onDrop={(evt) => dropHandler(evt)}

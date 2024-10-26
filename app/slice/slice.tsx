@@ -19,6 +19,7 @@ interface IinitialState {
   qrcodeSrc: string
   scannedData: any[]
   showQrCodeModal: boolean
+  showNameFileModal: boolean
   userIsDemo: boolean
   showImportExcelModal: boolean
   highlightExpiredPassports: boolean
@@ -29,6 +30,7 @@ interface IinitialState {
     table?: any
     obj?: any
   }
+  excelFileName: string
   excelFile: string
 }
 
@@ -53,6 +55,8 @@ const initialState: IinitialState = {
   },
   mrzStateDropZoneClass: defaultMrzStateDropZoneClass,
   excelImportData: {},
+  showNameFileModal: false,
+  excelFileName: 'untitled',
   excelFile: '',
 }
 
@@ -110,8 +114,14 @@ export const slice = createSlice({
     setShowQrCodeModal: (state, action) => {
       state.showQrCodeModal = action.payload
     },
+    setShowNameFileModal: (state, action) => {
+      state.showNameFileModal = action.payload
+    },
     setUserIsDemo: (state) => {
       state.userIsDemo = true
+    },
+    setExcelFileName: (state, action) => {
+      state.excelFileName = action.payload
     },
     toggleHighlightExpiredPassports: (state) => {
       state.highlightExpiredPassports = !state.highlightExpiredPassports
@@ -140,7 +150,9 @@ export const {
   revertMrzStateDropZoneClass,
   setExcelImportData,
   setExcelFile,
+  setShowNameFileModal,
   setUserIsDemo,
+  setExcelFileName,
 } = slice.actions
 
 export default slice.reducer

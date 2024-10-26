@@ -5,6 +5,7 @@ import {
   UserType,
 } from '@/app/admin/shared/controls/controls'
 import DocumentTitle from '@/app/documentTitle'
+import GenerateCsvModal from '@/app/generateCsvModal'
 import ImportExcelModal from '@/app/importExcelModal'
 import QrCodeModal from '@/app/qrCodeModal'
 import QRCode from 'qrcode'
@@ -126,6 +127,7 @@ const AppLanding = (props: AppLandingType) => {
       </LandingZone>
       <QrCodeModal />
       <ImportExcelModal />
+      <GenerateCsvModal user={user} />
     </>
   )
 }
