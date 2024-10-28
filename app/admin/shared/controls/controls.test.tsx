@@ -21,6 +21,12 @@ describe('Controls', () => {
       email: 'admin@example.com',
       name: 'Admin User',
       image: '/avatar.png',
+      res: {
+        result: {
+          company: '',
+          demo: false,
+        },
+      },
     },
     sessionId: '12345',
   }
