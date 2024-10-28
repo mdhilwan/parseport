@@ -58,6 +58,7 @@ const EmailInput = (props: EmailInputType) => {
         <span className="shadow-sm px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-300 bg-gray-50 text-sm text-gray-500">
           {state === 'saving' ? (
             <svg
+              data-testid="saving"
               aria-hidden="true"
               className="inline w-4 h-4 text-gray-200 animate-spin fill-green-600"
               viewBox="0 0 100 101"
@@ -78,10 +79,11 @@ const EmailInput = (props: EmailInputType) => {
           )}
           {state === 'saved' ? (
             <svg
+              data-testid="saved"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth={1.5}
+              strokeWidth="1.5"
               stroke="currentColor"
               className="w-4 h-4 stroke-green-600"
             >
