@@ -119,7 +119,7 @@ const doGenerateCsv = async (
   saveAs(blob, excelFileName + '.xlsx')
 }
 
-const GenerateCsvModal = ({ user }: { user: UserType }) => {
+export const GenerateCsvModal = ({ user }: { user: UserType }) => {
   const { showNameFileModal, scannedData, userIsDemo, excelFileName } =
     useAppSelector((state) => state.mrzStore)
   const [generating, setGenerating] = useState<boolean>(false)
@@ -163,5 +163,3 @@ const GenerateCsvModal = ({ user }: { user: UserType }) => {
     <></>
   )
 }
-
-export default GenerateCsvModal
