@@ -8,7 +8,7 @@ import {
 import DocumentTitle from '@/app/documentTitle'
 import { State } from '@/app/enums/state'
 import { GenerateCsvModal } from '@/app/generate/csv'
-import GenerateBagTagModal from '@/app/generate/tag/bagTag'
+import { GenerateTagModal } from '@/app/generate/tag/generateTagModal'
 import ImportExcelModal from '@/app/importExcelModal'
 import { decrypt } from '@/app/mrz/crypt'
 import QrCodeModal from '@/app/qrCodeModal'
@@ -129,7 +129,7 @@ const AppLanding = (props: AppLandingType) => {
       <QrCodeModal />
       <ImportExcelModal />
       <GenerateCsvModal user={user} />
-      <GenerateBagTagModal />
+      <GenerateTagModal />
     </>
   )
 }

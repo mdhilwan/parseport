@@ -1,4 +1,4 @@
-import { GenerateBagTagButton } from '@/app/generate/tag/bagTag/generateBagTagButton'
+import GenerateTagButton from '@/app/generate/tag/'
 import GenerateVisa from '@/app/generate/visa'
 import Input from '@/app/parsedTable/input'
 import { RemoveRow } from '@/app/parsedTable/removeRow'
@@ -49,7 +49,7 @@ const Row = (props: RowType) => {
         <></>
       )}
       <td>
-        <GenerateBagTagButton rowKey={rowKey} />
+        <GenerateTagButton rowKey={rowKey} />
       </td>
       <td>
         <RemoveRow rowKey={rowKey} />

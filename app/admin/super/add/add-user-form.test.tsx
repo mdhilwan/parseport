@@ -15,13 +15,9 @@ describe('AddUserForm Component', () => {
     render(<AddUserForm />)
 
     expect(screen.getByLabelText(/Email\(s\)/)).toBeInTheDocument()
-
     expect(screen.getByLabelText(/Company Name/)).toBeInTheDocument()
-
     expect(screen.getByLabelText(/Company Address/)).toBeInTheDocument()
-
     expect(screen.getByPlaceholderText(/9123 4321/)).toBeInTheDocument()
-
     expect(screen.getByLabelText(/Account Type/)).toBeInTheDocument()
   })
 
