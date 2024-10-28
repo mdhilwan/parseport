@@ -1,17 +1,23 @@
 import BaseModal from '@/app/baseModal'
+import { GenerateBagTagForm } from '@/app/generate/tag/bagTag/generateBagTagForm'
+import { GenerateBagTagPreview } from '@/app/generate/tag/bagTag/generateBagTagPreview'
 import { setShowBagTagModal } from '@/app/slice/slice'
 import { useAppSelector } from '@/app/store'
 import { useDispatch } from 'react-redux'
 
 const GenerateBagTagModal = () => {
   const {
-    scannedData,
     showBagTagModal: { show, rowKey },
   } = useAppSelector((state) => state.mrzStore)
   const dispatch = useDispatch()
-  return show && rowKey ? (
+  return show && rowKey !== undefined ? (
     <BaseModal
-      content={<pre>{JSON.stringify(scannedData[rowKey], undefined, 2)}</pre>}
+      content={
+        <div className="grid grid-cols-3 gap-4 mt-4">
+          <GenerateBagTagPreview />
+          <GenerateBagTagForm />
+        </div>
+      }
       header={<>Tags</>}
       size={'large'}
       button={

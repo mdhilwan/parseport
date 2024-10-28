@@ -1,12 +1,12 @@
 import { UserType } from '@/app/admin/shared/controls/controls'
 import { HttpActions } from '@/app/api/httpActions'
+import { State } from '@/app/enums/state'
+import MrzInputHandler from '@/app/mrz/MrzInutHandler'
+import { setParsed, setScanState } from '@/app/slice/slice'
 import { useAppDispatch, useAppSelector } from '@/app/store'
 import Image from 'next/image'
 import React from 'react'
-import { State } from '../enums/state'
 import Mrz from '../mrz'
-import MrzInputHandler from '../mrz/MrzInutHandler'
-import { setParsed, setScanState } from '../slice/slice'
 
 const PreScan = ({ user }: { user: UserType }) => {
   const { qrcodeSrc, guid, scanState, mrzStateDropZoneClass } = useAppSelector(
