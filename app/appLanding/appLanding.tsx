@@ -1,22 +1,22 @@
 'use client'
 
+import Controls from '@/app/admin/shared/controls'
 import {
   ControlSessionType,
   UserType,
 } from '@/app/admin/shared/controls/controls'
 import DocumentTitle from '@/app/documentTitle'
-import GenerateBagTagModal from '@/app/generate/bagTag'
+import { State } from '@/app/enums/state'
 import { GenerateCsvModal } from '@/app/generate/csv'
+import GenerateBagTagModal from '@/app/generate/tag/bagTag'
 import ImportExcelModal from '@/app/importExcelModal'
+import { decrypt } from '@/app/mrz/crypt'
 import QrCodeModal from '@/app/qrCodeModal'
 import QRCode from 'qrcode'
 import { useEffect } from 'react'
 import { useCookies } from 'react-cookie'
 import { Provider } from 'react-redux'
 import io from 'socket.io-client'
-import Controls from '../admin/shared/controls'
-import { State } from '../enums/state'
-import { decrypt } from '../mrz/crypt'
 import {
   addScannedData,
   revertMrzStateDropZoneClass,

@@ -1,4 +1,4 @@
-import { GenerateBagTagButton } from '@/app/generate/bagTag/generateBagTagButton'
+import { GenerateBagTagButton } from '@/app/generate/tag/bagTag/generateBagTagButton'
 import GenerateVisa from '@/app/generate/visa'
 import Input from '@/app/parsedTable/input'
 import { RemoveRow } from '@/app/parsedTable/removeRow'
