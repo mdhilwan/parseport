@@ -11,45 +11,80 @@ interface IScanState {
   state: State
 }
 
-interface IinitialState {
-  scanned: boolean
-  parsed: any[]
-  guid: string
-  disconnected: boolean
-  qrcodeSrc: string
-  scannedData: any[]
-  showQrCodeModal: boolean
-  showNameFileModal: boolean
-  showBagTagModal: {
-    show: boolean
-    rowKey: number | undefined
+export interface ITourPackageDetail {
+  dates: {
+    start: string
+    end: string
   }
-  userIsDemo: boolean
-  showImportExcelModal: boolean
-  highlightExpiredPassports: boolean
-  maskPassportDetails: boolean
-  scanState: IScanState
-  mrzStateDropZoneClass: string
+  id: string
+  hotels: {
+    makkah: [
+      {
+        hotelName: string
+        hotelContact: string
+      },
+      {
+        hotelName: string
+        hotelContact: string
+      },
+    ]
+    madinah: [
+      {
+        hotelName: string
+        hotelContact: string
+      },
+      {
+        hotelName: string
+        hotelContact: string
+      },
+    ]
+  }
+  mutawif: {
+    name: string
+    contact: string
+  }
+  tourPackageName: string
+}
+
+interface IinitialState {
+  disconnected: boolean
+  excelFile: string
+  excelFileName: string
   excelImportData: {
     table?: any
     obj?: any
   }
-  excelFileName: string
-  excelFile: string
+  guid: string
+  highlightExpiredPassports: boolean
+  maskPassportDetails: boolean
+  mrzStateDropZoneClass: string
+  parsed: any[]
+  qrcodeSrc: string
+  scanState: IScanState
+  scanned: boolean
+  scannedData: any[]
+  showBagTagModal: {
+    show: boolean
+    rowKey: number | undefined
+  }
+  showImportExcelModal: boolean
+  showNameFileModal: boolean
+  showQrCodeModal: boolean
+  tourPackageDetails: ITourPackageDetail
+  userIsDemo: boolean
 }
 
 const initialState: IinitialState = {
-  scanned: false,
-  parsed: [],
-  guid: '',
   disconnected: true,
-  qrcodeSrc: 'loading.svg',
-  scannedData: [],
-  userIsDemo: false,
-  showQrCodeModal: false,
-  showImportExcelModal: false,
+  excelFile: '',
+  excelFileName: 'untitled',
+  excelImportData: {},
+  guid: '',
   highlightExpiredPassports: false,
   maskPassportDetails: false,
+  mrzStateDropZoneClass: defaultMrzStateDropZoneClass,
+  parsed: [],
+  qrcodeSrc: 'loading.svg',
   scanState: {
     success: 0,
     scanning: 0,
@@ -57,15 +92,50 @@ const initialState: IinitialState = {
     length: 0,
     state: State.IDLE,
   },
-  mrzStateDropZoneClass: defaultMrzStateDropZoneClass,
-  excelImportData: {},
-  showNameFileModal: false,
+  scanned: false,
+  scannedData: [],
   showBagTagModal: {
     show: false,
     rowKey: undefined,
   },
-  excelFileName: 'untitled',
-  excelFile: '',
+  showImportExcelModal: false,
+  showNameFileModal: false,
+  showQrCodeModal: false,
+  tourPackageDetails: {
+    dates: {
+      start: '',
+      end: '',
+    },
+    id: '',
+    hotels: {
+      makkah: [
+        {
+          hotelName: '',
+          hotelContact: '',
+        },
+        {
+          hotelName: '',
+          hotelContact: '',
+        },
+      ],
+      madinah: [
+        {
+          hotelName: '',
+          hotelContact: '',
+        },
+        {
+          hotelName: '',
+          hotelContact: '',
+        },
+      ],
+    },
+    mutawif: {
+      name: '',
+      contact: '',
+    },
+    tourPackageName: '',
+  },
+  userIsDemo: false,
 }
 
 export const slice = createSlice({
@@ -83,6 +153,9 @@ export const slice = createSlice({
     },
     setExcelFile: (state, action) => {
       state.excelFile = action.payload
+    },
+    setExcelFileName: (state, action) => {
+      state.excelFileName = action.payload
     },
     setExcelImportData: (state, action) => {
       state.excelImportData = action.payload
@@ -116,25 +189,25 @@ export const slice = createSlice({
     setScannedData: (state, action) => {
       state.scannedData = action.payload
     },
-    setShowImportExcelModal: (state, action) => {
-      state.showImportExcelModal = action.payload
-    },
-    setShowQrCodeModal: (state, action) => {
-      state.showQrCodeModal = action.payload
-    },
-    setShowNameFileModal: (state, action) => {
-      state.showNameFileModal = action.payload
-    },
     setShowBagTagModal: (state, action) => {
       const { show, rowKey } = action.payload
       state.showBagTagModal.show = show
       state.showBagTagModal.rowKey = rowKey
     },
+    setShowImportExcelModal: (state, action) => {
+      state.showImportExcelModal = action.payload
+    },
+    setShowNameFileModal: (state, action) => {
+      state.showNameFileModal = action.payload
+    },
+    setShowQrCodeModal: (state, action) => {
+      state.showQrCodeModal = action.payload
+    },
+    setTourPackageDetails: (state, action) => {
+      state.tourPackageDetails = action.payload
+    },
     setUserIsDemo: (state) => {
       state.userIsDemo = true
-    },
-    setExcelFileName: (state, action) => {
-      state.excelFileName = action.payload
     },
     toggleHighlightExpiredPassports: (state) => {
       state.highlightExpiredPassports = !state.highlightExpiredPassports
@@ -161,6 +234,7 @@ export const {
   toggleMaskPassportDetails,
   toggleHighlightExpiredPassports,
   setShowBagTagModal,
+  setTourPackageDetails,
   revertMrzStateDropZoneClass,
   setExcelImportData,
   setExcelFile,
