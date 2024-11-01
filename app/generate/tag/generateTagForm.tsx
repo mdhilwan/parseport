@@ -26,7 +26,7 @@ export const GenerateTagForm = () => {
   }
 
   return (
-    <div className="col-span-1 max-h-[calc(100vh-16rem)] min-h-[calc(820px-10rem)] overflow-y-scroll overflow-x-hidden relative">
+    <div className="col-span-1 max-h-[calc(1000px-16rem)] min-h-[calc(820px-10rem)] overflow-y-scroll overflow-x-hidden relative">
       {/*<pre>{JSON.stringify(cloneTourPackageDetails, undefined, 2)}</pre>*/}
       <h3 className="pb-3 text-sm text-gray-400 uppercase">Personal Details</h3>
       <form className="border border-gray-100 shadow-sm rounded p-4 mb-4">

@@ -34,7 +34,7 @@ const TagButton = (tagButtonProp: TagButtonType) => {
 export const GenerateTagPreview = () => {
   return (
     <div className="col-span-2">
-      <div className="bg-gray-500 rounded flex justify-center items-center h-[calc(100vh-16rem)] min-h-[calc(820px-10rem)] shadow-inner border border-gray-600 relative overflow-hidden">
+      <div className="bg-gray-500 rounded flex justify-center items-center h-[calc(100vh-16rem)] max-h-[calc(1000px-16rem)] min-h-[calc(900px-10rem)] shadow-inner border border-gray-600 relative overflow-hidden">
         <TagButtons />
         <FrontBagTag />
         <BackBagTag />
