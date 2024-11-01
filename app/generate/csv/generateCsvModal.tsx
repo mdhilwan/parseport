@@ -148,7 +148,7 @@ export const GenerateCsvModal = ({ user }: { user: UserType }) => {
               dispatch(setShowNameFileModal(false))
             }}
           >
-            Cancel
+            Done
           </button>
         </>
       }

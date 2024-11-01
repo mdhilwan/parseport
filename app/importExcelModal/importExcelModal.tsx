@@ -62,7 +62,7 @@ const ImportExcelModal = () => {
               dispatch(setExcelFile(''))
             }}
           >
-            Cancel
+            Done
           </button>
         </>
       }
