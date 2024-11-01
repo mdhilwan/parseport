@@ -26,8 +26,8 @@ export const GenerateTagForm = () => {
   }
 
   return (
-    <div className="col-span-1 max-h-[calc(100vh-16rem)] overflow-y-scroll overflow-x-hidden">
-      <pre>{JSON.stringify(cloneTourPackageDetails, undefined, 2)}</pre>
+    <div className="col-span-1 max-h-[calc(100vh-16rem)] min-h-[calc(820px-10rem)] overflow-y-scroll overflow-x-hidden relative">
+      {/*<pre>{JSON.stringify(cloneTourPackageDetails, undefined, 2)}</pre>*/}
       <h3 className="pb-3 text-sm text-gray-400 uppercase">Personal Details</h3>
       <form className="border border-gray-100 shadow-sm rounded p-4 mb-4">
         <div className="mb-4">
@@ -255,12 +255,18 @@ export const GenerateTagForm = () => {
             }}
           />
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex sticky bottom-0">
           <button
-            className="border border-blue-500 hover:bg-blue-400 hover:text-white text-blue-500 text-sm font-semibold px-3 py-2 rounded"
+            className="border border-blue-500 bg-white hover:bg-blue-400 hover:text-white text-blue-500 text-xs font-semibold px-3 py-2 me-2 rounded"
             type="button"
           >
-            Save package
+            Save package for future
+          </button>
+          <button
+            className="border border-gray-500 bg-white hover:bg-gray-400 hover:text-white text-gray-500 text-xs font-semibold px-3 py-2 rounded"
+            type="button"
+          >
+            Load past package
           </button>
         </div>
       </form>

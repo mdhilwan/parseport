@@ -36,7 +36,7 @@ const BaseModal = (baseModalProps: BaseModalType) => {
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 sm:items-center sm:p-0">
           <div
-            className={`relative transform overflow-hidden rounded-md bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:${modalSize}`}
+            className={`relative transform overflow-hidden rounded-md bg-white text-left shadow-xl transition-all sm:my-6 ${modalSize} min-h-[800px]`}
           >
             <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <h3
