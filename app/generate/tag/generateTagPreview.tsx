@@ -10,7 +10,7 @@ const TagButtons = () => (
 
 const PackageButtons = () => (
   <div className="absolute top-4 center">
-    <TagButton active={true} label="Umrah / Makkah Tags" />
+    <TagButton active={true} label="Umrah / Hajj Tags" />
     <TagButton disabled={true} label="Generic Tour Tags (coming soon)" />
   </div>
 )
