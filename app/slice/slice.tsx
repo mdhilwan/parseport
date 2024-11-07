@@ -11,11 +11,13 @@ interface IScanState {
   state: State
 }
 
+export interface ITourDates {
+  start: string
+  end: string
+}
+
 export interface ITourPackageDetail {
-  dates: {
-    start: string
-    end: string
-  }
+  dates: ITourDates
   id: string
   hotels: {
     makkah: [
