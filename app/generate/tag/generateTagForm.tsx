@@ -67,25 +67,6 @@ export const GenerateTagForm = () => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="packageName"
           >
-            Tour Package Name
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
-            type="text"
-            id="packageName"
-            placeholder="Umrah 2025"
-            value={cloneTourPackageDetails.tourPackageName}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              cloneTourPackageDetails.tourPackageName = e.target.value
-              dispatch(setTourPackageDetails(cloneTourPackageDetails))
-            }}
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="packageName"
-          >
             Tour ID
           </label>
           <input
@@ -96,6 +77,25 @@ export const GenerateTagForm = () => {
             value={cloneTourPackageDetails.id}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               cloneTourPackageDetails.id = e.target.value
+              dispatch(setTourPackageDetails(cloneTourPackageDetails))
+            }}
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="packageName"
+          >
+            Tour Package Name
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
+            type="text"
+            id="packageName"
+            placeholder="Umrah 2025"
+            value={cloneTourPackageDetails.tourPackageName}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              cloneTourPackageDetails.tourPackageName = e.target.value
               dispatch(setTourPackageDetails(cloneTourPackageDetails))
             }}
           />
