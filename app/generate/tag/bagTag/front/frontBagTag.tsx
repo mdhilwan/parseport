@@ -1,7 +1,13 @@
 import BaseBagTag from '@/app/generate/tag/bagTag/base'
+import { ITourDates } from '@/app/slice/slice'
 import { useAppSelector } from '@/app/store'
+import localFont from 'next/font/local'
 
-function getDaysBetweenDates({ start, end }: { start: string; end: string }) {
+const playlistFont = localFont({
+  src: '../../font/PlaylistFF/Playlist Script.otf',
+})
+
+function getDaysBetweenDates({ start, end }: ITourDates) {
   if (start && end) {
     const oneDay = 24 * 60 * 60 * 1000 // milliseconds in a day
     const diffInMs = Math.abs(
@@ -12,12 +18,19 @@ function getDaysBetweenDates({ start, end }: { start: string; end: string }) {
   return ''
 }
 
-function displayDateRange({ start, end }: { start: string; end: string }) {
+function displayDateRange({ start, end }: ITourDates) {
   if (start && end) {
     const formatter = new Intl.DateTimeFormat('en-SG', {
       dateStyle: 'medium',
     })
-    return formatter.formatRange(new Date(start), new Date(end))
+
+    const a = new Date(end)
+    const localeFormat = 'ar-SA-islamic-umalqura'
+    const hijri = Intl.DateTimeFormat(localeFormat).formatToParts(a)
+    const hijriYear = hijri.find((value) => value.type === 'year')
+    const hijriEra = hijri.find((value) => value.type === 'era')
+
+    return `${formatter.formatRange(new Date(start), new Date(end))} / ${hijriEra?.value}${hijriYear?.value}`
   }
   return ''
 }
@@ -29,29 +42,30 @@ const FrontBagTag = () => {
     showBagTagModal: { rowKey = 0 },
   } = useAppSelector((state) => state.mrzStore)
 
-  const a = new Date()
-  const localeFormat = 'ar-SA-islamic-umalqura'
-  const hijriYear = Intl.DateTimeFormat(localeFormat).formatToParts(a)
-  console.log(hijriYear)
-
   return (
-    <BaseBagTag type="Front">
+    <BaseBagTag
+      type="Front"
+      bgImg={'/bagTags/HalijahUmrahHajjLuggageTag-Front.png'}
+    >
       <>
-        <h3>{tourPackageDetails.tourPackageName}</h3>
-        <h4>Halijah Travels Pte Ltd</h4>
-        <h5>
-          22 Kandahar Street, Singapore 198886, +65 6294 9676 halijah.com.sg
-        </h5>
-        <p>
+        <h3
+          className={
+            'absolute top-14 left-[4.6rem] text-[#d2f4f0] text-2xl text-shadow leading-none ' +
+            playlistFont.className
+          }
+        >
+          {tourPackageDetails.tourPackageName}
+        </h3>
+        <p className={'absolute py-2 px-5 bottom-32'}>
           {scannedData[rowKey].firstName} {scannedData[rowKey].lastName}
         </p>
-        <ul>
-          <li>
-            {getDaysBetweenDates(tourPackageDetails.dates)}
-            {tourPackageDetails.id}
-          </li>
-          <li>{displayDateRange(tourPackageDetails.dates)}</li>
-        </ul>
+        {/*<ul>*/}
+        {/*  <li>*/}
+        {/*    {getDaysBetweenDates(tourPackageDetails.dates)}*/}
+        {/*    {tourPackageDetails.id}*/}
+        {/*  </li>*/}
+        {/*  <li>{displayDateRange(tourPackageDetails.dates)}</li>*/}
+        {/*</ul>*/}
       </>
     </BaseBagTag>
   )
