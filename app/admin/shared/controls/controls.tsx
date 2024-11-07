@@ -28,6 +28,45 @@ export type ControlsType = {
   session: ControlSessionType
 }
 
+type SuperLinkType = {
+  whichAdmin: WhichAdmin
+  email: string
+}
+
+const SuperLink = ({ whichAdmin, email }: SuperLinkType) => {
+  return (
+    <>
+      {whichAdmin === WhichAdmin.SUPER ||
+      GetType(email) === WhichAdmin.SUPER ? (
+        <ControlLink
+          text={'Super'}
+          url={`${process.env.NEXT_PUBLIC_BASE_URL}/admin/super`}
+        />
+      ) : (
+        <></>
+      )}
+    </>
+  )
+}
+
+const AddAccountLink = ({ whichAdmin, email }: SuperLinkType) => {
+  return (
+    <>
+      {whichAdmin === WhichAdmin.SUPER ||
+      GetType(email) === WhichAdmin.SUPER ? (
+        <ControlLink
+          text={'Add Account'}
+          url={`${process.env.NEXT_PUBLIC_BASE_URL}/admin/super/add`}
+          color="yellow"
+          extraClass="ms-4 border-s rounded-s"
+        />
+      ) : (
+        <></>
+      )}
+    </>
+  )
+}
+
 const Controls = (props: ControlsType) => {
   const {
     whichAdmin = WhichAdmin.ADMIN,
@@ -56,15 +95,7 @@ const Controls = (props: ControlsType) => {
 
       <ControlLink text={'Home'} url={'/'} />
       <ControlLink text={'Settings'} url={'/admin'} />
-      {whichAdmin === WhichAdmin.SUPER ||
-      GetType(email) === WhichAdmin.SUPER ? (
-        <ControlLink
-          text={'Super'}
-          url={`${process.env.NEXT_PUBLIC_BASE_URL}/admin/super`}
-        />
-      ) : (
-        <></>
-      )}
+      <SuperLink email={email} whichAdmin={whichAdmin} />
       <ControlLink
         text={'Logout'}
         clickEvent={async () => await signOut({ callbackUrl: cbUrl })}
@@ -72,17 +103,13 @@ const Controls = (props: ControlsType) => {
       />
 
       <span className="flex">
-        {whichAdmin === WhichAdmin.SUPER ||
-        GetType(email) === WhichAdmin.SUPER ? (
-          <ControlLink
-            text={'Add Account'}
-            url={`${process.env.NEXT_PUBLIC_BASE_URL}/admin/super/add`}
-            color="yellow"
-            extraClass="ms-4 border-s rounded-s"
-          />
-        ) : (
-          <></>
-        )}
+        <ControlLink
+          text={'Packages'}
+          url={'/packages'}
+          color={'blue'}
+          extraClass="ms-4 border rounded-e"
+        />
+        <AddAccountLink whichAdmin={whichAdmin} email={email} />
       </span>
     </div>
   )
