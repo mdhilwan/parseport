@@ -46,6 +46,7 @@ export interface ITourPackageDetail {
     contact: string
   }
   tourPackageName: string
+  flag: string
 }
 
 interface IinitialState {
@@ -136,6 +137,7 @@ const initialState: IinitialState = {
       contact: '',
     },
     tourPackageName: '',
+    flag: '',
   },
   userIsDemo: false,
 }
