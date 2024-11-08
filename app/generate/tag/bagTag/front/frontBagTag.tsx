@@ -30,7 +30,7 @@ function displayDateRange({ start, end }: ITourDates) {
     const hijriYear = hijri.find((value) => value.type === 'year')
     const hijriEra = hijri.find((value) => value.type === 'era')
 
-    return `${formatter.formatRange(new Date(start), new Date(end))} / ${hijriEra?.value}${hijriYear?.value}`
+    return `${formatter.formatRange(new Date(start), new Date(end))}`
   }
   return ''
 }
@@ -56,12 +56,18 @@ const FrontBagTag = () => {
         >
           {tourPackageDetails.tourPackageName}
         </h3>
+        <h4
+          className={
+            'absolute top-[5.2rem] left-[4.6rem] text-[#d2f4f0] text-xs text-shadow leading-none'
+          }
+        >
+          {displayDateRange(tourPackageDetails.dates)}
+        </h4>
         <p className={'absolute py-2 px-5 bottom-32'}>
           {scannedData[rowKey].firstName} {scannedData[rowKey].lastName}
         </p>
         {/*<ul>*/}
         {/*  <li>*/}
-        {/*    {getDaysBetweenDates(tourPackageDetails.dates)}*/}
         {/*    {tourPackageDetails.id}*/}
         {/*  </li>*/}
         {/*  <li>{displayDateRange(tourPackageDetails.dates)}</li>*/}

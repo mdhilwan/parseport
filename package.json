@@ -24,6 +24,7 @@
   "dependencies": {
     "@next/third-parties": "^14.2.5",
     "@reduxjs/toolkit": "^2.2.3",
+    "@types/lodash": "^4.17.13",
     "@vercel/postgres": "^0.5.1",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
@@ -38,6 +39,7 @@
     "i18n-iso-countries": "^7.7.0",
     "is-mobile": "^4.0.0",
     "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "muhammara": "^4.1.0",
     "next": "14.0.4",
