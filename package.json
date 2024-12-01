@@ -36,6 +36,7 @@
     "express-rate-limit": "^7.1.5",
     "file-saver": "^2.0.5",
     "helmet": "^7.1.0",
+    "html2canvas-pro": "^1.5.8",
     "i18n-iso-countries": "^7.7.0",
     "is-mobile": "^4.0.0",
     "jsonwebtoken": "^9.0.2",
