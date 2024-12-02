@@ -1,6 +1,6 @@
 import { UserType } from '@/app/admin/shared/controls/controls'
 import { HttpActions } from '@/app/api/httpActions'
-import BaseModal from '@/app/baseModal'
+import { BaseModal } from '@/app/baseModal/baseModal.lazy'
 import DocumentTitle from '@/app/documentTitle'
 import { maskData } from '@/app/parsedTable/input'
 import { setShowNameFileModal } from '@/app/slice/slice'
@@ -119,7 +119,7 @@ const doGenerateCsv = async (
   saveAs(blob, excelFileName + '.xlsx')
 }
 
-export const GenerateCsvModal = ({ user }: { user: UserType }) => {
+const GenerateCsvModal = ({ user }: { user: UserType }) => {
   const { showNameFileModal, scannedData, userIsDemo, excelFileName } =
     useAppSelector((state) => state.mrzStore)
   const [generating, setGenerating] = useState<boolean>(false)
@@ -163,3 +163,5 @@ export const GenerateCsvModal = ({ user }: { user: UserType }) => {
     <></>
   )
 }
+
+export default GenerateCsvModal

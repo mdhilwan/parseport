@@ -2,7 +2,7 @@ import { setShowNameFileModal } from '@/app/slice/slice'
 import { useAppSelector } from '@/app/store'
 import { useDispatch } from 'react-redux'
 
-const GenerateCsvButton = () => {
+export const GenerateCsvButton = () => {
   const { scannedData } = useAppSelector((state) => state.mrzStore)
   const dispatch = useDispatch()
 
@@ -34,5 +34,3 @@ const GenerateCsvButton = () => {
     <></>
   )
 }
-
-export default GenerateCsvButton
