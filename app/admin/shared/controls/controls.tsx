@@ -103,12 +103,6 @@ const Controls = (props: ControlsType) => {
       />
 
       <span className="flex">
-        <ControlLink
-          text={'Packages'}
-          url={'/packages'}
-          color={'blue'}
-          extraClass="ms-4 border rounded-e"
-        />
         <AddAccountLink whichAdmin={whichAdmin} email={email} />
       </span>
     </div>
