@@ -1,4 +1,4 @@
-import BaseModal from '@/app/baseModal'
+import { BaseModal } from '@/app/baseModal/baseModal.lazy'
 import { setShowQrCodeModal } from '@/app/slice/slice'
 import { useAppDispatch, useAppSelector } from '@/app/store'
 import Image from 'next/image'
