@@ -1,17 +1,9 @@
-import BaseModal from '@/app/baseModal'
-import { GenerateTagForm } from '@/app/generate/tag/generateTagForm'
-import { GenerateTagPreview } from '@/app/generate/tag/generateTagPreview'
+import { BaseModal } from '@/app/baseModal/baseModal.lazy'
+import { GenerateTagForm, GenerateTagPreview } from '@/app/generate/tag'
+import { TagModalButton } from '@/app/generate/tag/tagModalButton'
 import { setShowBagTagModal } from '@/app/slice/slice'
 import { useAppSelector } from '@/app/store'
-import { ReactElement } from 'react'
 import { useDispatch } from 'react-redux'
-
-type TagModalButtonType = {
-  children: ReactElement | string
-  disabled?: boolean
-  classNameOverwrite?: string
-  onClick?: () => void
-}
 
 const Pagination = () => {
   const {
@@ -67,7 +59,7 @@ const Pagination = () => {
   )
 }
 
-const TagModalButtons = () => {
+const TagModalButtonGroup = () => {
   const { scannedData } = useAppSelector((state) => state.mrzStore)
   const dispatch = useDispatch()
   return (
@@ -87,26 +79,6 @@ const TagModalButtons = () => {
   )
 }
 
-const TagModalButton = (tagModalButtonProps: TagModalButtonType) => {
-  const {
-    children,
-    classNameOverwrite = '',
-    disabled = false,
-    onClick = () => console.log('click TagModalButton'),
-  } = tagModalButtonProps
-  const baseClassName = `className="mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto ms-3 last:ms-0 ${classNameOverwrite}`
-  return (
-    <button
-      type="button"
-      disabled={disabled}
-      onClick={onClick}
-      className={baseClassName}
-    >
-      {children}
-    </button>
-  )
-}
-
 export const GenerateTagModal = () => {
   const {
     showBagTagModal: { show, rowKey },
@@ -121,7 +93,7 @@ export const GenerateTagModal = () => {
       }
       header={<>Tags</>}
       size={'large'}
-      button={<TagModalButtons />}
+      button={<TagModalButtonGroup />}
     />
   ) : (
     <></>

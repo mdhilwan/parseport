@@ -1,7 +1,7 @@
 import { setShowBagTagModal } from '@/app/slice/slice'
 import { useDispatch } from 'react-redux'
 
-const GenerateTagButton = ({ rowKey }: { rowKey: number }) => {
+export const GenerateTagButton = ({ rowKey }: { rowKey: number }) => {
   const dispatch = useDispatch()
 
   return (
@@ -31,5 +31,3 @@ const GenerateTagButton = ({ rowKey }: { rowKey: number }) => {
     </button>
   )
 }
-
-export default GenerateTagButton

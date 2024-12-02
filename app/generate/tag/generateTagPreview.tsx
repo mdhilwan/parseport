@@ -1,17 +1,9 @@
-import BackBagTag from '@/app/generate/tag/bagTag/back'
-import FrontBagTag from '@/app/generate/tag/bagTag/front'
+import { BackBagTag, FrontBagTag } from '@/app/generate/tag'
 
 const TagButtons = () => (
   <div className="absolute bottom-4 center">
     <TagButton active={true} label="Luggage Tags" />
     <TagButton disabled={true} label="Lanyards (coming soon)" />
-  </div>
-)
-
-const PackageButtons = () => (
-  <div className="absolute top-4 center">
-    <TagButton active={true} label="Umrah / Hajj Tags" />
-    <TagButton disabled={true} label="Generic Tour Tags (coming soon)" />
   </div>
 )
 
@@ -31,6 +23,7 @@ const TagButton = (tagButtonProp: TagButtonType) => {
     </button>
   )
 }
+
 export const GenerateTagPreview = () => {
   return (
     <div className="col-span-2">
@@ -38,7 +31,6 @@ export const GenerateTagPreview = () => {
         <TagButtons />
         <FrontBagTag />
         <BackBagTag />
-        <PackageButtons />
       </div>
     </div>
   )
