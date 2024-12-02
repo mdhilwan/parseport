@@ -7,8 +7,8 @@ import {
 } from '@/app/admin/shared/controls/controls'
 import DocumentTitle from '@/app/documentTitle'
 import { State } from '@/app/enums/state'
-import { GenerateCsvModal } from '@/app/generate/csv'
-import { GenerateTagModal } from '@/app/generate/tag/generateTagModal'
+import { GenerateCsvModal } from '@/app/generate/csv/generateCsvModal.lazy'
+import { GenerateTagModal } from '@/app/generate/tag'
 import ImportExcelModal from '@/app/importExcelModal'
 import { decrypt } from '@/app/mrz/crypt'
 import QrCodeModal from '@/app/qrCodeModal'
@@ -43,7 +43,7 @@ type AppLandingType = {
 
 const AppLanding = (props: AppLandingType) => {
   const { uuid, session, user } = props
-  const { parsed, guid, scanState, userIsDemo } = useAppSelector(
+  const { parsed, guid, scanState, userIsDemo, scannedData } = useAppSelector(
     (state) => state.mrzStore
   )
   const dispatch = useAppDispatch()
@@ -104,11 +104,13 @@ const AppLanding = (props: AppLandingType) => {
   }, [scanState])
 
   useEffect(() => {
-    window.gtag('set', 'user_data', { email: user.email })
-    window.addEventListener('beforeunload', alertUser)
-    return () => {
-      window.removeEventListener('beforeunload', alertUser)
+    if (scannedData.length > 0) {
+      window.addEventListener('beforeunload', alertUser)
     }
+  }, [scannedData])
+
+  useEffect(() => {
+    window.gtag('set', 'user_data', { email: user.email })
   }, [])
 
   const alertUser = (e: {

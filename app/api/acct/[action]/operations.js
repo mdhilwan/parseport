@@ -1,3 +1,4 @@
+import { GetType } from '@/app/server/allowed'
 import { getServerAuthSession } from '@/app/server/auth'
 import { sql } from '@vercel/postgres'
 import jwt from 'jsonwebtoken'
@@ -158,6 +159,10 @@ export const doScan = async (request) => {
   }
 
   const [user] = await doGetByEmail(userEmail)
+  if (GetType(user.useremail) === 'super') {
+    return doReturn200({})
+  }
+
   const newScanCount = scanCount + user.scancount
 
   try {

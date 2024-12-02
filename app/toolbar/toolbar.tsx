@@ -1,4 +1,4 @@
-import GenerateCsvButton from '@/app/generate/csv'
+import { GenerateCsvButton } from '@/app/generate/csv'
 import HighlightExpiredPassports from '@/app/highlightExpiredPassports'
 import MaskDetails from '@/app/maskDetails'
 import ScanNotification from '@/app/scanNotification'

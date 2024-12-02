@@ -2,7 +2,7 @@ import { setShowQrCodeModal } from '@/app/slice/slice'
 import { useAppDispatch, useAppSelector } from '@/app/store'
 
 const StatePhoneConnection = () => {
-  const { disconnected } = useAppSelector((state) => state.mrzStore)
+  const { disconnected, qrcodeSrc } = useAppSelector((state) => state.mrzStore)
   const dispatch = useAppDispatch()
 
   const baseClass =
@@ -20,6 +20,14 @@ const StatePhoneConnection = () => {
               onClick={() => dispatch(setShowQrCodeModal(true))}
             >
               Connect
+              {qrcodeSrc !== 'loading.svg' ? (
+                <span
+                  className={'rounded-full bg-green-500 ml-1.5 inline-block'}
+                  style={{ height: '10px', width: '10px' }}
+                />
+              ) : (
+                <></>
+              )}
             </a>
           </div>
         </>
