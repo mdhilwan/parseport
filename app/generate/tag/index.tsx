@@ -1,1 +1,10 @@
-export { default } from './generateTagButton'
+export { GenerateTagButton } from './generateTagButton'
+export { GenerateTagForm } from './generateTagForm'
+export { GenerateTagModal } from './generateTagModal'
+export { GenerateTagPreview } from './generateTagPreview'
+export { Input } from './input'
+export { Label } from './label'
+
+export { default as BackBagTag } from './bagTag/back'
+export { default as BaseBagTag } from './bagTag/base'
+export { default as FrontBagTag } from './bagTag/front'

@@ -1,4 +1,4 @@
-import BaseBagTag from '@/app/generate/tag/bagTag/base'
+import { BaseBagTag } from '@/app/generate/tag'
 import { useAppSelector } from '@/app/store'
 
 const FrontBagTag = () => {
@@ -7,23 +7,31 @@ const FrontBagTag = () => {
     showBagTagModal: {
       rowKey = 0,
       elementsPos: {
-        name: { x, y },
+        name: { front, display },
       },
     },
   } = useAppSelector((state) => state.mrzStore)
 
+  const getFontSize = () => {
+    return 'text-base'
+  }
+
   return (
-    <BaseBagTag type="Front">
+    <BaseBagTag face="front">
       <>
-        <p
-          className={'absolute py-2 px-5'}
-          style={{
-            top: y,
-            left: x,
-          }}
-        >
-          {scannedData[rowKey].firstName} {scannedData[rowKey].lastName}
-        </p>
+        {display.includes('front') ? (
+          <p
+            className={`front-name-element absolute py-2 px-5 w-full ${getFontSize()}`}
+            style={{
+              top: front.y,
+              left: front.x,
+            }}
+          >
+            {scannedData[rowKey].firstName} {scannedData[rowKey].lastName}
+          </p>
+        ) : (
+          <></>
+        )}
       </>
     </BaseBagTag>
   )
