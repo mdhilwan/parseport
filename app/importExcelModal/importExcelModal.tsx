@@ -1,4 +1,4 @@
-import BaseModal from '@/app/baseModal'
+import { BaseModal } from '@/app/baseModal/baseModal.lazy'
 import ImportExcelInput from '@/app/ImportExcelInput'
 import {
   setExcelFile,

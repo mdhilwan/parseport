@@ -4,7 +4,7 @@ type BaseModalType = {
   content: ReactElement
   button: ReactElement
   header: ReactElement
-  size?: 'small' | 'medium' | 'large'
+  size?: 'small' | 'medium' | 'large' | 'full'
 }
 
 const BaseModal = (baseModalProps: BaseModalType) => {
@@ -22,7 +22,9 @@ const BaseModal = (baseModalProps: BaseModalType) => {
   } else if (size === 'medium') {
     modalSize = 'max-w-lg'
   } else if (size === 'large') {
-    modalSize = 'max-w-7xl'
+    modalSize = 'w-[calc(100%-10em)] max-w-[100em]'
+  } else if (size === 'full') {
+    modalSize = 'w-full'
   }
 
   return (
