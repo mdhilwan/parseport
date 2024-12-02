@@ -11,43 +11,7 @@ interface IScanState {
   state: State
 }
 
-export interface ITourDates {
-  start: string
-  end: string
-}
-
-export interface ITourPackageDetail {
-  dates: ITourDates
-  id: string
-  hotels: {
-    makkah: [
-      {
-        hotelName: string
-        hotelContact: string
-      },
-      {
-        hotelName: string
-        hotelContact: string
-      },
-    ]
-    madinah: [
-      {
-        hotelName: string
-        hotelContact: string
-      },
-      {
-        hotelName: string
-        hotelContact: string
-      },
-    ]
-  }
-  mutawif: {
-    name: string
-    contact: string
-  }
-  tourPackageName: string
-  flag: string
-}
+export type CardFace = 'front' | 'back'
 
 interface IinitialState {
   disconnected: boolean
@@ -69,11 +33,31 @@ interface IinitialState {
   showBagTagModal: {
     show: boolean
     rowKey: number | undefined
+    elementsPos: {
+      name: {
+        display: CardFace[]
+        front: {
+          x: string
+          y: string
+        }
+        back: {
+          x: string
+          y: string
+        }
+      }
+    }
+    design: {
+      front: string
+      back: string
+      dimension: {
+        h: number
+        w: number
+      }
+    }
   }
   showImportExcelModal: boolean
   showNameFileModal: boolean
   showQrCodeModal: boolean
-  tourPackageDetails: ITourPackageDetail
   userIsDemo: boolean
 }
 
@@ -100,45 +84,31 @@ const initialState: IinitialState = {
   showBagTagModal: {
     show: false,
     rowKey: undefined,
+    elementsPos: {
+      name: {
+        front: {
+          x: '0px',
+          y: '0px',
+        },
+        back: {
+          x: '0px',
+          y: '0px',
+        },
+        display: ['front'],
+      },
+    },
+    design: {
+      front: '',
+      back: '',
+      dimension: {
+        h: 0,
+        w: 0,
+      },
+    },
   },
   showImportExcelModal: false,
   showNameFileModal: false,
   showQrCodeModal: false,
-  tourPackageDetails: {
-    dates: {
-      start: '',
-      end: '',
-    },
-    id: '',
-    hotels: {
-      makkah: [
-        {
-          hotelName: '',
-          hotelContact: '',
-        },
-        {
-          hotelName: '',
-          hotelContact: '',
-        },
-      ],
-      madinah: [
-        {
-          hotelName: '',
-          hotelContact: '',
-        },
-        {
-          hotelName: '',
-          hotelContact: '',
-        },
-      ],
-    },
-    mutawif: {
-      name: '',
-      contact: '',
-    },
-    tourPackageName: '',
-    flag: '',
-  },
   userIsDemo: false,
 }
 
@@ -207,8 +177,11 @@ export const slice = createSlice({
     setShowQrCodeModal: (state, action) => {
       state.showQrCodeModal = action.payload
     },
-    setTourPackageDetails: (state, action) => {
-      state.tourPackageDetails = action.payload
+    setBagTagNamePos: (state, action) => {
+      state.showBagTagModal.elementsPos.name = action.payload
+    },
+    setBagTagDesign: (state, action) => {
+      state.showBagTagModal.design = action.payload
     },
     setUserIsDemo: (state) => {
       state.userIsDemo = true
@@ -238,7 +211,8 @@ export const {
   toggleMaskPassportDetails,
   toggleHighlightExpiredPassports,
   setShowBagTagModal,
-  setTourPackageDetails,
+  setBagTagNamePos,
+  setBagTagDesign,
   revertMrzStateDropZoneClass,
   setExcelImportData,
   setExcelFile,
