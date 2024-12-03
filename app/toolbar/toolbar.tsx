@@ -1,6 +1,7 @@
 import { GenerateCsvButton } from '@/app/generate/csv'
 import HighlightExpiredPassports from '@/app/highlightExpiredPassports'
 import MaskDetails from '@/app/maskDetails'
+import ScanNotification from '@/app/scanNotification'
 import StatePhoneConnection from '@/app/statePhoneConnection'
 
 const Toolbar = () => {
@@ -10,6 +11,7 @@ const Toolbar = () => {
       <StatePhoneConnection />
       <GenerateCsvButton />
       <HighlightExpiredPassports />
+      <ScanNotification />
     </div>
   )
 }

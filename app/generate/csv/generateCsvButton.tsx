@@ -9,7 +9,7 @@ export const GenerateCsvButton = () => {
   return scannedData.length > 0 ? (
     <button
       type="button"
-      className="border focus:outline-none font-medium rounded-md text-xs px-2 py-1 text-center inline-flex items-center focus:ring-gray-600 bg-gray-800 border-gray-700 text-white hover:bg-gray-700"
+      className="border focus:outline-none font-medium rounded-full text-sm px-2 py-1 text-center inline-flex items-center focus:ring-gray-600 bg-gray-800 border-gray-700 text-white hover:bg-gray-700"
       onClick={async () => {
         dispatch(setShowNameFileModal(true))
       }}

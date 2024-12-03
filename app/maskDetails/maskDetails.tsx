@@ -7,7 +7,7 @@ const MaskDetails = () => {
   )
   const dispatch = useAppDispatch()
   const baseClass =
-    'me-4 border focus:outline-none font-medium rounded-md text-xs px-2 py-1.5 text-center inline-flex items-center focus:ring-gray-600 border-gray-700'
+    'me-4 border focus:outline-none font-medium rounded-full text-xs px-2 py-1.5 text-center inline-flex items-center focus:ring-gray-600 border-gray-700'
 
   if (userIsDemo) {
     return (
