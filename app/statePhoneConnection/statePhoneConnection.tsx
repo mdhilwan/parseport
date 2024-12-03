@@ -6,7 +6,7 @@ const StatePhoneConnection = () => {
   const dispatch = useAppDispatch()
 
   const baseClass =
-    'me-4 border focus:outline-none font-medium rounded-md text-xs px-2 py-1.5 text-center inline-flex items-center focus:ring-gray-600'
+    'me-4 border focus:outline-none font-medium rounded-full text-xs px-2 py-1.5 text-center inline-flex items-center focus:ring-gray-600'
   return (
     <div
       className={`${baseClass} ${disconnected ? 'bg-gray-800 border-gray-700 text-white hover:bg-gray-700' : 'bg-lime-100 border-lime-700 text-lime-800'}`}

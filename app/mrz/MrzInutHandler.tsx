@@ -20,9 +20,7 @@ const MrzInputHandler = (props: MrzInputHandlerType) => {
     const idToUpdate = workerIdCol.find((i) => i.id === id)
 
     if (idToUpdate) {
-      if (state === State.SUCCESS) {
-        idToUpdate.state = state
-      }
+      idToUpdate.state = state
       const states = workerIdCol.map((id) => id.state)
       const progress = {
         success: states.filter((s) => s === State.SUCCESS).length,
