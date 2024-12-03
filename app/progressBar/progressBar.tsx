@@ -1,3 +1,4 @@
+import { State } from '@/app/enums/state'
 import { setScanState } from '@/app/slice/slice'
 import { useAppDispatch, useAppSelector } from '@/app/store'
 import { useEffect } from 'react'
@@ -17,22 +18,26 @@ const ProgressBar = () => {
 
   useEffect(() => {
     if (Math.ceil(progressLength) >= 100) {
-      setTimeout(
-        () =>
+      setTimeout(() => {
+        if (scanState.state === State.SUCCESS) {
           dispatch(
             setScanState({
               success: 0,
               error: 0,
               length: 0,
               scanning: 0,
+              state: State.IDLE,
             })
-          ),
-        1000
-      )
+          )
+        }
+      }, 1000)
     }
   }, [progressLength])
 
-  if (!progressLength) {
+  if (
+    !progressLength ||
+    [State.ERROR, State.IDLE, State.SUCCESS].includes(scanState.state)
+  ) {
     return <></>
   }
 
