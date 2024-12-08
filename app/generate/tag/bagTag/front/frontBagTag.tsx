@@ -1,9 +1,12 @@
 import { BaseBagTag } from '@/app/generate/tag'
+import { maskData } from '@/app/parsedTable/input'
 import { useAppSelector } from '@/app/store'
 
 const FrontBagTag = () => {
   const {
     scannedData,
+    maskPassportDetails,
+    userIsDemo,
     showBagTagModal: {
       rowKey = 0,
       elementsPos: {
@@ -16,6 +19,13 @@ const FrontBagTag = () => {
     return 'text-base'
   }
 
+  const returnName = () =>
+    maskPassportDetails || userIsDemo
+      ? maskData(
+          `${scannedData[rowKey].firstName} ${scannedData[rowKey].lastName}`
+        )
+      : `${scannedData[rowKey].firstName} ${scannedData[rowKey].lastName}`
+
   return (
     <BaseBagTag face="front">
       <>
@@ -27,7 +37,7 @@ const FrontBagTag = () => {
               left: front.x,
             }}
           >
-            {scannedData[rowKey].firstName} {scannedData[rowKey].lastName}
+            {returnName()}
           </p>
         ) : (
           <></>
