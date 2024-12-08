@@ -22,6 +22,7 @@ const LandingZone = ({ children }: LandingZoneType) => {
 
   return (
     <div
+      data-testid={'landing-zone'}
       className="flex flex-col items-center justify-between px-12 w-full mx-auto"
       onDragOver={() => dragOverHandler()}
       onDragLeave={() => dragEndHandler()}
