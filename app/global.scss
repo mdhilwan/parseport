@@ -1,0 +1,33 @@
+@use 'sass:color';
+
+$base-dark: #211F16;
+$base-light: #C24E35;
+$change: 10%;
+
+:root {
+  --primary-light: #{$base-light};
+  --primary-light-100: #{darken($base-light, $change)};
+  --primary-light-200: #{darken($base-light, $change * 2)};
+  --primary-light-300: #{darken($base-light, $change * 3)};
+  --primary-light-400: #{darken($base-light, $change * 4)};
+  --primary-dark: #{$base-dark};
+  --primary-dark-100: #{lighten($base-dark, $change)};
+  --primary-dark-200: #{lighten($base-dark, $change * 2)};
+  --primary-dark-300: #{lighten($base-dark, $change * 3)};
+  --primary-dark-400: #{lighten($base-dark, $change * 4)};
+}
+
+#background {
+  background: $base-dark;
+
+  &.light {
+    background: grayscale(lighten($base-dark, $change * 7));
+
+    .text-white {
+      color: $base-dark;
+    }
+    .border-white {
+      border-color: $base-dark;
+    }
+  }
+}
