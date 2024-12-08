@@ -4,7 +4,10 @@ import { Toolbar } from '@/app/toolbar/toolbar.lazy'
 import { ParsedTable } from '../parsedTable/parsedTable.lazy'
 
 const PostScan = ({ user }: { user: UserType }) => (
-  <div className="w-full max-w-full overflow-auto mb-16">
+  <div
+    className="w-full max-w-full overflow-auto mb-16"
+    data-testid="post-scan"
+  >
     <ProgressBar />
     <ParsedTable user={user} />
     <Toolbar />
