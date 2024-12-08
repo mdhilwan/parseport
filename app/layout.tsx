@@ -1,10 +1,10 @@
 import { GoogleAnalytics } from '@next/third-parties/google'
-import { Open_Sans } from 'next/font/google'
+import { Cabin } from 'next/font/google'
 import { ReactElement } from 'react'
-
-const googleFont = Open_Sans({
+import './global.scss'
+const cabin = Cabin({
   subsets: ['latin'],
-  weight: ['300', '400', '600', '800'],
+  weight: ['400', '500', '600', '700'],
 })
 
 export const metadata = {
@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: ReactElement }) {
   return (
     <html lang="en">
       <GoogleAnalytics gaId="G-T3JNMDMTCV" />
-      <body className={googleFont.className}>{children}</body>
+      <body className={cabin.className}>{children}</body>
     </html>
   )
 }
