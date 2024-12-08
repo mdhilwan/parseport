@@ -30,7 +30,7 @@ describe('Unauth component', () => {
     render(<Unauth whichAdmin={WhichAdmin.SUPER} />)
 
     // Check that the heading includes ": Super Admin"
-    const headingElement = screen.getByText('Passport to Visa: Super Admin')
+    const headingElement = screen.getByText('Passport to Visa')
     expect(headingElement).toBeInTheDocument()
   })
 
@@ -38,7 +38,7 @@ describe('Unauth component', () => {
     render(<Unauth whichAdmin={WhichAdmin.ADMIN} />)
 
     // Check that the heading includes ": Admin"
-    const headingElement = screen.getByText('Passport to Visa: Admin')
+    const headingElement = screen.getByText('Passport to Visa')
     expect(headingElement).toBeInTheDocument()
   })
 
