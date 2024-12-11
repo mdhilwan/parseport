@@ -20,7 +20,7 @@ describe('ControlLink', () => {
     expect(link).toHaveAttribute('href', props.url)
     expect(link).toHaveTextContent(props.text)
     expect(link).toHaveClass(
-      'text-base-color py-6 hover:cursor-pointer font-light text-sm mx-4 first-of-type:ms-0 last-of-type:me-0 py-0.5'
+      'text-base-color py-6 hover:cursor-pointer font-light text-sm mx-4 first-of-type:ms-0 last-of-type:me-0'
     )
   })
 
@@ -42,7 +42,7 @@ describe('ControlLink', () => {
     expect(link).toHaveTextContent('Logout')
     expect(link.getAttribute('href')).toEqual('')
     expect(link).toHaveClass(
-      'text-base-color py-6 hover:cursor-pointer font-light text-sm mx-4 first-of-type:ms-0 last-of-type:me-0 py-0.5'
+      'text-base-color py-6 hover:cursor-pointer font-light text-sm mx-4 first-of-type:ms-0 last-of-type:me-0'
     )
 
     // Simulate a click event
@@ -63,7 +63,7 @@ describe('ControlLink', () => {
     // Assert
     const link = screen.getByTestId('ControlLink')
     expect(link).toHaveClass(
-      'text-base-color py-6 hover:cursor-pointer font-light text-sm mx-4 first-of-type:ms-0 last-of-type:me-0 py-0.5'
+      'text-base-color py-6 hover:cursor-pointer font-light text-sm mx-4 first-of-type:ms-0 last-of-type:me-0'
     )
   })
 })
