@@ -1,8 +1,8 @@
 import { GoogleAnalytics } from '@next/third-parties/google'
-import { Cabin } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { ReactElement } from 'react'
 import './global.scss'
-const cabin = Cabin({
+const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
 })
@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: ReactElement }) {
   return (
     <html lang="en">
       <GoogleAnalytics gaId="G-T3JNMDMTCV" />
-      <body className={cabin.className}>{children}</body>
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }
