@@ -1,7 +1,8 @@
 @use 'sass:color';
 
 $base-dark: #211F16;
-$base-light: #C24E35;
+$base-light: #FAFAFA;
+
 $change: 10%;
 
 :root {
@@ -18,16 +19,9 @@ $change: 10%;
 }
 
 #background {
-  background: $base-dark;
+  background: $base-light;
+}
 
-  &.light {
-    background: grayscale(lighten($base-dark, $change * 7));
-
-    .text-white {
-      color: $base-dark;
-    }
-    .border-white {
-      border-color: $base-dark;
-    }
-  }
+.text-base-color {
+  color: #111111
 }
