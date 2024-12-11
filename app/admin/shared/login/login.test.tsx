@@ -44,7 +44,7 @@ describe('Login component', () => {
     render(<Login whichAdmin={WhichAdmin.ADMIN} session={null} />)
 
     const button = screen.getByRole('button', {
-      name: /use your google account to signin/i,
+      name: /Continue with Google/i,
     })
 
     // Simulate form submission
@@ -60,7 +60,7 @@ describe('Login component', () => {
     render(<Login whichAdmin={WhichAdmin.SUPER} session={null} />)
 
     const button = screen.getByRole('button', {
-      name: /use your google account to signin/i,
+      name: /Continue with Google/i,
     })
 
     // Simulate form submission
