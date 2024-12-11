@@ -1,3 +1,4 @@
+import Logo from '@/app/logo'
 import '@/styles/global.css'
 
 const SuperError = () => {
