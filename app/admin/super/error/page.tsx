@@ -2,11 +2,9 @@ import '@/styles/global.css'
 
 const SuperError = () => {
   return (
-    <section className="bg-gray-50">
+    <section id="background">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <h1 className="flex items-center mb-6 text-2xl font-semibold text-gray-900 ">
-          Passport to Visa
-        </h1>
+        <Logo />
         <div className="w-full bg-white rounded-md shadow md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 sm:p-8">
             <h1 className="text-md font-bold leading-tight tracking-tight text-gray-900 mb-4">
