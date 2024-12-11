@@ -1,37 +1,47 @@
 import { setShowQrCodeModal } from '@/app/slice/slice'
-import { useAppDispatch, useAppSelector } from '@/app/store'
+import store, { useAppDispatch, useAppSelector } from '@/app/store'
+import { Provider } from 'react-redux'
 
 const StatePhoneConnection = () => {
   const { disconnected, qrcodeSrc } = useAppSelector((state) => state.mrzStore)
   const dispatch = useAppDispatch()
 
-  const baseClass =
-    'me-4 border focus:outline-none font-medium rounded-full text-xs px-2 py-1.5 text-center inline-flex items-center focus:ring-gray-600'
+  let statusLight: string
+  let statusText: string
+
+  if (qrcodeSrc !== 'loading.svg' && disconnected) {
+    statusText = 'Device not connected'
+    statusLight = 'ring-4 ring-green-700 bg-green-500 animate-pulse'
+  } else if (qrcodeSrc !== 'loading.svg' && !disconnected) {
+    statusText = 'Phone connected'
+    statusLight = 'bg-green-500'
+  } else {
+    statusText = 'Getting ready'
+    statusLight = 'ring-4 ring-red-700 bg-red-500 animate-pulse'
+  }
+
   return (
-    <div
-      className={`${baseClass} ${disconnected ? 'bg-gray-800 border-gray-700 text-white hover:bg-gray-700' : 'bg-lime-100 border-lime-700 text-lime-800'}`}
+    <a
+      className="me-4 border cursor-pointer font-medium rounded-full text-xs px-4 py-2 text-center inline-flex items-center bg-white border-gray-300 text-base-color transition-all hover:shadow"
+      onClick={() => dispatch(setShowQrCodeModal(true))}
     >
-      {disconnected ? (
-        <>
-          <div className="text-sm font-normal">Phone not connected</div>
-          <div className="flex items-center ">
-            <a
-              className="font-medium text-blue-600 px-1 ms-2 hover:bg-blue-100 rounded-md hover:cursor-pointer"
-              onClick={() => dispatch(setShowQrCodeModal(true))}
-            >
-              Connect
-              <span
-                className={`rounded-full ${qrcodeSrc !== 'loading.svg' ? 'bg-green-500' : 'bg-red-500'} ml-1.5 inline-block`}
-                style={{ height: '10px', width: '10px' }}
-              />
-            </a>
-          </div>
-        </>
-      ) : (
-        <div className="text-sm font-normal">Phone connected.</div>
-      )}
-    </div>
+      <div className="flex items-center ">
+        <span
+          className={`rounded-full ${statusLight} mr-2.5 inline-block`}
+          style={{ height: '10px', width: '10px' }}
+        />
+      </div>
+      <div className="text-sm font-normal">{statusText}</div>
+    </a>
   )
 }
 
-export default StatePhoneConnection
+const StatePhoneConnectionProvider = () => {
+  return (
+    <Provider store={store}>
+      <StatePhoneConnection />
+    </Provider>
+  )
+}
+
+export default StatePhoneConnectionProvider
