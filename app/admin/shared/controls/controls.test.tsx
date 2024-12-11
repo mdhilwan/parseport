@@ -1,9 +1,16 @@
 import Controls from '@/app/admin/shared/controls'
 import { WhichAdmin } from '@/app/enums/whichAdmin'
 import { GetType } from '@/app/server/allowed'
+import { setShowQrCodeModal } from '@/app/slice/slice'
+import { useAppDispatch, useAppSelector } from '@/app/store'
 import '@testing-library/jest-dom'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { signOut } from 'next-auth/react'
+
+jest.mock('@/app/store', () => ({
+  useAppDispatch: jest.fn(),
+  useAppSelector: jest.fn(),
+}))
 
 // Mock the signOut function
 jest.mock('next-auth/react', () => ({
@@ -15,7 +22,16 @@ jest.mock('@/app/server/allowed', () => ({
   GetType: jest.fn(),
 }))
 
+// Mock the statePhoneConnection
+jest.mock('@/app/statePhoneConnection', () =>
+  jest.fn(() => <div data-testid="statePhoneConnection" />)
+)
+
 describe('Controls', () => {
+  const mockDispatch = jest.fn()
+  const mockAppSelector = jest.fn()
+  const mockSetShowQrCodeModal = jest.fn()
+
   const baseSession = {
     user: {
       email: 'admin@example.com',
@@ -34,29 +50,27 @@ describe('Controls', () => {
   const originalEnv = process.env
 
   beforeEach(() => {
-    jest.resetModules() // Clear the cache
+    jest.resetModules()
     jest.resetAllMocks()
     process.env = { ...originalEnv } // Reset process.env before each test
     process.env.NEXT_PUBLIC_BASE_URL = 'http://localhost:3000'
+    ;(useAppDispatch as unknown as jest.Mock)
+      .mockReturnValue(mockDispatch)(setShowQrCodeModal as unknown as jest.Mock)
+      .mockImplementation(mockSetShowQrCodeModal)
+    ;(useAppSelector as unknown as jest.Mock).mockReturnValue(mockAppSelector)
   })
 
   afterEach(() => {
     process.env = originalEnv // Restore original process.env
+    jest.clearAllMocks()
+    jest.clearAllTimers()
   })
 
   it('renders with basic admin controls', () => {
     render(<Controls whichAdmin={WhichAdmin.ADMIN} session={baseSession} />)
 
-    // Check for image rendering
-    const image = screen.getByAltText('Admin User')
-    expect(image).toBeInTheDocument()
-    expect(image).toHaveAttribute(
-      'src',
-      '/_next/image?url=%2Favatar.png&w=48&q=75'
-    )
-
     // Check that ControlLinks are rendered correctly
-    expect(screen.getByText('Home')).toHaveAttribute('href', '/')
+    expect(screen.getByText('Passports')).toHaveAttribute('href', '/')
     expect(screen.getByText('Settings')).toHaveAttribute('href', '/admin')
     expect(screen.getByText('Logout')).toBeInTheDocument()
   })
@@ -92,7 +106,7 @@ describe('Controls', () => {
   })
 
   it('renders super admin control links based on email type', () => {
-    ;(GetType as jest.Mock).mockReturnValueOnce(WhichAdmin.SUPER)
+    ;(GetType as jest.Mock).mockReturnValue(WhichAdmin.SUPER)
 
     render(<Controls whichAdmin={WhichAdmin.SUPER} session={baseSession} />)
 
@@ -102,7 +116,7 @@ describe('Controls', () => {
   })
 
   it('does not render super admin links for regular admins', () => {
-    ;(GetType as jest.Mock).mockReturnValueOnce(WhichAdmin.ADMIN)
+    ;(GetType as jest.Mock).mockReturnValue(WhichAdmin.ADMIN)
 
     render(<Controls whichAdmin={WhichAdmin.ADMIN} session={baseSession} />)
 

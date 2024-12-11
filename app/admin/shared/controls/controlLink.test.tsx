@@ -1,4 +1,4 @@
-import ControlLink from '@/app/admin/shared/controls/controlLink'
+import CtrlLink from '@/app/admin/shared/controls/ctrlLink'
 import '@testing-library/jest-dom'
 import { fireEvent, render, screen } from '@testing-library/react'
 
@@ -9,11 +9,10 @@ describe('ControlLink', () => {
       text: 'Click me',
       url: 'https://example.com',
       color: 'blue',
-      extraClass: 'custom-class',
     }
 
     // Act
-    render(<ControlLink {...props} />)
+    render(<CtrlLink {...props} />)
 
     // Assert
     const link = screen.getByTestId('ControlLink')
@@ -21,9 +20,8 @@ describe('ControlLink', () => {
     expect(link).toHaveAttribute('href', props.url)
     expect(link).toHaveTextContent(props.text)
     expect(link).toHaveClass(
-      'text-blue-800 bg-blue-50 hover:bg-blue-400 hover:cursor-pointer'
+      'text-base-color py-6 hover:cursor-pointer font-light text-sm mx-4 first-of-type:ms-0 last-of-type:me-0 py-0.5'
     )
-    expect(link).toHaveClass('custom-class') // Ensure extra class is applied
   })
 
   it('renders and triggers the click event when no URL is provided', () => {
@@ -33,21 +31,19 @@ describe('ControlLink', () => {
       text: 'Logout',
       clickEvent: mockClickEvent,
       color: 'red',
-      extraClass: 'custom-class',
     }
 
     // Act
-    render(<ControlLink {...props} />)
+    render(<CtrlLink {...props} />)
     const link = screen.getByTestId('ControlLink')
 
     // Assert
     expect(link).toBeInTheDocument()
     expect(link).toHaveTextContent('Logout')
-    expect(link).not.toHaveAttribute('href') // No href attribute since there's no URL
+    expect(link.getAttribute('href')).toEqual('')
     expect(link).toHaveClass(
-      'text-red-800 bg-red-50 hover:bg-red-400 hover:cursor-pointer'
+      'text-base-color py-6 hover:cursor-pointer font-light text-sm mx-4 first-of-type:ms-0 last-of-type:me-0 py-0.5'
     )
-    expect(link).toHaveClass('custom-class')
 
     // Simulate a click event
     fireEvent.click(link)
@@ -62,10 +58,12 @@ describe('ControlLink', () => {
     }
 
     // Act
-    render(<ControlLink {...props} />)
+    render(<CtrlLink {...props} />)
 
     // Assert
     const link = screen.getByTestId('ControlLink')
-    expect(link).toHaveClass('text-slate-800 bg-slate-50 hover:bg-slate-400')
+    expect(link).toHaveClass(
+      'text-base-color py-6 hover:cursor-pointer font-light text-sm mx-4 first-of-type:ms-0 last-of-type:me-0 py-0.5'
+    )
   })
 })

@@ -17,25 +17,19 @@ jest.mock('@/app/admin/shared/login', () =>
 
 describe('LoginAdmin', () => {
   it('renders the Login component with correct props when session is fetched', async () => {
-    // Mock the server-side session response
     const mockSession = { user: { name: 'Admin' }, expires: 'some-date' }
     ;(getServerAuthSession as jest.Mock).mockResolvedValueOnce(mockSession)
 
-    // Render the component
-    render(await LoginAdmin())
+    render(LoginAdmin())
 
-    // Check if the section with data-testid is rendered
-    const section = screen.getByTestId('LoginAdmin')
+    const section = screen.getByTestId('unauth')
     expect(section).toBeInTheDocument()
 
-    // Check if the "Passport to Visa" text is displayed
-    expect(screen.getByText('Passport to Visa')).toBeInTheDocument()
+    expect(screen.getByTestId('logo-medium')).toBeInTheDocument()
 
-    // Check if the Login component is rendered with correct props
     expect(Login).toHaveBeenCalledWith(
       {
-        whichAdmin: WhichAdmin.ADMIN,
-        session: mockSession,
+        whichAdmin: WhichAdmin.NONE,
       },
       {}
     )
