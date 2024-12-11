@@ -1,10 +1,12 @@
 'use client'
 
 import { WhichAdmin } from '@/app/enums/whichAdmin'
+import Logo from '@/app/logo'
+import { LogoSize } from '@/app/logo/logo'
 import { GetType } from '@/app/server/allowed'
+import StatePhoneConnection from '@/app/statePhoneConnection'
 import { signOut } from 'next-auth/react'
-import Image from 'next/image'
-import ControlLink from './controlLink'
+import CtrlLink from './ctrlLink'
 
 export type UserType = {
   email: string
@@ -33,12 +35,12 @@ type SuperLinkType = {
   email: string
 }
 
-const SuperLink = ({ whichAdmin, email }: SuperLinkType) => {
+const CtrlLinkSuper = ({ whichAdmin, email }: SuperLinkType) => {
   return (
     <>
       {whichAdmin === WhichAdmin.SUPER ||
       GetType(email) === WhichAdmin.SUPER ? (
-        <ControlLink
+        <CtrlLink
           text={'Super'}
           url={`${process.env.NEXT_PUBLIC_BASE_URL}/admin/super`}
         />
@@ -49,16 +51,14 @@ const SuperLink = ({ whichAdmin, email }: SuperLinkType) => {
   )
 }
 
-const AddAccountLink = ({ whichAdmin, email }: SuperLinkType) => {
+const CtrlLinkAddAcc = ({ whichAdmin, email }: SuperLinkType) => {
   return (
     <>
       {whichAdmin === WhichAdmin.SUPER ||
       GetType(email) === WhichAdmin.SUPER ? (
-        <ControlLink
+        <CtrlLink
           text={'Add Account'}
           url={`${process.env.NEXT_PUBLIC_BASE_URL}/admin/super/add`}
-          color="yellow"
-          extraClass="ms-4 border-s rounded-s"
         />
       ) : (
         <></>
@@ -71,7 +71,7 @@ const Controls = (props: ControlsType) => {
   const {
     whichAdmin = WhichAdmin.ADMIN,
     session: {
-      user: { name, email, image },
+      user: { email },
     },
   } = props
 
@@ -83,28 +83,22 @@ const Controls = (props: ControlsType) => {
   return (
     <div
       data-testid="Controls"
-      className="sticky top-0 bg-slate-300 py-2 flex ps-4"
+      className="sticky top-0 bg-white flex align-middle px-6 border-b border-b-gray-300"
     >
-      <Image
-        src={image as string}
-        width="24"
-        height="24"
-        alt={name as string}
-        className="rounded-full overflow-hidden flex-none me-4"
-      />
-
-      <ControlLink text={'Home'} url={'/'} />
-      <ControlLink text={'Settings'} url={'/admin'} />
-      <SuperLink email={email} whichAdmin={whichAdmin} />
-      <ControlLink
-        text={'Logout'}
-        clickEvent={async () => await signOut({ callbackUrl: cbUrl })}
-        extraClass={'rounded-e border-e'}
-      />
-
-      <span className="flex">
-        <AddAccountLink whichAdmin={whichAdmin} email={email} />
-      </span>
+      <div className="flex flex-grow items-center">
+        <Logo size={LogoSize.small} className={'me-12'} />
+        <CtrlLink text={'Passports'} url={'/'} />
+        <CtrlLink text={'Settings'} url={'/admin'} />
+        <CtrlLinkSuper email={email} whichAdmin={whichAdmin} />
+        <CtrlLinkAddAcc whichAdmin={whichAdmin} email={email} />
+      </div>
+      <div className="shrink">
+        <StatePhoneConnection />
+        <CtrlLink
+          text={'Logout'}
+          clickEvent={async () => await signOut({ callbackUrl: cbUrl })}
+        />
+      </div>
     </div>
   )
 }
