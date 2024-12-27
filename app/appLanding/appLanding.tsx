@@ -1,5 +1,6 @@
 'use client'
 
+import AddPassportButton from '@/app/addPassportButton'
 import Controls from '@/app/admin/shared/controls'
 import {
   ControlSessionType,
@@ -124,7 +125,10 @@ const AppLanding = (props: AppLandingType) => {
   return (
     <>
       <Controls session={session} />
-      <DocumentTitle />
+      <div className="flex align-middle sticky top-[4.3rem] bg-white shadow shadow-gray-50 mb-4">
+        <DocumentTitle />
+        <AddPassportButton />
+      </div>
       <LandingZone>
         <PostScan user={user} />
       </LandingZone>

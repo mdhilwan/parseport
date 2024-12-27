@@ -10,18 +10,18 @@ type DocumentTitleType = {
 
 const DocumentTitle = (opt: DocumentTitleType) => {
   const { focus = false, extraClassName = '' } = opt
-  const { scannedData, excelFileName } = useAppSelector(
+  const { scannedData, excelFileName, showAddPassport } = useAppSelector(
     (state) => state.mrzStore
   )
 
   const dispatch = useDispatch()
 
-  if (scannedData.length === 0) {
+  if (scannedData.length === 0 || showAddPassport) {
     return <></>
   }
 
   return (
-    <div className="mt-2 pt-2 px-10">
+    <div className="pl-10 flex flex-grow items-center">
       <input
         type="text"
         autoFocus={focus}

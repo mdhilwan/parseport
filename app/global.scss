@@ -2,10 +2,12 @@
 
 $base-dark: #211F16;
 $base-light: #FAFAFA;
+$base-brand: #DC2F11;
 
 $change: 10%;
 
 :root {
+  --Brand-01: #{$base-brand};
   --primary-light: #{$base-light};
   --primary-light-100: #{darken($base-light, $change)};
   --primary-light-200: #{darken($base-light, $change * 2)};
@@ -24,4 +26,17 @@ $change: 10%;
 
 .text-base-color {
   color: #111111
+}
+
+.label-text-base-brand,
+.text-base-brand,
+a.text-base-brand {
+
+  cursor: pointer;
+  color: $base-brand;
+  transition: color ease-in-out 0.2s;
+
+  &:hover {
+    color: #{lighten($base-brand, $change * 2)};
+  }
 }
