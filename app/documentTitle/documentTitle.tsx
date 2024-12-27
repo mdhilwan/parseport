@@ -27,9 +27,11 @@ const DocumentTitle = (opt: DocumentTitleType) => {
         autoFocus={focus}
         value={excelFileName}
         onChange={(evt: ChangeEvent<HTMLInputElement>) => {
-          dispatch(setExcelFileName(evt.target.value))
+          if (evt.target.value) {
+            dispatch(setExcelFileName(evt.target.value))
+          }
         }}
-        className={`w-full px-2 py-1 text-xs text-gray-400 hover:border-gray-700 focus:border-gray-700 focus:text-gray-700 hover:cursor-pointer ${extraClassName}`}
+        className={`w-full px-2 py-1 text-lg text-gray-400 hover:border-gray-700 focus:border-gray-700 focus:text-gray-700 hover:cursor-pointer ${extraClassName} ${excelFileName !== 'untitled' ? 'text-gray-700' : ''}`}
       />
     </div>
   )

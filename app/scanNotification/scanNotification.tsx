@@ -9,7 +9,7 @@ const ScanNotification = () => {
 
   return scannedData.length > 0 && scanState.state === State.ERROR ? (
     <button
-      className={`cursor-pointer ms-4 p-1 bg-red-700 border border-red-800 items-center text-red-100 leading-none rounded-full flex lg:inline-flex`}
+      className={`cursor-pointer ms-4 p-1 bg-red-700 border border-red-800 items-center text-red-100 leading-none rounded-full flex inline-flex`}
       role="alert"
       onClick={() => {
         dispatch(

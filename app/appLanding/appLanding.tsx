@@ -125,7 +125,7 @@ const AppLanding = (props: AppLandingType) => {
   return (
     <>
       <Controls session={session} />
-      <div className="flex align-middle sticky top-[4.3rem] bg-white shadow shadow-gray-50 mb-4">
+      <div className="flex align-middle sticky top-[4.3rem] bg-white shadow shadow-gray-50">
         <DocumentTitle />
         <AddPassportButton />
       </div>

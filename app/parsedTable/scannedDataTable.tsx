@@ -13,7 +13,8 @@ export const ScannedDataTable = ({ user }: { user: UserType }) => {
       Object.entries(row).filter((r) => TableLabelKeys.includes(r[0]))
     )
   )
-  const baseLabelClassName = 'pe-3 font-bold whitespace-nowrap'
+  const baseLabelClassName =
+    'pe-3 font-bold whitespace-nowrap text-gray-500 text-xs'
 
   return (
     <>
