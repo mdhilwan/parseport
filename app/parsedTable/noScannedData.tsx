@@ -8,11 +8,7 @@ export const NoScannedData = ({ user }: { user: UserType }) => {
     <div className="text-slate-500">
       {disconnected ? (
         <div className="my-5">
-          <div className="w-full">
-            <div className="border border-gray-300 rounded-md">
-              <StateMrzInputWrap user={user} />
-            </div>
-          </div>
+          <StateMrzInputWrap user={user} />
         </div>
       ) : (
         <>

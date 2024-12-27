@@ -21,6 +21,11 @@ export const StateMrzInputWrap = (props: StateMrzInputWrapType) => {
   const dpSetScanState = (obj: any) => dispatch(setScanState(obj))
 
   return (
-    <StateMrzInput dpSetParsed={dpSetParsed} dpSetScanState={dpSetScanState} />
+    <div className="w-full h-[calc(100vh-12.5rem)] flex justify-center items-center">
+      <StateMrzInput
+        dpSetParsed={dpSetParsed}
+        dpSetScanState={dpSetScanState}
+      />
+    </div>
   )
 }

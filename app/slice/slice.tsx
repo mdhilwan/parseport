@@ -24,6 +24,7 @@ interface IinitialState {
   guid: string
   highlightExpiredPassports: boolean
   maskPassportDetails: boolean
+  showAddPassport: boolean
   mrzStateDropZoneClass: string
   parsed: any[]
   qrcodeSrc: string
@@ -69,6 +70,7 @@ const initialState: IinitialState = {
   guid: '',
   highlightExpiredPassports: false,
   maskPassportDetails: false,
+  showAddPassport: false,
   mrzStateDropZoneClass: defaultMrzStateDropZoneClass,
   parsed: [],
   qrcodeSrc: 'loading.svg',
@@ -124,6 +126,9 @@ export const slice = createSlice({
     },
     setDisconnected: (state, action) => {
       state.disconnected = action.payload
+    },
+    setShowAddPassport: (state, action) => {
+      state.showAddPassport = action.payload
     },
     setExcelFile: (state, action) => {
       state.excelFile = action.payload
@@ -202,6 +207,7 @@ export const {
   setDisconnected,
   setQrcodeSrc,
   setScannedData,
+  setShowAddPassport,
   addScannedData,
   setShowQrCodeModal,
   setShowImportExcelModal,
