@@ -16,7 +16,7 @@ const AddPassportButton = () => {
     <div className={'pr-10'}>
       <button
         className={
-          'my-2.5 mx-3 py-2 px-4 rounded-full border border-red-800 bg-red-700 text-white items-center text-sm flex inline-flex'
+          'my-2.5 mx-3 py-2 px-4 rounded-full border border-red-800 bg-red-700 text-white items-center text-sm inline-flex'
         }
         onClick={() => {
           dispatch(setShowAddPassport(true))
