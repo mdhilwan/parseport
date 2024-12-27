@@ -58,7 +58,7 @@ describe('LandingZone', () => {
     fireEvent.dragOver(landingZone)
 
     expect(mockDispatch).toHaveBeenCalledWith(
-      setMrzStateDropZoneClass('bg-blue-100')
+      setMrzStateDropZoneClass('bg-red-100')
     )
   })
 

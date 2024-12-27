@@ -11,7 +11,7 @@ const LandingZone = ({ children }: LandingZoneType) => {
   const dispatch = useAppDispatch()
 
   const dragOverHandler = () => {
-    dispatch(setMrzStateDropZoneClass('bg-blue-100'))
+    dispatch(setMrzStateDropZoneClass('bg-red-100'))
   }
 
   const dragEndHandler = () => {

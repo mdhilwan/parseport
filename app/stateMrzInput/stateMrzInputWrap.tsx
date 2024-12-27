@@ -1,6 +1,6 @@
 import { UserType } from '@/app/admin/shared/controls/controls'
 import { HttpActions } from '@/app/api/httpActions'
-import { setParsed, setScanState } from '@/app/slice/slice'
+import { setParsed, setScanState, setShowAddPassport } from '@/app/slice/slice'
 import StateMrzInput from '@/app/stateMrzInput/stateMrzInput'
 import { useAppDispatch } from '@/app/store'
 
@@ -16,6 +16,7 @@ export const StateMrzInputWrap = (props: StateMrzInputWrapType) => {
       userEmail: user.email,
       company: user.res?.result?.company,
     })
+    dispatch(setShowAddPassport(false))
     dispatch(setParsed(obj))
   }
   const dpSetScanState = (obj: any) => dispatch(setScanState(obj))

@@ -101,7 +101,7 @@ const ImportExcelInput = () => {
   const dragOverHandler = (evt: DragEvent<HTMLDivElement>) => {
     evt.preventDefault()
     evt.stopPropagation()
-    dispatch(setMrzStateDropZoneClass('bg-blue-100'))
+    dispatch(setMrzStateDropZoneClass('bg-red-100'))
   }
 
   const dropHandler = (evt: DragEvent<HTMLDivElement>) => {
