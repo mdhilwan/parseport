@@ -15,17 +15,21 @@ type UpdateIdColType = {
 const MrzInputHandler = (props: MrzInputHandlerType) => {
   const { dpSetParsed, dpSetScanState, $event } = props
 
-  let workerIdCol: { id: any; state: State }[] = []
+  let workerIdCol: { id: any; fileName: string; state: State }[] = []
   const updateIdCol = ({ id, state }: UpdateIdColType) => {
     const idToUpdate = workerIdCol.find((i) => i.id === id)
 
     if (idToUpdate) {
       idToUpdate.state = state
+
       const states = workerIdCol.map((id) => id.state)
       const progress = {
         success: states.filter((s) => s === State.SUCCESS).length,
         error: states.filter((s) => s === State.ERROR).length,
         scanning: states.filter((s) => s === State.SCANNING).length,
+        failedFiles: workerIdCol
+          .filter((s) => s.state === State.ERROR)
+          .map((f) => f.fileName),
         length: states.length,
       }
 
@@ -41,6 +45,7 @@ const MrzInputHandler = (props: MrzInputHandlerType) => {
   const beginScanning = (inputFiles: string | any[]) => {
     if (inputFiles?.length) {
       ;[...Array.from(inputFiles)].map((file, fileIndex) => {
+        console.log(file.name)
         const reader = new FileReader()
         reader.onload = (e) => {
           if (e && e.target && e.target.result) {
@@ -48,6 +53,7 @@ const MrzInputHandler = (props: MrzInputHandlerType) => {
             if (mrzWorker) {
               workerIdCol.push({
                 id: (mrzWorker as any).id,
+                fileName: file.name,
                 state: State.SCANNING,
               })
               mrzWorker.postMessage({
