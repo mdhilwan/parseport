@@ -8,6 +8,7 @@ interface IScanState {
   scanning: number
   error: number
   length: number
+  failedFiles: string[]
   state: State
 }
 
@@ -79,6 +80,7 @@ const initialState: IinitialState = {
     scanning: 0,
     error: 0,
     length: 0,
+    failedFiles: [],
     state: State.IDLE,
   },
   scanned: false,
