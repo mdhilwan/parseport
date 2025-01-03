@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { MouseEventHandler } from 'react'
 
@@ -25,14 +26,14 @@ const CtrlLink = (props: ControlLinkType) => {
   }
 
   return (
-    <a
+    <Link
       className={`text-base-color py-6 hover:cursor-pointer font-light text-sm mx-4 first-of-type:ms-0 last-of-type:me-0 ${isActive ? 'border-b-2 border-b-black pb-[22px]' : ''}`}
       {...baseProps}
       href={url}
       onClick={clickEvent}
     >
       {text}
-    </a>
+    </Link>
   )
 }
 
