@@ -4,7 +4,7 @@ import { useAppSelector } from '@/app/store'
 import { useDispatch } from 'react-redux'
 
 const ScanNotification = () => {
-  const { scanState, scannedData } = useAppSelector((state) => state.mrzStore)
+  const { scanState } = useAppSelector((state) => state.mrzStore)
   const dispatch = useDispatch()
 
   return scanState.state === State.ERROR ? (
