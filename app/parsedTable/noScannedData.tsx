@@ -1,5 +1,5 @@
 import { UserType } from '@/app/admin/shared/controls/controls'
-import { StateMrzInputWrap } from '@/app/stateMrzInput/stateMrzInputWrap'
+import StateMrzInput from '@/app/stateMrzInput'
 import { useAppSelector } from '@/app/store'
 
 export const NoScannedData = ({ user }: { user: UserType }) => {
@@ -8,7 +8,7 @@ export const NoScannedData = ({ user }: { user: UserType }) => {
     <div className="text-slate-500">
       {disconnected ? (
         <div className="my-5">
-          <StateMrzInputWrap user={user} />
+          <StateMrzInput user={user} />
         </div>
       ) : (
         <>

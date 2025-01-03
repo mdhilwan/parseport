@@ -10,8 +10,8 @@ const StatePhoneConnection = () => {
   let statusText: string
 
   if (qrcodeSrc !== 'loading.svg' && disconnected) {
-    statusText = 'Device not connected'
-    statusLight = 'ring-4 ring-green-700 bg-green-500 animate-pulse'
+    statusText = 'No device connected'
+    statusLight = 'ring-4 ring-amber-400 bg-amber-500 animate-pulse'
   } else if (qrcodeSrc !== 'loading.svg' && !disconnected) {
     statusText = 'Phone connected'
     statusLight = 'bg-green-500'

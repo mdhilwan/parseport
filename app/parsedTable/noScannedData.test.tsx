@@ -8,10 +8,6 @@ jest.mock('@/app/store', () => ({
   useAppSelector: jest.fn(),
 }))
 
-jest.mock('@/app/stateMrzInput/stateMrzInputWrap', () => ({
-  StateMrzInputWrap: jest.fn(() => <div>Mocked StateMrzInputWrap</div>),
-}))
-
 describe('NoScannedData Component', () => {
   const mockUser: UserType = {
     email: 'admin@example.com',

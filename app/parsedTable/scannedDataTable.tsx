@@ -1,7 +1,7 @@
 import { UserType } from '@/app/admin/shared/controls/controls'
 import { TableLabelKeys } from '@/app/parsedTable/parsedTable'
 import { Row } from '@/app/parsedTable/row'
-import { StateMrzInputWrap } from '@/app/stateMrzInput/stateMrzInputWrap'
+import StateMrzInput from '@/app/stateMrzInput'
 import { useAppSelector } from '@/app/store'
 
 export const ScannedDataTable = ({ user }: { user: UserType }) => {
@@ -19,7 +19,7 @@ export const ScannedDataTable = ({ user }: { user: UserType }) => {
   return (
     <>
       {showAddPassport ? (
-        <StateMrzInputWrap user={user} />
+        <StateMrzInput user={user} />
       ) : (
         <table className="table table-auto w-full mt-2">
           <thead>
