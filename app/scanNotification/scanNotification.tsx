@@ -7,8 +7,6 @@ const ScanNotification = () => {
   const { scanState, scannedData } = useAppSelector((state) => state.mrzStore)
   const dispatch = useDispatch()
 
-  console.log(scanState)
-
   return scanState.state === State.ERROR ? (
     <div className={'relative ms-4'}>
       <span
