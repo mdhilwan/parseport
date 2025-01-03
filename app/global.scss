@@ -40,3 +40,7 @@ a.text-base-brand {
     color: #{lighten($base-brand, $change * 2)};
   }
 }
+
+.col-span-3 {
+  grid-column: span 3 / span 3;
+}
